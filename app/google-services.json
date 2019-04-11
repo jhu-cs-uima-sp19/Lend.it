@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "726799302503",
+    "firebase_url": "https://lendit-af5be.firebaseio.com",
+    "project_id": "lendit-af5be",
+    "storage_bucket": "lendit-af5be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726799302503:android:191ab6635500659d",
+        "android_client_info": {
+          "package_name": "com.example.lendit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726799302503-hkmq5vm1mjjqc7raufs22lrhqb8oon72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6iHaKxo7gA-bX-qNweznjZ3G8X2-ImYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726799302503-hkmq5vm1mjjqc7raufs22lrhqb8oon72.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
