@@ -56,6 +56,7 @@ public class HomePage extends AppCompatActivity
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        //TODO: Finish coding here from example
     }
 
     @Override
