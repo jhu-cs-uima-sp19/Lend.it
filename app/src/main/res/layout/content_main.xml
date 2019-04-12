@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.201" />
 
     <TextView
-        android:id="@+id/editText"
+        android:id="@+id/setUpTxt"
         android:layout_width="326dp"
         android:layout_height="105dp"
         android:layout_marginStart="48dp"
@@ -123,6 +123,7 @@
         android:layout_marginRight="160dp"
         android:background="@color/green"
         android:text="Sign Up"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signin" />
 
