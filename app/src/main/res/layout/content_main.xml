@@ -110,6 +110,7 @@
         android:layout_marginRight="160dp"
         android:background="@color/green"
         android:text="Sign In"
+        android:onClick="toHome"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
@@ -123,6 +124,7 @@
         android:layout_marginRight="160dp"
         android:background="@color/green"
         android:text="Sign Up"
+        android:onClick="toSignUp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signin" />
