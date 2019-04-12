@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_signup">
 
     <TextView
-        android:id="@+id/editText"
+        android:id="@+id/setUpTxt"
         android:layout_width="326dp"
         android:layout_height="105dp"
         android:layout_marginStart="40dp"
@@ -54,7 +54,7 @@
         android:hint="Email"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/setUpTxt" />
 
     <TextView
         android:id="@+id/buildingTxt"
@@ -62,11 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="Please Select Your Building"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
 
     <Spinner
         android:id="@+id/buildingSpinner"
@@ -86,10 +86,10 @@
         android:layout_marginStart="56dp"
         android:layout_marginLeft="56dp"
         android:layout_marginTop="28dp"
-        android:text="First Name"
         android:gravity="center"
+        android:text="First Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/setUpTxt" />
 
     <TextView
         android:id="@+id/lastNameTxt"
@@ -101,7 +101,7 @@
         android:text="Last Name"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/setUpTxt" />
 
     <EditText
         android:id="@+id/firstNameET"
@@ -111,6 +111,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="First Name"
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,6 +125,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
+        android:hint="Last Name"
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,23 +135,23 @@
         android:id="@+id/passwordTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Select Password"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
+        android:text="Select Password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
         android:id="@+id/confirmPasswordTxt"
         android:layout_width="110dp"
         android:layout_height="21dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="36dp"
-        android:text="Confirm Password"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
+        android:text="Confirm Password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTxt" />
 
@@ -157,14 +159,13 @@
         android:id="@+id/passET"
         android:layout_width="164dp"
         android:layout_height="21dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toEndOf="@+id/passwordTxt"
-        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
+        tools:layout_editor_absoluteY="356dp" />
 
     <EditText
         android:id="@+id/confirmPassET"
@@ -178,6 +179,14 @@
         android:inputType="textNoSuggestions|textPassword"
         app:layout_constraintStart_toEndOf="@+id/confirmPasswordTxt"
         app:layout_constraintTop_toBottomOf="@+id/passET" />
+
+    <Button
+        android:id="@+id/createUser"
+        android:layout_width="163dp"
+        android:layout_height="51dp"
+        android:text="Sign Up"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="583dp" />
 
 
 </android.support.constraint.ConstraintLayout>
