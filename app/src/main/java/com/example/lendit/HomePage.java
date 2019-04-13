@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity
@@ -24,6 +26,9 @@ public class HomePage extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
+    //^^ prev
+
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,35 +56,30 @@ public class HomePage extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter(getPost());
-        mRecyclerView.setAdapter(mAdapter);
+        mListView = (ListView) findViewById(R.id.listViewLends);
+
+        //This is where you add entires
+        ArrayList<PostCard> list = new ArrayList();
+        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
+        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
+        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));
+
+        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, list);
+        if ((adapter != null) && (mListView != null)) {
+            mListView.setAdapter(adapter);
+        }
+        else {
+            System.out.println("Null Reference");
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-            }
-        });
+
     }
 
-    private ArrayList<PostCard> getPost() {
-        ArrayList results = new ArrayList<PostCard>();
-        for (int index = 0; index < 20; index++) {
-            PostCard obj = new PostCard("Some Primary Text " + index,
-                    "Secondary " + index);
-            results.add(index, obj);
-        }
-        return results;
-    }
 
     @Override
     public void onBackPressed() {

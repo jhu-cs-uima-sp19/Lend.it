@@ -2,29 +2,37 @@ package com.example.lendit;
 
 public class PostCard {
 
+    private String imgURL;
+    private String itemName;
+    private String personName;
 
-        private String mText1;
-        private String mText2;
-
-        PostCard (String text1, String text2){
-            mText1 = text1;
-            mText2 = text2;
+        PostCard (String img, String item, String person){
+            imgURL = img;
+            itemName = item;
+            personName = person;
         }
 
-        public String getmText1() {
-            return mText1;
-        }
+    public String getImgURL() {
+        return imgURL;
+    }
 
-        public void setmText1(String mText1) {
-            this.mText1 = mText1;
-        }
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
 
-        public String getmText2() {
-            return mText2;
-        }
+    public String getItemName() {
+        return itemName;
+    }
 
-        public void setmText2(String mText2) {
-            this.mText2 = mText2;
-        }
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
+    }
 
 }
