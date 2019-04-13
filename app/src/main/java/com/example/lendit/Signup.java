@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -15,7 +16,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Signup extends AppCompatActivity {
@@ -27,6 +32,7 @@ public class Signup extends AppCompatActivity {
     Spinner building;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "SignUpActivity";
+    List<String> spinnerBuildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,17 @@ public class Signup extends AppCompatActivity {
         first = (EditText) findViewById(R.id.firstNameET);
         last = (EditText) findViewById(R.id.lastNameET);
         building = (Spinner) findViewById(R.id.buildingSpinner);
+
+        // populate buildings spinner
+        spinnerBuildings = new ArrayList<String>(Arrays.asList("Charles Commons", "McCoy", "Bradford", "AMRI", "AMRII", "AMRIIIA", "AMRIIIB", "Wolman", "The Charles", "Homewood", "The Academy", "The Social", "Uni West", "100 West"));
+
+
+
+        // create array adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerBuildings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        building.setAdapter(adapter);
 
         // listen for create button
         signUp.setOnClickListener(new View.OnClickListener() {
