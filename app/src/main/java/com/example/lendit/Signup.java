@@ -38,9 +38,7 @@ public class Signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        Toolbar toolbar = findViewById(R.id.toolbar),
         // set variables for all signup screen components
         signUp = findViewById(R.id.createUser);
         emailAddress = (EditText) findViewById(R.id.email);
@@ -60,7 +58,7 @@ public class Signup extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         building.setAdapter(adapter);
 
-        // listen for create button
+        // listener for create button
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
