@@ -25,28 +25,29 @@
         layout="@layout/content_message" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/sendBTN"
         android:layout_width="141dp"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Send"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="right|bottom" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/msgET"
         android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Type here"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="left|bottom" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textField"
         android:layout_width="match_parent"
         android:layout_height="683dp"
-        android:text="TextView"
+        android:gravity="bottom"
+        android:hint="Chat message will appear here..."
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="left|top" />
 

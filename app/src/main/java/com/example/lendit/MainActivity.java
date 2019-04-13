@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText emailAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button signInButton = (Button) findViewById(R.id.signin);
+        emailAddress = (EditText) findViewById(R.id.email);
+
 
     }
 
@@ -46,10 +51,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toHome(View view) {
+        String email = emailAddress.getText().toString();
+        String username = email.substring(0, email.indexOf('@'));
         Intent i = new Intent(MainActivity.this, HomePage.class);
         Bundle bundle = new Bundle();
-        //bundle.putString(“”, getrec);
-        //i.putExtra(bundle);
+        bundle.putString("userName", username);
+        i.putExtras(bundle);
         startActivity(i);
     }
 

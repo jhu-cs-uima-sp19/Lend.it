@@ -1,5 +1,6 @@
 package com.example.lendit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ public class HomePage extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    String userName;
     private static String LOG_TAG = "CardViewActivity";
     //^^ prev
 
@@ -37,15 +39,16 @@ public class HomePage extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Bundle bundle = getIntent().getExtras();
+        userName = bundle.getString("userName");
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -71,6 +74,16 @@ public class HomePage extends AppCompatActivity
         else {
             System.out.println("Null Reference");
         }
+
+    }
+
+    public void createPost(View view) {
+        Intent i = new Intent(HomePage.this, CreatePost.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userName", userName);
+        i.putExtras(bundle);
+        startActivity(i);
+
 
     }
 
