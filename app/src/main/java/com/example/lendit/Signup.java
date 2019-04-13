@@ -38,7 +38,7 @@ public class Signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Toolbar toolbar = findViewById(R.id.toolbar),
+        //Toolbar toolbar = findViewById(R.id.toolbar),
         // set variables for all signup screen components
         signUp = findViewById(R.id.createUser);
         emailAddress = (EditText) findViewById(R.id.email);

@@ -9,13 +9,12 @@
     <Button
         android:id="@+id/createLendBTN"
         android:layout_width="265dp"
-        android:layout_height="49dp"
+        android:layout_height="45dp"
         android:layout_marginStart="84dp"
         android:layout_marginLeft="84dp"
         android:layout_marginTop="8dp"
         android:background="@color/green"
         android:text="Post"
-        android:onClick="createLend"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lendAddPhotoBTN" />
@@ -80,7 +79,6 @@
         android:layout_marginRight="60dp"
         android:drawableLeft="@drawable/ic_menu_camera"
         android:text="photo"
-        android:onClick="addPhoto"
         android:textColor="@color/green"
         android:textColorLink="@color/green"
         android:textCursorDrawable="@color/green"

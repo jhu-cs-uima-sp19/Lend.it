@@ -114,5 +114,4 @@ public class UserAccount extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.user_account, menu);
         return true;
     }
-
 }

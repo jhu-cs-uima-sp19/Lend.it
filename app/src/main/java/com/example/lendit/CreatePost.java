@@ -29,21 +29,9 @@ import java.util.UUID;
 
 public class CreatePost extends AppCompatActivity {
 
-    private static final String TAG = "CreatePostActivity";
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private static final int REQUEST_IMAGE_CAPTURE = 111;
-
-    Button createLend;
-    EditText lendDesc;
-    // lend photo
-    Button addPhoto;
-    Button createAsk;
-    EditText askDesc;
-    EditText deposit;
-    EditText askTitle;
-    EditText lendTitle;
-    String photo;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -59,32 +47,6 @@ public class CreatePost extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        createLend = findViewById(R.id.createLendBTN);
-        lendTitle = findViewById(R.id.lendTitleET);
-        lendDesc = findViewById(R.id.lendDescriptionET);
-        deposit = findViewById(R.id.depositET);
-        addPhoto = findViewById(R.id.lendAddPhotoBTN);
-        createAsk = findViewById(R.id.createAskBTN);
-        askDesc = findViewById(R.id.lendDescriptionET);
-        askTitle = findViewById(R.id.askTitleET);
-
-
-        // listener for create lend button
-//        createLend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                createLend();
-//            }
-//        });
-//
-//        // listener for add photo button
-//        addPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String photo = "";
-//            }
-//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -94,86 +56,7 @@ public class CreatePost extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public void createLend(View view) {
-        String uniqueID = UUID.randomUUID().toString();
-        Map<String, Object> lend = new HashMap<>();
-        lend.put("title", lendTitle.getText().toString());
-        lend.put("description", lendDesc.getText().toString());
-        lend.put("deposit", deposit.getText().toString());
-        lend.put("photoID", photo);
-        lend.put("id", uniqueID);
-        // get username from intent that launched this activity?
-        // profile.put("username", );
-        db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
 
-    }
-
-    public void addPhoto(View view) {
-        onLaunchCamera();
-    }
-
-    public void onLaunchCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mImageLabel.setImageBitmap(imageBitmap);
-//            encodeBitmapAndSaveToFirebase(imageBitmap);
-//        }
-//    }
-//
-//    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-//        DatabaseReference ref = FirebaseDatabase.getInstance()
-//                .getReference(Constants.FIREBASE_CHILD_RESTAURANTS)
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                .child(mRestaurant.getPushId())
-//                .child("imageUrl");
-//        ref.setValue(imageEncoded);
-//    }
-
-    public void createAsk() {
-        String uniqueID = UUID.randomUUID().toString();
-        Map<String, Object> ask = new HashMap<>();
-        ask.put("title", askTitle.getText().toString());
-        ask.put("description", askDesc.getText().toString());
-        ask.put("id", uniqueID);
-        // get username from intent that launched this activity?
-        // profile.put("username", );
-        db.collection("asks").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-
-    }
 }
 
 
