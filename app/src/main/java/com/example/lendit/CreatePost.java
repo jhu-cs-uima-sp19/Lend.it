@@ -64,20 +64,20 @@ public class CreatePost extends AppCompatActivity {
 
 
         // listener for create lend button
-        createLend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createLend();
-            }
-        });
-
-        // listener for add photo button
-        addPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String photo = "";
-            }
-        });
+//        createLend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                createLend();
+//            }
+//        });
+//
+//        // listener for add photo button
+//        addPhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String photo = "";
+//            }
+//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -98,6 +98,33 @@ public class CreatePost extends AppCompatActivity {
         // get username from intent that launched this activity?
         // profile.put("username", );
         db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "DocumentSnapshot successfully written!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+    }
+
+    public void addPhoto() {
+
+    }
+
+    public void createAsk() {
+        String uniqueID = UUID.randomUUID().toString();
+        Map<String, Object> ask = new HashMap<>();
+        ask.put("title", askTitle.getText().toString());
+        ask.put("description", askDesc.getText().toString());
+        ask.put("id", uniqueID);
+        // get username from intent that launched this activity?
+        // profile.put("username", );
+        db.collection("asks").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");
