@@ -34,7 +34,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="Welcome to LendIt"
+        android:text="Welcome to Lend.it"
         android:textColor="@color/green"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +82,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="156dp"
         android:layout_marginRight="156dp"
+        android:textColor="@color/green"
         android:text="Enter Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -95,6 +96,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Password"
+        android:background="@color/white"
         android:inputType="textPassword"
         android:textColorLink="@color/green"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,10 +124,10 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="160dp"
         android:layout_marginRight="160dp"
-        android:background="@color/green"
         android:text="Sign Up"
         android:onClick="toSignUp"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signin" />
 

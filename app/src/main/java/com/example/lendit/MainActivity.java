@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void toHome(View view) {
         Intent i = new Intent(MainActivity.this, HomePage.class);
+        Bundle bundle = new Bundle();
+        //bundle.putString(“”, getrec);
+        //i.putExtra(bundle);
         startActivity(i);
     }
 

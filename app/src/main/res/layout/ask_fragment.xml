@@ -6,16 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/createAskBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="595dp" />
+
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="138dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="224dp"
-        android:layout_marginRight="224dp"
-        android:text="ASK"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/askTitleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="190dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="377dp" />
+
+    <EditText
+        android:id="@+id/askTitleET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="170dp" />
+
+    <TextView
+        android:id="@+id/askDescriptionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="283dp" />
+
 </android.support.constraint.ConstraintLayout>
 
 
