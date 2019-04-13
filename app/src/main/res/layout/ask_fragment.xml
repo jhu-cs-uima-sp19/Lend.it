@@ -8,50 +8,71 @@
 
     <Button
         android:id="@+id/createAskBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_width="265dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="216dp"
+        android:background="@color/green"
         android:onClick="createAsk"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="595dp" />
+        android:text="Post"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/askDescriptionET" />
 
     <TextView
         android:id="@+id/askTitleTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="117dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:text="Post Title"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="170dp" />
-
-    <EditText
-        android:id="@+id/askDescriptionET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="377dp" />
+        app:layout_constraintEnd_toStartOf="@+id/askTitleET"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/askTitleET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="170dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/askDescriptionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="44dp"
+        android:text="Description"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="283dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/askTitleTxt" />
+
+    <EditText
+        android:id="@+id/askDescriptionET"
+        android:layout_width="303dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:inputType="textCapSentences|textMultiLine"
+        android:scrollHorizontally="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.739"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/askDescriptionTxt" />
+
 
 </android.support.constraint.ConstraintLayout>
 
