@@ -59,7 +59,6 @@ public class CreatePost extends AppCompatActivity {
         addPhoto = findViewById(R.id.lendAddPhotoBTN);
         createAsk = findViewById(R.id.createAskBTN);
         askDesc = findViewById(R.id.lendDescriptionET);
-        ;
         askTitle = findViewById(R.id.askTitleET);
 
 

@@ -10,18 +10,15 @@
     tools:showIn="@layout/activity_user_account">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/nameTxt"
         android:layout_width="93dp"
         android:layout_height="27dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginRight="140dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="32dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/buildingTxt"
         android:layout_width="170dp"
         android:layout_height="39dp"
         android:layout_marginTop="12dp"
@@ -29,7 +26,7 @@
         android:layout_marginRight="60dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
 
     <TextView
         android:id="@+id/neighborsTxt"
@@ -38,36 +35,33 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
-        android:text="TextView"
+        android:text="Neighbors"
         app:layout_constraintEnd_toStartOf="@+id/myPostsTxt"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/buildingTxt" />
 
     <TextView
         android:id="@+id/myPostsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginRight="68dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:text="My Posts"
+        tools:layout_editor_absoluteX="285dp"
+        tools:layout_editor_absoluteY="126dp" />
 
     <TextView
-        android:id="@+id/neighborsNum"
+        android:id="@+id/neighborsNumTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintEnd_toStartOf="@+id/myPostsNumTxt"
         app:layout_constraintTop_toBottomOf="@+id/neighborsTxt" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/myPostsNumTxt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="17dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
@@ -76,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myPostsTxt" />
 
     <Button
-        android:id="@+id/editProfile"
+        android:id="@+id/editProfileBTN"
         android:layout_width="138dp"
         android:layout_height="37dp"
         android:layout_marginTop="16dp"
@@ -84,7 +78,7 @@
         android:layout_marginRight="76dp"
         android:text="Edit Profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neighborsNum" />
+        app:layout_constraintTop_toBottomOf="@+id/neighborsNumTxt" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -98,20 +92,20 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/gives"
+        android:id="@+id/asksBTN"
         android:layout_width="211dp"
         android:layout_height="68dp"
         android:layout_marginTop="88dp"
-        android:text="Gives"
+        android:text="Asks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/borrow"
+        android:id="@+id/lendsBTN"
         android:layout_width="211dp"
         android:layout_height="68dp"
         android:layout_marginTop="88dp"
-        android:text="Borrows"
+        android:text="Lends"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
