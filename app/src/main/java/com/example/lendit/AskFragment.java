@@ -28,8 +28,6 @@ public class AskFragment extends Fragment {
     EditText askDesc;
     EditText askTitle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Bundle userData;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Nullable
     @Override
@@ -40,19 +38,13 @@ public class AskFragment extends Fragment {
         askDesc = rootView.findViewById(R.id.lendDescriptionET);
         askTitle = rootView.findViewById(R.id.askTitleET);
 
-        userData = getArguments();
-
-
         // listener for create lend button
-
         createAsk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createAsk();
             }
         });
-
-
         return rootView;
     }
 
@@ -64,10 +56,12 @@ public class AskFragment extends Fragment {
         ask.put("description", askDesc.getText().toString());
         ask.put("id", uniqueID);
         ask.put("post_date", Calendar.getInstance().getTime());
-        ask.put("username", getArguments().getString("username"));
-        ask.put("fullName", getArguments().getString("fullName"));
-        ask.put("building", getArguments().getString("building"));
-        ask.put("profileImg", getArguments().getString("profileImg"));
+        CreatePost activity = (CreatePost) getActivity();
+        final Map<String, String> userData = activity.getUserData();
+        ask.put("username", userData.get("username"));
+        ask.put("fullName", userData.get("fullName"));
+        ask.put("building", userData.get("building"));
+        ask.put("profileImg", userData.get("profileImg"));
 
         // get username from intent that launched this activity?
         // profile.put("username", );

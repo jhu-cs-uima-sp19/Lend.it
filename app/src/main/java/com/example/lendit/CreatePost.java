@@ -73,19 +73,8 @@ public class CreatePost extends AppCompatActivity {
                 userInfoBundle.put("profileImg", profileData.get("profileImg").toString());
                 userInfoBundle.put("building", profileData.get("building").toString());
                 userInfoBundle.put("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());
-                /*userInfoBundle.putString("username", username);
-                userInfoBundle.putString("profileImg", profileData.get("profileImg").toString());
-                userInfoBundle.putString("building", profileData.get("building").toString());
-                userInfoBundle.putString("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());*/
             }
         });
-
-        // make sure lend and ask fragments have access to user info
-        /*LendFragment lendfrag = new LendFragment();
-        AskFragment askfrag = new AskFragment();
-        lendfrag.setArguments(userInfoBundle);
-        askfrag.setArguments(userInfoBundle);*/
-
     }
 
     public Map<String, String> getUserData() {

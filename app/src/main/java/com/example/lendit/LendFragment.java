@@ -54,16 +54,14 @@ public class LendFragment extends Fragment {
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depositET);
         addPhoto = rootView.findViewById(R.id.lendAddPhotoBTN);
-        CreatePost activity = (CreatePost) getActivity();
-        //userData = getArguments();
-        final Map<String, String> userData = activity.getUserData();
+
+
 
         // listener for create lend button
         createLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                createLend(userData.get("username"), userData.get("fullName"), userData.get("building"), userData.get("profileImg"));
+                createLend();
             }
         });
 
@@ -78,9 +76,8 @@ public class LendFragment extends Fragment {
         return rootView;
     }
 
-    public void createLend(String u, String f, String b, String p) {
+    public void createLend() {
         String uniqueID = UUID.randomUUID().toString();
-
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
@@ -88,13 +85,12 @@ public class LendFragment extends Fragment {
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
-        lend.put("username", u);
-        lend.put("fullName", f);
-        lend.put("building", b);
-        lend.put("profileImg", p);
-        // also get profile photo from username query
-        // get username from intent that launched this activity?
-        // profile.put("username", );
+        CreatePost activity = (CreatePost) getActivity();
+        final Map<String, String> userData = activity.getUserData();
+        lend.put("username", userData.get("username"));
+        lend.put("fullName", userData.get("fullName"));
+        lend.put("building", userData.get("building"));
+        lend.put("profileImg", userData.get("profileImg"));
         db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
