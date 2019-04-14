@@ -111,6 +111,15 @@ public class CreatePost extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void launchHome(View view) {
+        Intent i;
+        Bundle bundle = new Bundle();
+        i = new Intent(CreatePost.this, HomePage.class);
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
+    }
+
 
 }
 
