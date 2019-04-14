@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
              username = email.substring(0, email.indexOf('@'));
             Intent i = new Intent(MainActivity.this, HomePage.class);
             Bundle bundle = new Bundle();
-            bundle.putString("userName", username);
+            bundle.putString("username", username);
             i.putExtras(bundle);
             startActivity(i);
         }

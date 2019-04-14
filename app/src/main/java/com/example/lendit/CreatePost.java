@@ -40,6 +40,7 @@ public class CreatePost extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 111;
     String username;
     Map<String, Object> profileData;
+    final String TAG = "CreatePostActivity";
     Bundle userInfoBundle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -60,6 +61,8 @@ public class CreatePost extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         username = b.getString("username");
+        Log.d(TAG, "username: " + username);
+        userInfoBundle = new Bundle();
 
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

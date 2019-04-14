@@ -35,7 +35,7 @@ public class HomePage extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    String userName;
+    String username;
     private static String TAG = "HomePageActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     List<DocumentSnapshot> asksData;
@@ -52,7 +52,7 @@ public class HomePage extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
-        userName = bundle.getString("userName");
+        username = bundle.getString("username");
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -104,13 +104,16 @@ public class HomePage extends AppCompatActivity
         // populate list with ask and lend data
         String practiceImg = "drawable://" + R.drawable.bath;
         // String dummyProfileImg = "drawable://" + R.drawable.bath;
-        for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+        if (lendsData != null) {
+            for (int i = 1; i < lendsData.size(); i++) {
+                cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+            }
         }
-        for (int i = 1; i < asksData.size(); i++) {
-            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
+        if (asksData != null) {
+            for (int i = 1; i < asksData.size(); i++) {
+                cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
+            }
         }
-
        /* dummy data for testing
         list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
         list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
@@ -128,7 +131,7 @@ public class HomePage extends AppCompatActivity
     public void createPost(View view) {
         Intent i = new Intent(HomePage.this, CreatePost.class);
         Bundle bundle = new Bundle();
-        bundle.putString("userName", userName);
+        bundle.putString("username", username);
         i.putExtras(bundle);
         startActivity(i);
     }
@@ -186,13 +189,13 @@ public class HomePage extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_msg) {
             i = new Intent(HomePage.this, MessageInbox.class);
-            bundle.putString("username", userName);
+            bundle.putString("username", username);
             i.putExtras(bundle);
             startActivity(i);
 
         } else if (id == R.id.nav_acc) { //Account
             i = new Intent(HomePage.this, UserAccount.class);
-            bundle.putString("username", userName);
+            bundle.putString("username", username);
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {
