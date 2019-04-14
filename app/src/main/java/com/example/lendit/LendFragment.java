@@ -40,8 +40,9 @@ public class LendFragment extends Fragment {
     String photo;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int REQUEST_IMAGE_CAPTURE = 111;
-    Bundle userData;
+    //Bundle userData;
     FirebaseStorage storage = FirebaseStorage.getInstance();
+
 
     @Nullable
     @Override
@@ -53,14 +54,16 @@ public class LendFragment extends Fragment {
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depositET);
         addPhoto = rootView.findViewById(R.id.lendAddPhotoBTN);
-
-        userData = getArguments();
+        CreatePost activity = (CreatePost) getActivity();
+        //userData = getArguments();
+        final Map<String, String> userData = activity.getUserData();
 
         // listener for create lend button
         createLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createLend();
+
+                createLend(userData.get("username"), userData.get("fullName"), userData.get("building"), userData.get("profileImg"));
             }
         });
 
@@ -75,8 +78,9 @@ public class LendFragment extends Fragment {
         return rootView;
     }
 
-    public void createLend() {
+    public void createLend(String u, String f, String b, String p) {
         String uniqueID = UUID.randomUUID().toString();
+
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
@@ -84,10 +88,10 @@ public class LendFragment extends Fragment {
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
-        lend.put("username", getArguments().getString("username"));
-        lend.put("fullName", getArguments().getString("fullName"));
-        lend.put("building", getArguments().getString("building"));
-        lend.put("profileImg", getArguments().getString("profileImg"));
+        lend.put("username", u);
+        lend.put("fullName", f);
+        lend.put("building", b);
+        lend.put("profileImg", p);
         // also get profile photo from username query
         // get username from intent that launched this activity?
         // profile.put("username", );
