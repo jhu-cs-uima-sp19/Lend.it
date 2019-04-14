@@ -40,13 +40,15 @@
                 android:text="Card Title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
             <TextView
-                android:layout_below="@id/cardTitle"
                 android:id="@+id/cardPerson"
-                android:gravity="center_vertical"
-                android:text="Person Name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/cardTitle"
+                android:layout_marginTop="0dp"
+                android:gravity="center_vertical"
+                android:text="Person Name" />
         </RelativeLayout>
 
 

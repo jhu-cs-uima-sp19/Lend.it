@@ -7,7 +7,7 @@
     tools:context=".ViewPost">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/uploadedPic"
         android:layout_width="362dp"
         android:layout_height="242dp"
         android:layout_marginTop="72dp"
@@ -49,6 +49,7 @@
         android:layout_marginBottom="331dp"
         android:text="Posted By:"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,27 +70,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
 
     <TextView
         android:id="@+id/item_descrip_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
         android:text="Description"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="420dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
 
     <TextView
         android:id="@+id/item_descrip_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="264dp"
         android:text="This item is ....."
         android:textColor="#202020"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="444dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/message_giver"
@@ -100,9 +107,24 @@
         android:background="#31A960"
         android:text="Message"
         android:textColor="#FFFFFF"
+        android:onClick="sendMSG"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="116dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginRight="204dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadedPic"
+        tools:textSize="14sp" />
 </android.support.constraint.ConstraintLayout>
