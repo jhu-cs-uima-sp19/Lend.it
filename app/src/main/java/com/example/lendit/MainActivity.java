@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,12 +53,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void toHome(View view) {
         String email = emailAddress.getText().toString();
-        String username = email.substring(0, email.indexOf('@'));
-        Intent i = new Intent(MainActivity.this, HomePage.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("userName", username);
-        i.putExtras(bundle);
-        startActivity(i);
+        String username = "";
+        if (email.contains("@")) {
+             username = email.substring(0, email.indexOf('@'));
+            Intent i = new Intent(MainActivity.this, HomePage.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("userName", username);
+            i.putExtras(bundle);
+            startActivity(i);
+        }
+        else {
+            Toast.makeText(this, "Invalid email address",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void toSignUp(View view) {
