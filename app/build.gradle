@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.scaledrone:scaledrone-java:0.6.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
