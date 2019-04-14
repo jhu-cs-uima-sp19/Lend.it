@@ -2,6 +2,7 @@ package com.example.lendit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,7 +19,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,10 +36,13 @@ public class HomePage extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     String userName;
-    private static String LOG_TAG = "CardViewActivity";
-    //^^ prev
-
+    private static String TAG = "HomePageActivity";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    List<DocumentSnapshot> asksData;
+    List<DocumentSnapshot> lendsData;
     private ListView mListView;
+    ArrayList<PostCard> cardList = new ArrayList();
+    Map<String, Object> postInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +53,6 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
         userName = bundle.getString("userName");
-
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -62,17 +73,53 @@ public class HomePage extends AppCompatActivity
 
         mListView = (ListView) findViewById(R.id.listViewLends);
 
-        //This is where you add entires
-        ArrayList<PostCard> list = new ArrayList();
+        // query based on timestamp (most recent will be displayed first)
+        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }*/
+                    asksData = task.getResult().getDocuments();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }*/
+                    lendsData = task.getResult().getDocuments();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+        // populate list with ask and lend data
+        String practiceImg = "drawable://" + R.drawable.bath;
+        String dummyProfileImg = "drawable://" + R.drawable.bath;
+        for (int i = 1; i < lendsData.size(); i++) {
+            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+        }
+        for (int i = 1; i < lendsData.size(); i++) {
+            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("description").toString()));
+        }
+
+       /* dummy data for testing
         list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
         list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
-        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));
+        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));*/
 
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, list);
+        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
         if ((adapter != null) && (mListView != null)) {
             mListView.setAdapter(adapter);
-        }
-        else {
+        } else {
             System.out.println("Null Reference");
         }
 
@@ -84,8 +131,6 @@ public class HomePage extends AppCompatActivity
         bundle.putString("userName", userName);
         i.putExtras(bundle);
         startActivity(i);
-
-
     }
 
     @Override

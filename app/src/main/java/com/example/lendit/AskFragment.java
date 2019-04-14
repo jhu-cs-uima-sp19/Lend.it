@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -56,6 +57,7 @@ public class AskFragment extends Fragment {
         ask.put("title", askTitle.getText().toString());
         ask.put("description", askDesc.getText().toString());
         ask.put("id", uniqueID);
+        ask.put("post_date", Calendar.getInstance().getTime());
         // get username from intent that launched this activity?
         // profile.put("username", );
         db.collection("asks").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
