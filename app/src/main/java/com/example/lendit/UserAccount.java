@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,9 @@ public class UserAccount extends AppCompatActivity {
     List<DocumentSnapshot> asksData;
     List<DocumentSnapshot> lendsData;
     private static final String TAG = "UserAccountActivity";
+    private ListView mListView;
+    ArrayList<PostCard> cardList = new ArrayList();
+    Map<String, Object> postInfo;
 
 
     @Override
@@ -110,6 +115,24 @@ public class UserAccount extends AppCompatActivity {
                 }
             }
         });
+
+        mListView = (ListView) findViewById(R.id.listViewProfileLends);
+        // populate list with ask and lend data
+        String practiceImg = "drawable://" + R.drawable.bath;
+        String dummyProfileImg = "drawable://" + R.drawable.bath;
+        for (int i = 1; i < lendsData.size(); i++) {
+            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+        }
+        for (int i = 1; i < lendsData.size(); i++) {
+            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("description").toString()));
+        }
+
+        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
+        if ((adapter != null) && (mListView != null)) {
+            mListView.setAdapter(adapter);
+        } else {
+            System.out.println("Null Reference");
+        }
     }
 
     @Override
