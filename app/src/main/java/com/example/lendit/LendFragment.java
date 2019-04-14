@@ -44,6 +44,7 @@ public class LendFragment extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,14 +55,14 @@ public class LendFragment extends Fragment {
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depositET);
         addPhoto = rootView.findViewById(R.id.lendAddPhotoBTN);
-
-
-
+        final CreatePost activity = (CreatePost) getActivity();
+        final Map<String, String> userData = activity.getUserData();
         // listener for create lend button
         createLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createLend();
+                createLend(userData);
+                activity.launchHome();
             }
         });
 
@@ -76,7 +77,7 @@ public class LendFragment extends Fragment {
         return rootView;
     }
 
-    public void createLend() {
+    public void createLend(Map<String, String> userData) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
@@ -85,8 +86,7 @@ public class LendFragment extends Fragment {
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
-        CreatePost activity = (CreatePost) getActivity();
-        final Map<String, String> userData = activity.getUserData();
+
         lend.put("username", userData.get("username"));
         lend.put("fullName", userData.get("fullName"));
         lend.put("building", userData.get("building"));

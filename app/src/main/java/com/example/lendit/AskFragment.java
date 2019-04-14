@@ -38,26 +38,29 @@ public class AskFragment extends Fragment {
         askDesc = rootView.findViewById(R.id.lendDescriptionET);
         askTitle = rootView.findViewById(R.id.askTitleET);
 
+        final CreatePost activity = (CreatePost) getActivity();
+        final Map<String, String> userData = activity.getUserData();
+
         // listener for create lend button
         createAsk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAsk();
+                createAsk(userData);
+                activity.launchHome();
             }
         });
         return rootView;
     }
 
 
-    public void createAsk() {
+    public void createAsk(Map<String, String> userData) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> ask = new HashMap<>();
         ask.put("title", askTitle.getText().toString());
         ask.put("description", askDesc.getText().toString());
         ask.put("id", uniqueID);
         ask.put("post_date", Calendar.getInstance().getTime());
-        CreatePost activity = (CreatePost) getActivity();
-        final Map<String, String> userData = activity.getUserData();
+
         ask.put("username", userData.get("username"));
         ask.put("fullName", userData.get("fullName"));
         ask.put("building", userData.get("building"));
