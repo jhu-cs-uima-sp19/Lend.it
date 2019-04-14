@@ -28,6 +28,7 @@
         android:id="@+id/sendBTN"
         android:layout_width="141dp"
         android:layout_height="wrap_content"
+        android:background="@color/green"
         android:text="Send"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="right|bottom" />

@@ -8,10 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
 import com.example.lendit.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,12 +39,11 @@ public class LendFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int REQUEST_IMAGE_CAPTURE = 111;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.lend_fragment, container, false);
-
+        //setHasOptionsMenu(true);
         createLend = rootView.findViewById(R.id.createLendBTN);
         System.out.println("in lend fragment; getActivity returns: " + getActivity());
         lendTitle = rootView.findViewById(R.id.lendTitleET);

@@ -130,19 +130,22 @@ public class HomePage extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Intent i;
+        Bundle bundle = new Bundle();
+
+
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_slideshow) { //Account
+            i = new Intent(HomePage.this, UserAccount.class);
+            bundle.putString("username", userName);
+            i.putExtras(bundle);
+            startActivity(i);
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

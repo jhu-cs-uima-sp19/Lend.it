@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.lendit.UserAccount">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="com.example.lendit.UserAccount">
     <item
         android:id="@+id/action_mode_close_button"
+        android:enabled="true"
+        android:icon="@drawable/ic_close_black"
         android:orderInCategory="100"
         android:title="Close"
-        android:icon="@drawable/ic_close_black"
-        app:showAsAction="never" />
+        android:visible="true"
+        app:showAsAction="always" />
 </menu>
