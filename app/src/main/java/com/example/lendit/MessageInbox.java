@@ -13,43 +13,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.ListView;
 
-import java.util.ArrayList;
-
-public class HomePage extends AppCompatActivity
+public class MessageInbox extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    String userName;
-    private static String LOG_TAG = "CardViewActivity";
-    //^^ prev
-
-    private ListView mListView;
+    Bundle b;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-
+        setContentView(R.layout.activity_message_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Bundle bundle = getIntent().getExtras();
-        userName = bundle.getString("userName");
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        b = getIntent().getExtras();
+        if (b != null) {
+            username = b.getString("username");
+        }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -59,41 +48,7 @@ public class HomePage extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        mListView = (ListView) findViewById(R.id.listViewLends);
-
-        //This is where you add entires
-        ArrayList<PostCard> list = new ArrayList();
-        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
-        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
-        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));
-
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, list);
-        if ((adapter != null) && (mListView != null)) {
-            mListView.setAdapter(adapter);
-        }
-        else {
-            System.out.println("Null Reference");
-        }
-
     }
-
-    public void createPost(View view) {
-        Intent i = new Intent(HomePage.this, CreatePost.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("userName", userName);
-        i.putExtras(bundle);
-        startActivity(i);
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -108,7 +63,7 @@ public class HomePage extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
+        getMenuInflater().inflate(R.menu.message_inbox, menu);
         return true;
     }
 
@@ -133,21 +88,19 @@ public class HomePage extends AppCompatActivity
         // Handle navigation view item clicks here.
         Intent i;
         Bundle bundle = new Bundle();
-
-
         int id = item.getItemId();
 
         if (id == R.id.nav_feed) {
-            // Handle the camera action
-        } else if (id == R.id.nav_msg) {
-            i = new Intent(HomePage.this, MessageInbox.class);
-            bundle.putString("username", userName);
+            i = new Intent(MessageInbox.this, HomePage.class);
+            bundle.putString("username", username);
             i.putExtras(bundle);
             startActivity(i);
+        } else if (id == R.id.nav_msg) {
+
 
         } else if (id == R.id.nav_acc) { //Account
-            i = new Intent(HomePage.this, UserAccount.class);
-            bundle.putString("username", userName);
+            i = new Intent(MessageInbox.this, UserAccount.class);
+            bundle.putString("username", username);
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {
