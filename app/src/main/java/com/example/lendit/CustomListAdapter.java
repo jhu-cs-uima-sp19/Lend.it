@@ -42,6 +42,8 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
         TextView title;
         ImageView image;
         TextView person;
+        TextView building;
+        ImageView profilePic;
     }
 
     /**
@@ -62,14 +64,12 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
-
-        //get the persons information
-        String item = getItem(position).getItemName();
+        //get post card information
+        String item = getItem(position).getPostTitle();
         String person = getItem(position).getPersonName();
         String imgUrl = getItem(position).getImgURL();
-
+        String building = getItem(position).getBuilding();
+        String profilImg = getItem(position).getProfileImg();
 
         try{
             //create the view result for showing the animation
@@ -84,7 +84,9 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
                 holder= new ViewHolder();
                 holder.title = (TextView) convertView.findViewById(R.id.cardTitle);
                 holder.image = (ImageView) convertView.findViewById(R.id.cardImage);
-                holder.person = (TextView) convertView.findViewById(R.id.cardPerson);
+                holder.person = (TextView) convertView.findViewById(R.id.posterName);
+                holder.building = (TextView) convertView.findViewById(R.id.building);
+                holder.profilePic = (ImageView) convertView.findViewById(R.id.posterImage);
                 result = convertView;
 
                 convertView.setTag(holder);
@@ -96,7 +98,7 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
 
             lastPosition = position;
 
-            holder.title.setText(item);
+            // holder.title.setText(item);
 
             //create the imageloader object
             ImageLoader imageLoader = ImageLoader.getInstance();

@@ -28,27 +28,58 @@
 
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
                 android:id="@+id/cardImage"
-                android:scaleType="centerCrop"/>
+                android:layout_width="match_parent"
+                android:layout_height="157dp"
+                android:scaleType="centerCrop" />
 
             <TextView
-                android:layout_below="@id/cardImage"
                 android:id="@+id/cardTitle"
+                android:layout_width="287dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/cardImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="73dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
-                android:text="Card Title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:text="Card Title" />
 
             <TextView
-                android:id="@+id/cardPerson"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/posterBuilding"
+                android:layout_width="287dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/cardTitle"
+                android:layout_alignStart="@+id/cardTitle"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="21dp"
+                android:gravity="center_vertical"
+                android:text="Person Name" />
+
+            <TextView
+                android:id="@+id/posterName"
+                android:layout_width="287dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardTitle"
+                android:layout_alignStart="@+id/cardTitle"
                 android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:text="Person Name" />
+
+            <ImageView
+                android:id="@+id/posterImage"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="1dp"
+                android:layout_toStartOf="@+id/posterName"
+                android:layout_toLeftOf="@+id/posterName"
+                tools:srcCompat="@tools:sample/avatars" />
         </RelativeLayout>
 
 

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -79,6 +80,8 @@ public class LendFragment extends Fragment {
         lend.put("deposit", deposit.getText().toString());
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
+        lend.put("post_date", Calendar.getInstance().getTime());
+        // also get profile photo from username query
         // get username from intent that launched this activity?
         // profile.put("username", );
         db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
