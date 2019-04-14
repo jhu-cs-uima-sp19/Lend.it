@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public class AskFragment extends Fragment {
     EditText askDesc;
     EditText askTitle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Bundle userData;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Nullable
     @Override
@@ -36,6 +39,9 @@ public class AskFragment extends Fragment {
         createAsk = rootView.findViewById(R.id.createAskBTN);
         askDesc = rootView.findViewById(R.id.lendDescriptionET);
         askTitle = rootView.findViewById(R.id.askTitleET);
+
+        userData = getArguments();
+
 
         // listener for create lend button
 
@@ -58,6 +64,11 @@ public class AskFragment extends Fragment {
         ask.put("description", askDesc.getText().toString());
         ask.put("id", uniqueID);
         ask.put("post_date", Calendar.getInstance().getTime());
+        ask.put("username", getArguments().getString("username"));
+        ask.put("fullName", getArguments().getString("fullName"));
+        ask.put("building", getArguments().getString("building"));
+        ask.put("profileImg", getArguments().getString("profileImg"));
+
         // get username from intent that launched this activity?
         // profile.put("username", );
         db.collection("asks").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {

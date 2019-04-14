@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.view.ViewPager;
@@ -23,7 +24,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -35,7 +38,9 @@ public class CreatePost extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private static final int REQUEST_IMAGE_CAPTURE = 111;
-
+    String username;
+    Map<String, Object> profileData;
+    Bundle userInfoBundle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -52,6 +57,30 @@ public class CreatePost extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        Bundle b = getIntent().getExtras();
+        username = b.getString("username");
+
+        // make sure lend and ask fragments have access to user info
+        LendFragment lendfrag = new LendFragment();
+        AskFragment askfrag = new AskFragment();
+        lendfrag.setArguments(userInfoBundle);
+        askfrag.setArguments(userInfoBundle);
+
+    }
+
+    private void getUserInfo() {
+        // get users' profile data
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileData = documentSnapshot.getData();
+                userInfoBundle.putString("username", username);
+                userInfoBundle.putString("profileImg", profileData.get("profileImg").toString());
+                userInfoBundle.putString("building", profileData.get("building").toString());
+                userInfoBundle.putString("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {

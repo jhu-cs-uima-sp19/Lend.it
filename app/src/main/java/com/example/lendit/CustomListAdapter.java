@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lendit.PostCard;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,29 +26,30 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by User on 4/4/2017.
  */
 
-public class CustomListAdapter  extends ArrayAdapter<PostCard> {
+public class CustomListAdapter extends ArrayAdapter<PostCard> {
 
     private static final String TAG = "CustomListAdapter";
-
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    /**
+    /*
      * Holds variables in a View
-     */
+
     private static class ViewHolder {
         TextView title;
         ImageView image;
         TextView person;
         TextView building;
         ImageView profilePic;
-    }
+    }*/
 
     /**
      * Default constructor for the PersonListAdapter
@@ -65,12 +70,54 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //get post card information
-        String item = getItem(position).getPostTitle();
+        String title = getItem(position).getPostTitle();
         String person = getItem(position).getPersonName();
         String imgUrl = getItem(position).getImgURL();
         String building = getItem(position).getBuilding();
-        String profilImg = getItem(position).getProfileImg();
+        String profileImg = getItem(position).getProfileImg();
 
+        try {
+
+
+            if (convertView == null){
+               convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
+            }
+
+            TextView titleTxt = (TextView) convertView.findViewById(R.id.cardTitle);
+            ImageView postImgView = (ImageView) convertView.findViewById(R.id.cardImage);
+            TextView personTxt = (TextView) convertView.findViewById(R.id.posterName);
+            TextView buildingTxt = (TextView) convertView.findViewById(R.id.building);
+            ImageView profilePicView = (ImageView) convertView.findViewById(R.id.posterImage);
+
+            titleTxt.setText(title);
+            buildingTxt.setText(building);
+            personTxt.setText(person);
+
+            Picasso.with(getContext()).load(imgUrl).into(postImgView);
+            Picasso.with(getContext()).load(profileImg).into(profilePicView);
+
+
+
+/*
+            lastPosition = position;
+
+            ImageLoader imageLoader = ImageLoader.getInstance();
+
+            int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
+
+            //create display options
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                    .cacheOnDisc(true).resetViewBeforeLoading(true)
+                    .showImageForEmptyUri(defaultImage)
+                    .showImageOnFail(defaultImage)
+                    .showImageOnLoading(defaultImage).build();
+
+            //download and display image from url
+            imageLoader.displayImage(imgUrl, image, options);
+*/
+            return convertView;
+        }
+/*
         try{
             //create the view result for showing the animation
             final View result;
@@ -116,7 +163,7 @@ public class CustomListAdapter  extends ArrayAdapter<PostCard> {
             imageLoader.displayImage(imgUrl, holder.image, options);
 
             return convertView;
-        }catch (IllegalArgumentException e){
+        }*/catch (IllegalArgumentException e){
             Log.e(TAG, "getView: IllegalArgumentException: " + e.getMessage() );
             return convertView;
         }

@@ -108,6 +108,7 @@ public class Signup extends AppCompatActivity {
         profile.put("first", first.getText().toString());
         profile.put("last", last.getText().toString());
         profile.put("building", building.getSelectedItem().toString());
+        profile.put("profileImg", "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg");
         db.collection("users").document(username).set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

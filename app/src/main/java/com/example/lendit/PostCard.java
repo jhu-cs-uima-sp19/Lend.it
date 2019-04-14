@@ -29,7 +29,7 @@ public class PostCard {
         this.profileImgURL = profile;
         this.description = desc;
         // default ask image
-        this.imgURL = "drawable://" + R.drawable.ask_icon;
+        this.imgURL = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
         // default deposit amount - will never be accessed
         this.deposit = "0";
     }

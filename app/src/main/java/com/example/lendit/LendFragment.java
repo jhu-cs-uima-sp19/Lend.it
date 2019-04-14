@@ -21,6 +21,7 @@ import com.example.lendit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class LendFragment extends Fragment {
     String photo;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int REQUEST_IMAGE_CAPTURE = 111;
+    Bundle userData;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Nullable
     @Override
@@ -46,11 +49,12 @@ public class LendFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.lend_fragment, container, false);
         //setHasOptionsMenu(true);
         createLend = rootView.findViewById(R.id.createLendBTN);
-        System.out.println("in lend fragment; getActivity returns: " + getActivity());
         lendTitle = rootView.findViewById(R.id.lendTitleET);
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depositET);
         addPhoto = rootView.findViewById(R.id.lendAddPhotoBTN);
+
+        userData = getArguments();
 
         // listener for create lend button
         createLend.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +65,6 @@ public class LendFragment extends Fragment {
         });
 
         // listener for add photo button
-
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +84,10 @@ public class LendFragment extends Fragment {
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
+        lend.put("username", getArguments().getString("username"));
+        lend.put("fullName", getArguments().getString("fullName"));
+        lend.put("building", getArguments().getString("building"));
+        lend.put("profileImg", getArguments().getString("profileImg"));
         // also get profile photo from username query
         // get username from intent that launched this activity?
         // profile.put("username", );

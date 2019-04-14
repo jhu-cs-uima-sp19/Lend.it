@@ -103,12 +103,12 @@ public class HomePage extends AppCompatActivity
 
         // populate list with ask and lend data
         String practiceImg = "drawable://" + R.drawable.bath;
-        String dummyProfileImg = "drawable://" + R.drawable.bath;
+        // String dummyProfileImg = "drawable://" + R.drawable.bath;
         for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
         }
-        for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("description").toString()));
+        for (int i = 1; i < asksData.size(); i++) {
+            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
         }
 
        /* dummy data for testing
