@@ -61,15 +61,6 @@ public class CreatePost extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         username = b.getString("username");
 
-        // make sure lend and ask fragments have access to user info
-        LendFragment lendfrag = new LendFragment();
-        AskFragment askfrag = new AskFragment();
-        lendfrag.setArguments(userInfoBundle);
-        askfrag.setArguments(userInfoBundle);
-
-    }
-
-    private void getUserInfo() {
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -81,6 +72,13 @@ public class CreatePost extends AppCompatActivity {
                 userInfoBundle.putString("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
+
+        // make sure lend and ask fragments have access to user info
+        LendFragment lendfrag = new LendFragment();
+        AskFragment askfrag = new AskFragment();
+        lendfrag.setArguments(userInfoBundle);
+        askfrag.setArguments(userInfoBundle);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

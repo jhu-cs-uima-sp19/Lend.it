@@ -173,7 +173,7 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
     /**
      * Required for setting up the Universal Image loader Library
      */
-    private void setupImageLoader(){
+    private void setupImageLoader() {
         // UNIVERSAL IMAGE LOADER SETUP
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
