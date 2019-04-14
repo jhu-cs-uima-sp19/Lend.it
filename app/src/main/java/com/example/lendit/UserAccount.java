@@ -68,7 +68,8 @@ public class UserAccount extends AppCompatActivity {
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                profileData = documentSnapshot.toObject(HashMap.class);
+                profileData = documentSnapshot.getData();
+               // profileData =  dataSnapshot.getValue();
                 // display building
                 building.setText(profileData.get("building").toString());
                 //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
@@ -86,7 +87,9 @@ public class UserAccount extends AppCompatActivity {
                     }*/
                     lendsData = task.getResult().getDocuments();
                     // display number of users' posts
-                    numPosts.setText(lendsData.size());
+                    if (numPosts != null) {
+                        numPosts.setText(String.valueOf(lendsData.size()));
+                    }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
