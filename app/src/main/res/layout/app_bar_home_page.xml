@@ -9,13 +9,15 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@color/green"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="@dimen/appbar_padding_top">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/green"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -28,11 +30,12 @@
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="createPost"
         android:clickable="true"
+        android:onClick="createPost"
         app:backgroundTint="@color/green"
         app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@android:color/background_light" />
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:focusable="true" />
 
 </android.support.design.widget.CoordinatorLayout>
