@@ -68,6 +68,7 @@ public class UserAccount extends AppCompatActivity {
         building = findViewById(R.id.buildingTxt);
         numNeighbors = findViewById(R.id.neighborsNumTxt);
         numPosts = findViewById(R.id.myPostsNumTxt);
+        mListView = findViewById(R.id.listViewProfileLends);
 
         // display name
         name.setText(username);
