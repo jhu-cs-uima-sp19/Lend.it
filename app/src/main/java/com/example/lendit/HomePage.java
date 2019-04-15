@@ -152,45 +152,67 @@ public class HomePage extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
+        final HomePage H = this;
         mListView = (ListView) findViewById(R.id.listViewLends);
+        Log.d(TAG, "in onStart");
 
-        // query based on timestamp (most recent will be displayed first)
+        Log.d(TAG, "Card Act" + R.layout.card_activity);
+         //query based on timestamp (most recent will be displayed first)
         db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    Log.d(TAG, "task successful");
                     String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
+                        Log.d(TAG, "inside for");
                         cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString()));
-                    }}else {
+                    }
+                    CustomListAdapter adapter = new CustomListAdapter(H, R.layout.card_activity, cardList);
+                    if ((adapter != null) && (mListView != null)) {
+                        mListView.setAdapter(adapter);
+                    } else {
+                        System.out.println("Null Reference");
+                    }
+                }else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
+
         db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    Log.d(TAG, "task successful lends");
                     for (QueryDocumentSnapshot s : task.getResult()) {
+                        Log.d(TAG, "inside for lends");
                         cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString()));
+                    }
+                    CustomListAdapter adapter = new CustomListAdapter(H, R.layout.card_activity, cardList);
+                    if ((adapter != null) && (mListView != null)) {
+                        mListView.setAdapter(adapter);
+                    } else {
+                        System.out.println("Null Reference");
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-
+        Log.d(TAG, "after");
        /* dummy data for testing
         cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
         cardList.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
         cardList.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
 */
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
-        if ((adapter != null) && (mListView != null)) {
-            mListView.setAdapter(adapter);
-        } else {
-            System.out.println("Null Reference");
-        }
+//        Log.d(TAG, "about to make Custom List AD");
+//        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
+//        if ((adapter != null) && (mListView != null)) {
+//            mListView.setAdapter(adapter);
+//        } else {
+//            System.out.println("Null Reference");
+//        }
 
     }
     @Override

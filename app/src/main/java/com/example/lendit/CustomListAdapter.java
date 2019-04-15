@@ -58,7 +58,10 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
      * @param objects
      */
     public CustomListAdapter(Context context, int resource, ArrayList<PostCard> objects) {
+
         super(context, resource, objects);
+
+        Log.d(TAG, "Created Custome List AD");
         mContext = context;
         mResource = resource;
 

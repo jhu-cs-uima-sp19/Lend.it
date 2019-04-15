@@ -10,8 +10,27 @@
     tools:showIn="@layout/app_bar_home_page">
 
     <ListView
+        android:id="@+id/listViewLends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewLends"></ListView>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"></ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="496dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="createPost"
+        app:backgroundTint="@color/green"
+        app:layout_anchor="@+id/include2"
+        app:layout_anchorGravity="right|bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
