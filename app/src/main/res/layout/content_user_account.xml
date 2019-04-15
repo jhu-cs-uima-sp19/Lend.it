@@ -12,8 +12,8 @@
     <TextView
         android:id="@+id/nameTxt"
         android:layout_width="93dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="136dp"
         android:layout_marginRight="136dp"
         android:text="TextView"
@@ -23,8 +23,8 @@
     <TextView
         android:id="@+id/buildingTxt"
         android:layout_width="170dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:text="TextView"
@@ -33,44 +33,44 @@
 
     <TextView
         android:id="@+id/neighborsTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:text="Neighbors"
         app:layout_constraintEnd_toStartOf="@+id/myPostsTxt"
         app:layout_constraintTop_toBottomOf="@+id/buildingTxt" />
 
     <TextView
         android:id="@+id/myPostsTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
         android:text="My Posts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buildingTxt" />
 
     <TextView
         android:id="@+id/neighborsNumTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="60dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/myPostsNumTxt"
         app:layout_constraintTop_toBottomOf="@+id/neighborsTxt" />
 
     <TextView
         android:id="@+id/myPostsNumTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="60dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myPostsTxt" />
@@ -79,51 +79,45 @@
         android:id="@+id/editProfileBTN"
         android:layout_width="138dp"
         android:layout_height="37dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginRight="76dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:text="Edit Profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neighborsNumTxt" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/profilePic"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/myPostsNumTxt"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/asksBTN"
-        android:layout_width="211dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="88dp"
-        android:text="Asks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <Button
-        android:id="@+id/lendsBTN"
-        android:layout_width="211dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="88dp"
-        android:text="Lends"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
     <ListView
         android:id="@+id/listViewProfileLends"
-        android:layout_width="match_parent"
-        android:layout_height="357dp"
+        android:layout_width="408dp"
+        android:layout_height="301dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/asksBTN"
-        app:layout_constraintVertical_bias="0.493"></ListView>
+        app:layout_constraintStart_toStartOf="parent"></ListView>
+
+    <TextView
+        android:id="@+id/MyPostsTxt"
+        android:layout_width="421dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="136dp"
+        android:background="@color/green"
+        android:gravity="center"
+        android:text="My Posts"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePic" />
 
 </android.support.constraint.ConstraintLayout>

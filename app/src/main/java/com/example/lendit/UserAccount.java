@@ -1,9 +1,12 @@
 package com.example.lendit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -65,34 +68,61 @@ public class UserAccount extends AppCompatActivity {
         building = findViewById(R.id.buildingTxt);
         numNeighbors = findViewById(R.id.neighborsNumTxt);
         numPosts = findViewById(R.id.myPostsNumTxt);
+        mListView = findViewById(R.id.listViewProfileLends);
 
         // display name
         name.setText(username);
 
         // get users' profile data
-        db.collection("users").document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult().exists()) {
-                        building.setText(profileData.get("building").toString());
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileData = documentSnapshot.getData();
+                building.setText(profileData.get("building").toString());
                         //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
                         // numNeighbors.setText(data.get().toString());
                     }
-                }
-            }
         });
 
-        // get users' lends
-        db.collection("lends").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        // get users' lend data (most recent at top)
+        db.collection("lends").whereEqualTo("username", username).orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            if (task.isSuccessful()) {
+                //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+                for (QueryDocumentSnapshot s : task.getResult()) {
+                    Map<String, Object> d = s.getData();
+                    cardList.add(new PostCard(d.get("photoID").toString(), d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("deposit").toString(), d.get("description").toString()));
+                }
+
+                CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, R.layout.card_activity, cardList);
+                if ((adapter != null) && (mListView != null)) {
+                    mListView.setAdapter(adapter);
+                } else {
+                    System.out.println("Null Reference");
+                }
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        }
+    });
+
+        // get users' ask data (most recent at top)
+        db.collection("asks").whereEqualTo("username", username).orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        Map<String, Object> d = s.getData();
+                        cardList.add(new PostCard(d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("description").toString()));
+                    }
 
-                    lendsData = task.getResult().getDocuments();
-                    // display number of users' posts
-                    if (lendsData != null) {
-                        numPosts.setText(String.valueOf(lendsData.size()));
+                    CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, R.layout.card_activity, cardList);
+                    if ((adapter != null) && (mListView != null)) {
+                        mListView.setAdapter(adapter);
+                    } else {
+                        System.out.println("Null Reference");
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -100,41 +130,36 @@ public class UserAccount extends AppCompatActivity {
             }
         });
 
-        // get users' asks
-        db.collection("asks").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    asksData = task.getResult().getDocuments();
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
 
-        mListView = (ListView) findViewById(R.id.listViewProfileLends);
-        // populate list with ask and lend data
-        String practiceImg = "drawable://" + R.drawable.bath;
-        String dummyProfileImg = "drawable://" + R.drawable.bath;
-        for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(postInfo.get("photoID").toString(), postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
-        }
-        for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("description").toString()));
-        }
 
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
-        if ((adapter != null) && (mListView != null)) {
-            mListView.setAdapter(adapter);
+       /* dummy data for testing
+        cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
+        cardList.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
+        cardList.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
+*/
+//        Log.d(TAG, "about to make Custom List AD");
+//        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
+//        if ((adapter != null) && (mListView != null)) {
+//            mListView.setAdapter(adapter);
+//        } else {
+//            System.out.println("Null Reference");
+//        }
+
+}
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
-            System.out.println("Null Reference");
+            super.onBackPressed();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user_account, menu);
+        getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
     }
 
@@ -146,10 +171,11 @@ public class UserAccount extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_mode_close_button) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }
