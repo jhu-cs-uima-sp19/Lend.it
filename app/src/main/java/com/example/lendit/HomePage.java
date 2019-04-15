@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -72,68 +73,6 @@ public class HomePage extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mListView = (ListView) findViewById(R.id.listViewLends);
-
-        // query based on timestamp (most recent will be displayed first)
-        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }*/
-                    asksData = task.getResult().getDocuments();
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }*/
-                    lendsData = task.getResult().getDocuments();
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-        Log.d(TAG, "get data");
-        // populate list with ask and lend data
-        String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
-        // String dummyProfileImg = "drawable://" + R.drawable.bath;
-
-        //Log.d(TAG, "Ask size " + asksData.size());
-        if (lendsData != null) {
-            Log.d(TAG, "Lend size " + lendsData.size());
-            for (int i = 0; i < lendsData.size(); i++) {
-                postInfo = lendsData.get(i).getData();
-                cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
-                //cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
-
-            }
-        }
-        if (asksData != null) {
-            for (int i = 0; i < asksData.size(); i++) {
-                cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
-            }
-        }
-       /* dummy data for testing
-        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
-        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
-        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));*/
-
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
-        if ((adapter != null) && (mListView != null)) {
-            mListView.setAdapter(adapter);
-        } else {
-            System.out.println("Null Reference");
-        }
-
-        onStart();
 
     }
 
@@ -224,8 +163,11 @@ public class HomePage extends AppCompatActivity
                     /*for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                     }*/
-                    asksData = task.getResult().getDocuments();
-                } else {
+                    String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        s.getData().get("title").toString();
+                        // cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString()));
+                    }}else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
@@ -237,23 +179,25 @@ public class HomePage extends AppCompatActivity
                     /*for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                     }*/
-                    lendsData = task.getResult().getDocuments();
+                    String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        cardList.add(new PostCard(practiceImg, s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString()));
+                    }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-        Log.d(TAG, "get data");
+        //Log.d(TAG, "get data");
         // populate list with ask and lend data
-        String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
-        // String dummyProfileImg = "drawable://" + R.drawable.bath;
 
-        //Log.d(TAG, "Ask size " + asksData.size());
+        // String dummyProfileImg = "drawable://" + R.drawable.bath;
+/*
+//        Log.d(TAG, "Lend size " + lendsData.size());
         if (lendsData != null) {
             Log.d(TAG, "Lend size " + lendsData.size());
             for (int i = 0; i < lendsData.size(); i++) {
-                postInfo = lendsData.get(i).getData();
-                cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+
                 //cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
 
             }
@@ -338,5 +282,11 @@ public class HomePage extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void toIndivPost(View view) {
+        Intent i = new Intent(HomePage.this, ViewPost.class);
+        startActivity(i);
+
     }
 }

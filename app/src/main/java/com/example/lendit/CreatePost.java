@@ -41,7 +41,6 @@ public class CreatePost extends AppCompatActivity {
     String username;
     Map<String, Object> profileData;
     final String TAG = "CreatePostActivity";
-    Map<String, String> userInfoBundle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -62,12 +61,16 @@ public class CreatePost extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         username = b.getString("username");
         Log.d(TAG, "username: " + username);
-        userInfoBundle = new HashMap<String, String>();
 
+    }
+
+    public Map<String, String> getUserData() {
+        final Map<String, String> userInfoBundle = new HashMap<String, String>();
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+
                 profileData = documentSnapshot.getData();
                 userInfoBundle.put("username", username);
                 userInfoBundle.put("profileImg", profileData.get("profileImg").toString());
@@ -75,9 +78,6 @@ public class CreatePost extends AppCompatActivity {
                 userInfoBundle.put("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
-    }
-
-    public Map<String, String> getUserData() {
         return userInfoBundle;
     }
 
