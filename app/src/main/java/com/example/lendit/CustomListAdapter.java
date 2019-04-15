@@ -93,8 +93,27 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
             buildingTxt.setText(building);
             personTxt.setText(person);
 
+            /*StorageReference islandRef = storageRef.child("images/island.jpg");
+
+            final long ONE_MEGABYTE = 1024 * 1024;
+            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    // Data for "images/island.jpg" is returns, use this as needed
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });*/
+
+            String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+/*
             Picasso.with(getContext()).load(imgUrl).into(postImgView);
-            Picasso.with(getContext()).load(profileImg).into(profilePicView);
+            Picasso.with(getContext()).load(profileImg).into(profilePicView);*/
+            Picasso.with(getContext()).load(practiceImg).into(postImgView);
+            Picasso.with(getContext()).load(practiceImg).into(profilePicView);
 
 
 
