@@ -1,0 +1,62 @@
+Group G Sprint 1 Meeting Log
+Meeting: Sunday, 3/31/19
+Members Present: Ravina, Taryn, Ryan and Mary
+Expanded on tasks for Sprint 1
+Formed front end and back end/database teams
+Front end: Mary and Ryan
+Back end (Java code): Taryn
+Database: Ravina
+Assigned members to each task
+Collectively reviewed wireframes to get a better sense of sprint tasks
+
+Action Items:
+Ryan: make new android project and push to GitHub
+All other members should clone the repository
+Ravina: decide which database is best (Firestore vs Realtime)
+
+Meeting: Wednesday, 4/3/19
+Members Present: Ravina, Taryn, Ryan and Mary
+Should use Firebase Firestore as Database
+Also determined that images should be stored using Cloud Storage
+Checked in on initial progress, planned for rest of sprint
+
+Action Items:
+All members to plan out to work on sprint tasks
+Make sure to move sprint tasks to done column when done
+
+
+Meeting: Thursday, 4/4/19
+Members Present: Ravina, Taryn, Ryan, Mary
+Finalized new color scheme for layouts
+
+Meeting: Sunday, 4/7/19
+Members Present: Ravina, Taryn, Ryan and Mary
+
+Action Items:
+Mary: start on initial layout for sign in page
+Ryan and Mary: Start creating layouts!
+Taryn and Ravina: as soon as layouts become available, work on java code for sign up/username + password verification 
+
+Meeting: Thursday, 4/11/19
+Members Present: Ravina, Taryn, Ryan, Mary and Ryenne
+Discussed T3 with Ryenne
+Fix Ask and Lend pop-up page because that will be difficult to implement
+Make a separate page and use tab view
+Color scheme is better! Stick with mint green and make sure text is readable
+Talked about Sprint 1
+Push back backend for messaging until next sprint - not enough time to implement that
+Definitely use firebase for database
+
+Meeting: Friday, 4/12/19
+Members Present: Ravina, Taryn, Ryan, Mary
+Group work session to make sure that naming conventions and practices are being followed
+
+Meeting: Saturday, 4/13/19
+Group work session to begin to link activities together and connect database to actions
+
+Meeting: Sunday, 4/14/19
+Finalized colors, layouts, and fixed a few last minute bugs.
+
+
+
+
