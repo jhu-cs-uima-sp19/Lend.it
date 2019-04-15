@@ -102,6 +102,7 @@ public class LendFragment extends Fragment {
         lend.put("description", lendDesc.getText().toString());
         lend.put("deposit", deposit.getText().toString());
         lend.put("id", uniqueID);
+        lend.put("photoID", photo);
         lend.put("post_date", Calendar.getInstance().getTime());
         lend.put("username", userData.get("username"));
         lend.put("fullName", userData.get("fullName"));
@@ -118,6 +119,7 @@ public class LendFragment extends Fragment {
                 Log.w(TAG, "Error writing document", e);
             }
         });
+        getActivity().finish();
     }
 
     /**
@@ -198,6 +200,6 @@ public class LendFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        photo = "lendImages/" + UUID.randomUUID().toString();
+        photo = UUID.randomUUID().toString();
     }
 }
