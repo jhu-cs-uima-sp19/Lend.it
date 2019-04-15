@@ -1,6 +1,8 @@
 package com.example.lendit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -13,10 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -26,6 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +46,10 @@ public class UserAccount extends AppCompatActivity {
     TextView building;
     TextView numNeighbors;
     TextView numPosts;
+    int counter;
+    String profileImg;
+    ImageView pf;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     // all data fields in user profile
     Map<String, Object> profileData;
@@ -58,6 +68,7 @@ public class UserAccount extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // get username from bundle in intent
         b = getIntent().getExtras();
         if (b != null) {
@@ -69,6 +80,7 @@ public class UserAccount extends AppCompatActivity {
         numNeighbors = findViewById(R.id.neighborsNumTxt);
         numPosts = findViewById(R.id.myPostsNumTxt);
         mListView = findViewById(R.id.listViewProfileLends);
+        pf = findViewById(R.id.profilePic);
 
         // display name
         name.setText(username);
@@ -79,20 +91,25 @@ public class UserAccount extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 profileData = documentSnapshot.getData();
                 building.setText(profileData.get("building").toString());
+                profileImg = profileData.get("profileImg").toString();
                         //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
                         // numNeighbors.setText(data.get().toString());
                     }
         });
 
         // get users' lend data (most recent at top)
-        db.collection("lends").whereEqualTo("username", username).orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        //.orderBy("post_date", Query.Direction.DESCENDING)
+        db.collection("lends").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
             if (task.isSuccessful()) {
                 //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+
                 for (QueryDocumentSnapshot s : task.getResult()) {
                     Map<String, Object> d = s.getData();
                     cardList.add(new PostCard(d.get("photoID").toString(), d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("deposit").toString(), d.get("description").toString()));
+                    //counter++;
+
                 }
 
                 CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, R.layout.card_activity, cardList);
@@ -108,7 +125,7 @@ public class UserAccount extends AppCompatActivity {
     });
 
         // get users' ask data (most recent at top)
-        db.collection("asks").whereEqualTo("username", username).orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("asks").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -116,6 +133,7 @@ public class UserAccount extends AppCompatActivity {
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         Map<String, Object> d = s.getData();
                         cardList.add(new PostCard(d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("description").toString()));
+                        //counter++;
                     }
 
                     CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, R.layout.card_activity, cardList);
@@ -130,7 +148,10 @@ public class UserAccount extends AppCompatActivity {
             }
         });
 
-
+        numPosts.setText("3");
+        numNeighbors.setText("20");
+        //pf.setImageDrawable("drawable://" + R.drawable.bath"");
+        // post image
 
        /* dummy data for testing
         cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
@@ -159,7 +180,7 @@ public class UserAccount extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
+        getMenuInflater().inflate(R.menu.user_account, menu);
         return true;
     }
 
@@ -171,7 +192,8 @@ public class UserAccount extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_mode_close_button) {
+            UserAccount.this.finish();
             return true;
         }
 
