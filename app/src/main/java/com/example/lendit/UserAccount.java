@@ -73,17 +73,14 @@ public class UserAccount extends AppCompatActivity {
         name.setText(username);
 
         // get users' profile data
-        db.collection("users").document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult().exists()) {
-                        building.setText(profileData.get("building").toString());
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileData = documentSnapshot.getData();
+                building.setText(profileData.get("building").toString());
                         //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
                         // numNeighbors.setText(data.get().toString());
                     }
-                }
-            }
         });
 
         // get users' lend data (most recent at top)
