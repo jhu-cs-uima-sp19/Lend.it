@@ -96,7 +96,11 @@ public class LendFragment extends Fragment {
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
         lend.put("deposit", deposit.getText().toString());
-        lend.put("photoID", photo);
+        if (photo != null) {
+            lend.put("photoID", photo);
+        } else {
+            lend.put("photoID", "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg");
+        }
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
         lend.put("username", u);

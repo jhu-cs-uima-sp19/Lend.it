@@ -1,4 +1,5 @@
 package com.example.lendit;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,12 +77,10 @@ public class Signup extends AppCompatActivity {
 
 
     public boolean validEmail(String email) {
-        String end = email.substring(email.indexOf('@'));
-        String correct = "@jhu.edu";
-        if (end.compareTo(correct) == 0) {
+        if (email.contains("@jhu.edu")) {
             return true;
         } else {
-            // output error message
+            Toast.makeText(this, "Please enter your JHU email address", Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -89,9 +89,13 @@ public class Signup extends AppCompatActivity {
         EditText confirmPassword = (EditText) findViewById(R.id.confirmPassET);
         String confirm = confirmPassword.getText().toString();
         if (pass.compareTo(confirm) == 0) {
+            if (pass.equals("")) {
+                Toast.makeText(this, "Password must not be empty", Toast.LENGTH_LONG).show();
+                return false;
+            }
             return true;
         } else {
-            // output error message
+            Toast.makeText(this, "Password entries do not match", Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -102,9 +106,10 @@ public class Signup extends AppCompatActivity {
         // String[] neighbors = ;
         //String profilePic;
 
-        String username = email.substring(0, email.indexOf('@'));
+        final String username = email.substring(0, email.indexOf('@'));
         Map<String, Object> profile = new HashMap<>();
         profile.put("username", username);
+        profile.put("password", password);
         profile.put("first", first.getText().toString());
         profile.put("last", last.getText().toString());
         profile.put("building", building.getSelectedItem().toString());
@@ -113,6 +118,11 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");
+                Intent i = new Intent(Signup.this, HomePage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         })
                 .addOnFailureListener(new OnFailureListener() {

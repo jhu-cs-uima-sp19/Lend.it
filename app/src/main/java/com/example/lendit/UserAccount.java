@@ -68,17 +68,18 @@ public class UserAccount extends AppCompatActivity {
 
         // display name
         name.setText(username);
-/*
+
         // get users' profile data
-        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("users").document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                profileData = documentSnapshot.getData();
-               // profileData =  dataSnapshot.getValue();
-                // display building
-                building.setText(profileData.get("building").toString());
-                //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
-                // numNeighbors.setText(data.get().toString());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        building.setText(profileData.get("building").toString());
+                        //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
+                        // numNeighbors.setText(data.get().toString());
+                    }
+                }
             }
         });
 
@@ -90,7 +91,7 @@ public class UserAccount extends AppCompatActivity {
 
                     lendsData = task.getResult().getDocuments();
                     // display number of users' posts
-                    if (numPosts != null) {
+                    if (lendsData != null) {
                         numPosts.setText(String.valueOf(lendsData.size()));
                     }
                 } else {
@@ -104,7 +105,6 @@ public class UserAccount extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
                     asksData = task.getResult().getDocuments();
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -117,7 +117,7 @@ public class UserAccount extends AppCompatActivity {
         String practiceImg = "drawable://" + R.drawable.bath;
         String dummyProfileImg = "drawable://" + R.drawable.bath;
         for (int i = 1; i < lendsData.size(); i++) {
-            cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+            cardList.add(new PostCard(postInfo.get("photoID").toString(), postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("deposit").toString(), postInfo.get("description").toString()));
         }
         for (int i = 1; i < lendsData.size(); i++) {
             cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), dummyProfileImg, postInfo.get("description").toString()));
@@ -128,7 +128,7 @@ public class UserAccount extends AppCompatActivity {
             mListView.setAdapter(adapter);
         } else {
             System.out.println("Null Reference");
-        }*/
+        }
     }
 
     @Override

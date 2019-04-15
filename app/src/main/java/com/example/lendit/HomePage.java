@@ -43,7 +43,6 @@ public class HomePage extends AppCompatActivity
     List<DocumentSnapshot> lendsData;
     private ListView mListView;
     ArrayList<PostCard> cardList = new ArrayList();
-    Map<String, Object> postInfo;
 
 
     @Override
@@ -154,19 +153,15 @@ public class HomePage extends AppCompatActivity
     public void onStart() {
         super.onStart();
         mListView = (ListView) findViewById(R.id.listViewLends);
-/*
+
         // query based on timestamp (most recent will be displayed first)
         db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }
                     String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        s.getData().get("title").toString();
-                        // cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString()));
+                        cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString()));
                     }}else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
@@ -176,42 +171,20 @@ public class HomePage extends AppCompatActivity
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }
-                    String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(practiceImg, s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString()));
+                        cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString()));
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-        //Log.d(TAG, "get data");
-        // populate list with ask and lend data
 
-        // String dummyProfileImg = "drawable://" + R.drawable.bath;
-/*
-//        Log.d(TAG, "Lend size " + lendsData.size());
-        if (lendsData != null) {
-            Log.d(TAG, "Lend size " + lendsData.size());
-            for (int i = 0; i < lendsData.size(); i++) {
-
-                //cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
-
-            }
-        }
-        if (asksData != null) {
-            for (int i = 0; i < asksData.size(); i++) {
-                cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
-            }
-        }*/
-       // dummy data for testing
+       /* dummy data for testing
         cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
         cardList.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
         cardList.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-
+*/
         CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
         if ((adapter != null) && (mListView != null)) {
             mListView.setAdapter(adapter);
