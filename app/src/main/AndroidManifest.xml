@@ -38,7 +38,10 @@
             android:label="@string/title_activity_user_account_editable"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewPost" />
+        <activity android:name=".ViewPost"
+            android:label="ViewPost"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"

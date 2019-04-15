@@ -9,16 +9,20 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@color/green"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="443dp"
+            android:layout_height="match_parent"
             android:background="@color/green"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
 
     <ImageView
         android:id="@+id/uploadedPic"
@@ -54,39 +58,31 @@
 
     <TextView
         android:id="@+id/posted_by_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="22dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="320dp"
         android:layout_marginRight="320dp"
-        android:layout_marginBottom="331dp"
         android:text=" Posted By: Taryn"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemName"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
         android:id="@+id/building_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="236dp"
-        android:layout_marginLeft="236dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="332dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
         android:text="Charles Commons"
         android:textColor="#202020"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
-        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
+        tools:layout_editor_absoluteY="419dp" />
 
     <TextView
         android:id="@+id/item_descrip_label"
@@ -94,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="56dp"
         android:text="Description"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
@@ -104,15 +100,15 @@
 
     <TextView
         android:id="@+id/item_descrip_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="264dp"
+        android:layout_width="253dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
         android:text="Come use my kitchen to cook a meal!"
         android:textColor="#202020"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_descrip_label" />
 
     <Button
         android:id="@+id/message_giver"
@@ -130,17 +126,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="116dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="204dp"
-        android:layout_marginRight="204dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadedPic"
-        tools:textSize="14sp" />
 </android.support.constraint.ConstraintLayout>
