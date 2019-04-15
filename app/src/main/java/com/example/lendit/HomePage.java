@@ -44,6 +44,7 @@ public class HomePage extends AppCompatActivity
     ArrayList<PostCard> cardList = new ArrayList();
     Map<String, Object> postInfo;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,17 +101,165 @@ public class HomePage extends AppCompatActivity
                 }
             }
         });
-
+        Log.d(TAG, "get data");
         // populate list with ask and lend data
-        String practiceImg = "drawable://" + R.drawable.bath;
+        String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
         // String dummyProfileImg = "drawable://" + R.drawable.bath;
+
+        //Log.d(TAG, "Ask size " + asksData.size());
         if (lendsData != null) {
-            for (int i = 1; i < lendsData.size(); i++) {
+            Log.d(TAG, "Lend size " + lendsData.size());
+            for (int i = 0; i < lendsData.size(); i++) {
+                postInfo = lendsData.get(i).getData();
                 cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+                //cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
+
             }
         }
         if (asksData != null) {
-            for (int i = 1; i < asksData.size(); i++) {
+            for (int i = 0; i < asksData.size(); i++) {
+                cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
+            }
+        }
+       /* dummy data for testing
+        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
+        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
+        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));*/
+
+        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
+        if ((adapter != null) && (mListView != null)) {
+            mListView.setAdapter(adapter);
+        } else {
+            System.out.println("Null Reference");
+        }
+
+        onStart();
+
+    }
+
+    public void createPost(View view) {
+        Intent i = new Intent(HomePage.this, CreatePost.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        mListView = (ListView) findViewById(R.id.listViewLends);
+//
+//        // query based on timestamp (most recent will be displayed first)
+//        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+//                        Log.d(TAG, document.getId() + " => " + document.getData());
+//                    }*/
+//                    asksData = task.getResult().getDocuments();
+//                } else {
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
+//        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+//                        Log.d(TAG, document.getId() + " => " + document.getData());
+//                    }*/
+//                    lendsData = task.getResult().getDocuments();
+//                } else {
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
+//        Log.d(TAG, "get data");
+//        // populate list with ask and lend data
+//        String practiceImg = "drawable://" + R.drawable.bath;
+//        // String dummyProfileImg = "drawable://" + R.drawable.bath;
+//
+//        //Log.d(TAG, "Ask size " + asksData.size());
+//        if (lendsData != null) {
+//            Log.d(TAG, "Lend size " + lendsData.size());
+//            for (int i = 0; i < lendsData.size(); i++) {
+//                //cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+//                cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
+//            }
+//        }
+//        if (asksData != null) {
+//            for (int i = 0; i < asksData.size(); i++) {
+//                //cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
+//                cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
+//
+//            }
+//        }
+//       /* dummy data for testing
+//        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
+//        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
+//        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));*/
+//
+//        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
+//        if ((adapter != null) && (mListView != null)) {
+//            mListView.setAdapter(adapter);
+//        } else {
+//            System.out.println("Null Reference");
+//        }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mListView = (ListView) findViewById(R.id.listViewLends);
+
+        // query based on timestamp (most recent will be displayed first)
+        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }*/
+                    asksData = task.getResult().getDocuments();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    /*for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }*/
+                    lendsData = task.getResult().getDocuments();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        Log.d(TAG, "get data");
+        // populate list with ask and lend data
+        String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+        // String dummyProfileImg = "drawable://" + R.drawable.bath;
+
+        //Log.d(TAG, "Ask size " + asksData.size());
+        if (lendsData != null) {
+            Log.d(TAG, "Lend size " + lendsData.size());
+            for (int i = 0; i < lendsData.size(); i++) {
+                postInfo = lendsData.get(i).getData();
+                cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
+                //cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
+
+            }
+        }
+        if (asksData != null) {
+            for (int i = 0; i < asksData.size(); i++) {
                 cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
             }
         }
@@ -127,22 +276,6 @@ public class HomePage extends AppCompatActivity
         }
 
     }
-
-    public void createPost(View view) {
-        Intent i = new Intent(HomePage.this, CreatePost.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        i.putExtras(bundle);
-        startActivity(i);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -111,7 +111,7 @@ public class CreatePost extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchHome(View view) {
+    public void launchHome() {
         Intent i;
         Bundle bundle = new Bundle();
         i = new Intent(CreatePost.this, HomePage.class);

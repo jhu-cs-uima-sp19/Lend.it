@@ -86,7 +86,7 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
             TextView titleTxt = (TextView) convertView.findViewById(R.id.cardTitle);
             ImageView postImgView = (ImageView) convertView.findViewById(R.id.cardImage);
             TextView personTxt = (TextView) convertView.findViewById(R.id.posterName);
-            TextView buildingTxt = (TextView) convertView.findViewById(R.id.building);
+            TextView buildingTxt = (TextView) convertView.findViewById(R.id.posterBuilding);
             ImageView profilePicView = (ImageView) convertView.findViewById(R.id.posterImage);
 
             titleTxt.setText(title);
