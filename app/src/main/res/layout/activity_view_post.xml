@@ -79,8 +79,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
         android:layout_marginLeft="116dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Charles Commons"
         android:textColor="#202020"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
         tools:layout_editor_absoluteY="419dp" />
 
@@ -91,10 +94,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="56dp"
+        android:layout_marginEnd="294dp"
+        android:layout_marginRight="294dp"
         android:text="Description"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
 
@@ -102,12 +108,15 @@
         android:id="@+id/item_descrip_text"
         android:layout_width="253dp"
         android:layout_height="47dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="132dp"
         android:layout_marginRight="132dp"
         android:text="Come use my kitchen to cook a meal!"
         android:textColor="#202020"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_label" />
 
     <Button
@@ -125,5 +134,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
+
+
 
 </android.support.constraint.ConstraintLayout>
