@@ -138,12 +138,10 @@
         android:id="@+id/displayIV"
         android:layout_width="260dp"
         android:layout_height="200dp"
-        android:background="@drawable/ic_menu_gallery"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depositTxt"
-        app:srcCompat="@drawable/ic_menu_gallery" />
+        app:layout_constraintTop_toBottomOf="@+id/depositTxt" />
 </android.support.constraint.ConstraintLayout>
 
 

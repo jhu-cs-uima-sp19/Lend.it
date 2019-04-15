@@ -12,7 +12,7 @@ public class PostCard {
 
     // Constructor for lend
     PostCard(String img, String item, String person, String building, String profile, String dep, String desc){
-        this.imgURL = img;
+        this.imgURL = "lendImages/" + img;
         this.postTitle = item;
         this.personName = person;
         this.building = building;
@@ -29,7 +29,7 @@ public class PostCard {
         this.profileImgURL = profile;
         this.description = desc;
         // default ask image
-        this.imgURL = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+        this.imgURL = "appImages/opploans-how-to-lend-to-family.jpg";
         // default deposit amount - will never be accessed
         this.deposit = "0";
     }

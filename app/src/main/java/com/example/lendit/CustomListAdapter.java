@@ -1,36 +1,20 @@
 package com.example.lendit;
-
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.lendit.PostCard;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-
 import java.util.ArrayList;
-import java.util.List;
-import com.squareup.picasso.Picasso;
-
-/**
- * Created by User on 4/4/2017.
- */
 
 public class CustomListAdapter extends ArrayAdapter<PostCard> {
 
@@ -40,17 +24,6 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
     private int lastPosition = -1;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    /*
-     * Holds variables in a View
-
-    private static class ViewHolder {
-        TextView title;
-        ImageView image;
-        TextView person;
-        TextView building;
-        ImageView profilePic;
-    }*/
-
     /**
      * Default constructor for the PersonListAdapter
      * @param context
@@ -58,15 +31,10 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
      * @param objects
      */
     public CustomListAdapter(Context context, int resource, ArrayList<PostCard> objects) {
-
         super(context, resource, objects);
-
         Log.d(TAG, "Created Custome List AD");
         mContext = context;
         mResource = resource;
-
-        //sets up the image loader library
-        setupImageLoader();
     }
 
     @NonNull
@@ -75,25 +43,60 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
         //get post card information
         String title = getItem(position).getPostTitle();
         String person = getItem(position).getPersonName();
-        String imgUrl = getItem(position).getImgURL();
+        String imgURL = getItem(position).getImgURL();
         String building = getItem(position).getBuilding();
         String profileImg = getItem(position).getProfileImg();
 
         try {
-
-
             if (convertView == null){
                convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
             }
 
-            TextView titleTxt = (TextView) convertView.findViewById(R.id.cardTitle);
-            final ImageView postImgView = (ImageView) convertView.findViewById(R.id.cardImage);
-            TextView personTxt = (TextView) convertView.findViewById(R.id.posterName);
-            TextView buildingTxt = (TextView) convertView.findViewById(R.id.posterBuilding);
-            final ImageView profilePicView = (ImageView) convertView.findViewById(R.id.posterImage);
+            TextView titleTxt = convertView.findViewById(R.id.cardTitle);
+            final ImageView postImgView = convertView.findViewById(R.id.cardImage);
+            TextView personTxt = convertView.findViewById(R.id.posterName);
+            TextView buildingTxt = convertView.findViewById(R.id.posterBuilding);
+            final ImageView profilePicView = convertView.findViewById(R.id.posterImage);
 
             titleTxt.setText(title);
             buildingTxt.setText(building);
+            personTxt.setText(person);
+
+            // post image
+            final long ONE_MEGABYTE = 1024 * 1024;
+            storageRef.child(imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    postImgView.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+
+            // profile image
+            storageRef.child(profileImg).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    profilePicView.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+            return convertView;
+        } catch (IllegalArgumentException e){
+            Log.e(TAG, "getView: IllegalArgumentException: " + e.getMessage() );
+            return convertView;
+        }
+
+            /* dummy data
             personTxt.setText(person);
             if (person.equals("Ryan")) {
                 postImgView.setImageResource(R.drawable.bath);
@@ -103,126 +106,7 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
                 postImgView.setImageResource(R.drawable.stove);
             }
             profilePicView.setImageResource(R.drawable.ic_person_black_24dp);
-
-
-//            String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
-////            Picasso.with(mContext).load(practiceImg).into(postImgView);
-////            Picasso.with(mContext).load(practiceImg).into(profilePicView);
-
-
-            /*StorageReference islandRef = storageRef.child("images/island.jpg");
-
-            final long ONE_MEGABYTE = 1024 * 1024;
-            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    // Data for "images/island.jpg" is returns, use this as needed
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });*/
-
-           // String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
-/*
-            Picasso.with(getContext()).load(imgUrl).into(postImgView);
-            Picasso.with(getContext()).load(profileImg).into(profilePicView);
-            Picasso.with(getContext()).load(practiceImg).into(postImgView);
-            Picasso.with(getContext()).load(practiceImg).into(profilePicView);
-
-
-
-/*
-            lastPosition = position;
-
-            ImageLoader imageLoader = ImageLoader.getInstance();
-
-            int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
-
-            //create display options
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                    .cacheOnDisc(true).resetViewBeforeLoading(true)
-                    .showImageForEmptyUri(defaultImage)
-                    .showImageOnFail(defaultImage)
-                    .showImageOnLoading(defaultImage).build();
-
-            //download and display image from url
-            imageLoader.displayImage(imgUrl, image, options);
 */
-            return convertView;
-        }
-/*
-        try{
-            //create the view result for showing the animation
-            final View result;
 
-            //ViewHolder object
-            ViewHolder holder;
-
-            if(convertView == null){
-                LayoutInflater inflater = LayoutInflater.from(mContext);
-                convertView = inflater.inflate(mResource, parent, false);
-                holder= new ViewHolder();
-                holder.title = (TextView) convertView.findViewById(R.id.cardTitle);
-                holder.image = (ImageView) convertView.findViewById(R.id.cardImage);
-                holder.person = (TextView) convertView.findViewById(R.id.posterName);
-                holder.building = (TextView) convertView.findViewById(R.id.building);
-                holder.profilePic = (ImageView) convertView.findViewById(R.id.posterImage);
-                result = convertView;
-
-                convertView.setTag(holder);
-            }
-            else{
-                holder = (ViewHolder) convertView.getTag();
-                result = convertView;
-            }
-
-            lastPosition = position;
-
-            // holder.title.setText(item);
-
-            //create the imageloader object
-            ImageLoader imageLoader = ImageLoader.getInstance();
-
-            int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
-
-            //create display options
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                    .cacheOnDisc(true).resetViewBeforeLoading(true)
-                    .showImageForEmptyUri(defaultImage)
-                    .showImageOnFail(defaultImage)
-                    .showImageOnLoading(defaultImage).build();
-
-            //download and display image from url
-            imageLoader.displayImage(imgUrl, holder.image, options);
-
-            return convertView;
-        }*/catch (IllegalArgumentException e){
-            Log.e(TAG, "getView: IllegalArgumentException: " + e.getMessage() );
-            return convertView;
-        }
-
-    }
-
-    /**
-     * Required for setting up the Universal Image loader Library
-     */
-    private void setupImageLoader() {
-        // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisc(true).cacheInMemory(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                mContext)
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .discCacheSize(100 * 1024 * 1024).build();
-
-        ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
     }
 }

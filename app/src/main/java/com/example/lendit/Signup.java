@@ -2,10 +2,7 @@ package com.example.lendit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,12 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,8 +45,6 @@ public class Signup extends AppCompatActivity {
 
         // populate buildings spinner
         spinnerBuildings = new ArrayList<String>(Arrays.asList("Charles Commons", "McCoy", "Bradford", "AMRI", "AMRII", "AMRIIIA", "AMRIIIB", "Wolman", "The Charles", "Homewood", "The Academy", "The Social", "Uni West", "100 West"));
-
-
 
         // create array adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -104,7 +96,6 @@ public class Signup extends AppCompatActivity {
 
         // figure out if we want to be able to add people not in our building as neighbors
         // String[] neighbors = ;
-        //String profilePic;
 
         final String username = email.substring(0, email.indexOf('@'));
         Map<String, Object> profile = new HashMap<>();
@@ -113,7 +104,8 @@ public class Signup extends AppCompatActivity {
         profile.put("first", first.getText().toString());
         profile.put("last", last.getText().toString());
         profile.put("building", building.getSelectedItem().toString());
-        profile.put("profileImg", "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg");
+        // default profile image
+        profile.put("profileImg", "appImages/opploans-how-to-lend-to-family.jpg");
         db.collection("users").document(username).set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
