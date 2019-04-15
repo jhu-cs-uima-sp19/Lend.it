@@ -43,6 +43,8 @@ public class HomePage extends AppCompatActivity
     List<DocumentSnapshot> lendsData;
     private ListView mListView;
     ArrayList<PostCard> cardList = new ArrayList();
+    //CustomListAdapter adapter;
+
 
 
     @Override
@@ -86,66 +88,6 @@ public class HomePage extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-//        mListView = (ListView) findViewById(R.id.listViewLends);
-//
-//        // query based on timestamp (most recent will be displayed first)
-//        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-//                        Log.d(TAG, document.getId() + " => " + document.getData());
-//                    }*/
-//                    asksData = task.getResult().getDocuments();
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-//                        Log.d(TAG, document.getId() + " => " + document.getData());
-//                    }*/
-//                    lendsData = task.getResult().getDocuments();
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//        Log.d(TAG, "get data");
-//        // populate list with ask and lend data
-//        String practiceImg = "drawable://" + R.drawable.bath;
-//        // String dummyProfileImg = "drawable://" + R.drawable.bath;
-//
-//        //Log.d(TAG, "Ask size " + asksData.size());
-//        if (lendsData != null) {
-//            Log.d(TAG, "Lend size " + lendsData.size());
-//            for (int i = 0; i < lendsData.size(); i++) {
-//                //cardList.add(new PostCard(practiceImg, postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("deposit").toString(), postInfo.get("description").toString()));
-//                cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
-//            }
-//        }
-//        if (asksData != null) {
-//            for (int i = 0; i < asksData.size(); i++) {
-//                //cardList.add(new PostCard(postInfo.get("title").toString(), postInfo.get("fullName").toString(), postInfo.get("building").toString(), postInfo.get("profileImg").toString(), postInfo.get("description").toString()));
-//                cardList.add(new PostCard(practiceImg, "Cup", "M J", "CC", practiceImg, "1", "here"));
-//
-//            }
-//        }
-//       /* dummy data for testing
-//        list.add(new PostCard("drawable://" + R.drawable.bath, "Bathroom", "Ryan"));
-//        list.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina"));
-//        list.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn"));*/
-//
-//        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.card_activity, cardList);
-//        if ((adapter != null) && (mListView != null)) {
-//            mListView.setAdapter(adapter);
-//        } else {
-//            System.out.println("Null Reference");
-//        }
 
     }
 
@@ -165,7 +107,6 @@ public class HomePage extends AppCompatActivity
                     Log.d(TAG, "task successful");
                     String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        Log.d(TAG, "inside for");
                         cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString()));
                     }
                     CustomListAdapter adapter = new CustomListAdapter(H, R.layout.card_activity, cardList);
@@ -186,7 +127,6 @@ public class HomePage extends AppCompatActivity
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task successful lends");
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        Log.d(TAG, "inside for lends");
                         cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString()));
                     }
                     CustomListAdapter adapter = new CustomListAdapter(H, R.layout.card_activity, cardList);
