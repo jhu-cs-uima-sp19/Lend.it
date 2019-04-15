@@ -17,7 +17,7 @@
         android:text="Post"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lendAddPhotoFromGalleryBTN" />
+        app:layout_constraintTop_toBottomOf="@+id/displayIV"  />
 
     <TextView
         android:id="@+id/lendTitleTxt"
@@ -26,8 +26,10 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="52dp"
         android:layout_marginRight="52dp"
+        android:layout_marginLeft="52dp"
         android:text="Post Title"
         android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/lendTitleET"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +42,7 @@
         android:layout_marginRight="32dp"
         android:ems="10"
         android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/lendTitleTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,16 +51,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="52dp"
         android:layout_marginTop="44dp"
         android:text="Description"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lendDescriptionET"
         app:layout_constraintTop_toBottomOf="@+id/lendTitleTxt" />
 
     <EditText
         android:id="@+id/lendDescriptionET"
-        android:layout_width="303dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -69,8 +73,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lendDescriptionTxt" />
-
-    <Button
+    <!--
+<Button
         android:id="@+id/lendAddPhotoBTN"
         android:layout_width="266dp"
         android:layout_height="57dp"
@@ -84,7 +88,7 @@
         android:textCursorDrawable="@color/green"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depositET" />
+        app:layout_constraintTop_toBottomOf="@+id/depositET" >
 
     <Button
         android:id="@+id/lendAddPhotoFromGalleryBTN"
@@ -100,14 +104,13 @@
         android:textCursorDrawable="@color/green"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lendAddPhotoBTN" />
+        app:layout_constraintTop_toBottomOf="@+id/lendAddPhotoBTN" />-->
 
     <EditText
         android:id="@+id/depositET"
         android:layout_width="128dp"
         android:layout_height="71dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="Enter Amount"
@@ -115,6 +118,7 @@
         android:textColorLink="@color/green"
         android:textCursorDrawable="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/depositTxt"
         app:layout_constraintTop_toBottomOf="@+id/lendDescriptionET" />
 
     <TextView
@@ -126,8 +130,20 @@
         android:layout_marginTop="60dp"
         android:text="Deposit Amount (optional)"
         android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/depositET"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lendDescriptionET" />
+
+    <ImageView
+        android:id="@+id/displayIV"
+        android:layout_width="260dp"
+        android:layout_height="200dp"
+        android:background="@drawable/ic_menu_gallery"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/depositTxt"
+        app:srcCompat="@drawable/ic_menu_gallery" />
 </android.support.constraint.ConstraintLayout>
 
 
