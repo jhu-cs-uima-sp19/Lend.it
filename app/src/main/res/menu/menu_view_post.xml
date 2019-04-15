@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.lendit.ViewPost">
     <item
-        android:id="@+id/action_mode_close_button"
+        android:id="@+id/action_mode_close_button2"
         android:checkable="true"
         android:enabled="true"
         android:icon="@drawable/ic_close_black"
