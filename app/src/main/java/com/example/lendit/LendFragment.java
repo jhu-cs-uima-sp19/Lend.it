@@ -35,14 +35,15 @@ public class LendFragment extends Fragment {
     EditText lendDesc;
     // lend photo
     Button addPhoto;
+    Button addPhotoFromGallery;
     EditText deposit;
     EditText lendTitle;
     String photo;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int REQUEST_IMAGE_CAPTURE = 111;
+    private static final int SELECT_PHOTO = 100;
     //Bundle userData;
     FirebaseStorage storage = FirebaseStorage.getInstance();
-
 
 
     @Nullable
@@ -55,14 +56,17 @@ public class LendFragment extends Fragment {
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depositET);
         addPhoto = rootView.findViewById(R.id.lendAddPhotoBTN);
-        final CreatePost activity = (CreatePost) getActivity();
+        addPhotoFromGallery = rootView.findViewById(R.id.lendAddPhotoFromGalleryBTN);
+        CreatePost activity = (CreatePost) getActivity();
+        //userData = getArguments();
         final Map<String, String> userData = activity.getUserData();
+
         // listener for create lend button
         createLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createLend(userData);
-                //activity.launchHome();
+
+                createLend(userData.get("username"), userData.get("fullName"), userData.get("building"), userData.get("profileImg"));
             }
         });
 
@@ -74,11 +78,20 @@ public class LendFragment extends Fragment {
             }
         });
 
+        addPhotoFromGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UploadActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 
-    public void createLend(Map<String, String> userData) {
+    public void createLend(String u, String f, String b, String p) {
         String uniqueID = UUID.randomUUID().toString();
+
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
@@ -86,11 +99,13 @@ public class LendFragment extends Fragment {
         lend.put("photoID", photo);
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
-
-        lend.put("username", userData.get("username"));
-        lend.put("fullName", userData.get("fullName"));
-        lend.put("building", userData.get("building"));
-        lend.put("profileImg", userData.get("profileImg"));
+        lend.put("username", u);
+        lend.put("fullName", f);
+        lend.put("building", b);
+        lend.put("profileImg", p);
+        // also get profile photo from username query
+        // get username from intent that launched this activity?
+        // profile.put("username", );
         db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -113,25 +128,11 @@ public class LendFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mImageLabel.setImageBitmap(imageBitmap);
-//            encodeBitmapAndSaveToFirebase(imageBitmap);
-//        }
-//    }
-//
-//    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-//        DatabaseReference ref = FirebaseDatabase.getInstance()
-//                .getReference(Constants.FIREBASE_CHILD_RESTAURANTS)
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                .child(mRestaurant.getPushId())
-//                .child("imageUrl");
-//        ref.setValue(imageEncoded);
-//    }
+    public void selectImage(View view) {
+
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+    }
+
 }

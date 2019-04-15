@@ -35,6 +35,7 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
         setContentView(R.layout.activity_upload);
 
         imageView = (ImageView) findViewById(R.id.imageView2);
@@ -120,10 +121,11 @@ public class UploadActivity extends AppCompatActivity {
                 Uri downloadUrl = urlTask.getResult();
 
                 final String sdownload_url = String.valueOf(downloadUrl);
+                progressDialog.dismiss();
 
                 //showing the uploaded image in ImageView using the download url
                 Picasso.with(UploadActivity.this).load(downloadUrl).into(imageView);
-                progressDialog.dismiss();
+
 
             }
         });
