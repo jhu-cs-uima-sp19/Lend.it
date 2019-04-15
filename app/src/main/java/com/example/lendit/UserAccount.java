@@ -68,7 +68,7 @@ public class UserAccount extends AppCompatActivity {
 
         // display name
         name.setText(username);
-
+/*
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -87,9 +87,7 @@ public class UserAccount extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }*/
+
                     lendsData = task.getResult().getDocuments();
                     // display number of users' posts
                     if (numPosts != null) {
@@ -106,9 +104,7 @@ public class UserAccount extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    /*for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }*/
+
                     asksData = task.getResult().getDocuments();
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -132,7 +128,7 @@ public class UserAccount extends AppCompatActivity {
             mListView.setAdapter(adapter);
         } else {
             System.out.println("Null Reference");
-        }
+        }*/
     }
 
     @Override

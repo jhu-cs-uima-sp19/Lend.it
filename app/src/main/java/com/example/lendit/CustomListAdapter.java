@@ -84,14 +84,28 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
             }
 
             TextView titleTxt = (TextView) convertView.findViewById(R.id.cardTitle);
-            ImageView postImgView = (ImageView) convertView.findViewById(R.id.cardImage);
+            final ImageView postImgView = (ImageView) convertView.findViewById(R.id.cardImage);
             TextView personTxt = (TextView) convertView.findViewById(R.id.posterName);
             TextView buildingTxt = (TextView) convertView.findViewById(R.id.posterBuilding);
-            ImageView profilePicView = (ImageView) convertView.findViewById(R.id.posterImage);
+            final ImageView profilePicView = (ImageView) convertView.findViewById(R.id.posterImage);
 
             titleTxt.setText(title);
             buildingTxt.setText(building);
             personTxt.setText(person);
+            if (person.equals("Ryan")) {
+                postImgView.setImageResource(R.drawable.bath);
+            } else if (person.equals("Taryn")) {
+                postImgView.setImageResource(R.drawable.kitchen);
+            } else if (person.equals("Ravina")) {
+                postImgView.setImageResource(R.drawable.stove);
+            }
+            profilePicView.setImageResource(R.drawable.ic_person_black_24dp);
+
+
+//            String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+////            Picasso.with(mContext).load(practiceImg).into(postImgView);
+////            Picasso.with(mContext).load(practiceImg).into(profilePicView);
+
 
             /*StorageReference islandRef = storageRef.child("images/island.jpg");
 
@@ -108,10 +122,10 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
                 }
             });*/
 
-            String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+           // String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
 /*
             Picasso.with(getContext()).load(imgUrl).into(postImgView);
-            Picasso.with(getContext()).load(profileImg).into(profilePicView);*/
+            Picasso.with(getContext()).load(profileImg).into(profilePicView);
             Picasso.with(getContext()).load(practiceImg).into(postImgView);
             Picasso.with(getContext()).load(practiceImg).into(profilePicView);
 

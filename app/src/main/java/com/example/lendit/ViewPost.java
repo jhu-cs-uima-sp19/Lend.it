@@ -9,12 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class ViewPost extends AppCompatActivity {
+    String username;
+    private static String TAG = "HomePageActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        Bundle bundle = getIntent().getExtras();
+        username = bundle.getString("username");
         //setSupportActionBar(toolbar);
     }
 
@@ -42,7 +46,7 @@ public class ViewPost extends AppCompatActivity {
     }
 
     public void sendMSG(View v) {
-        Intent i = new Intent(ViewPost.this, Message.class);
+        Intent i = new Intent(ViewPost.this, MessageActivity.class);
         //need to send name?
         startActivity(i);
 
