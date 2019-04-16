@@ -35,7 +35,7 @@ public class AskFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.ask_fragment, container, false);
 
         createAsk = rootView.findViewById(R.id.createAskBTN);
-        askDesc = rootView.findViewById(R.id.lendDescriptionET);
+        askDesc = rootView.findViewById(R.id.askDescriptionET);
         askTitle = rootView.findViewById(R.id.askTitleET);
 
         final CreatePost activity = (CreatePost) getActivity();
@@ -80,6 +80,7 @@ public class AskFragment extends Fragment {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+        getActivity().finish();
 
     }
 
