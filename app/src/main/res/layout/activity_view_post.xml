@@ -77,15 +77,12 @@
         android:id="@+id/building_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
-        android:layout_marginTop="107dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:text="Charles Commons"
         android:textColor="#202020"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
         app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
 
     <TextView
@@ -124,6 +121,8 @@
         android:id="@+id/message_giver"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="123dp"
         android:layout_marginBottom="97dp"
         android:background="@color/green"
@@ -131,11 +130,28 @@
         android:text="Message"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
+        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text"
+        app:layout_constraintVertical_bias="0.477" />
 
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="57dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/green"
+        android:onClick="closePost"
+        android:text="x"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/message_giver" />
 
 
 </android.support.constraint.ConstraintLayout>

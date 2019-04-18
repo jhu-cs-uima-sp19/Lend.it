@@ -1,5 +1,6 @@
 package com.example.lendit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,8 @@ public class MessageActivity extends AppCompatActivity implements RoomListener {
     private Scaledrone scaledrone;
     private MessageAdapter messageAdapter;
     private ListView messagesView;
+    Bundle b;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,10 @@ public class MessageActivity extends AppCompatActivity implements RoomListener {
         setContentView(R.layout.activity_message);
 
         editText = (EditText) findViewById(R.id.editText);
-
+        b = getIntent().getExtras();
+        if (b != null) {
+            username = b.getString("username");
+        }
         messageAdapter = new MessageAdapter(this);
         messagesView = (ListView) findViewById(R.id.messages_view);
         messagesView.setAdapter(messageAdapter);
@@ -119,6 +125,15 @@ public class MessageActivity extends AppCompatActivity implements RoomListener {
             sb.append(Integer.toHexString(r.nextInt()));
         }
         return sb.toString().substring(0, 7);
+    }
+
+    public void toAccount(View v) {
+        Intent i;
+        Bundle bundle = new Bundle();
+        i = new Intent(MessageActivity.this, UserAccount.class);
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 }
 

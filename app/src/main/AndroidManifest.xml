@@ -16,12 +16,12 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".MessageInbox"
-            android:label="@string/title_activity_message_inbox"
+            android:label="Message Inbox"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreatePost"
-            android:label="@string/title_activity_create_post"
+            android:label="Create Post"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -40,17 +40,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomePage"
-            android:label="@string/title_activity_home_page"
+            android:label="Feed"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Signup"
-            android:label="Signup"
+            android:label="Sign Up"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserAccount"
-            android:label="@string/title_activity_user_account"
+            android:label="Account"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

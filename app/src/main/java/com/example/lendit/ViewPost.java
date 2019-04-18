@@ -51,4 +51,8 @@ public class ViewPost extends AppCompatActivity {
         startActivity(i);
 
     }
+
+    public void closePost(View v) {
+        this.finish();
+    }
 }

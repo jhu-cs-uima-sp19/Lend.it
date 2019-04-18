@@ -55,7 +55,7 @@ public class MessageInbox extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.message_inbox, menu);
+        //getMenuInflater().inflate(R.menu.message_inbox, menu);
         return true;
     }
 
@@ -72,6 +72,15 @@ public class MessageInbox extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void toAccount(View v) {
+        Intent i;
+        Bundle bundle = new Bundle();
+        i = new Intent(MessageInbox.this, UserAccount.class);
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

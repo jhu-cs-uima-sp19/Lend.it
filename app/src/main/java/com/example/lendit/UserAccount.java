@@ -81,9 +81,9 @@ public class UserAccount extends AppCompatActivity {
         numPosts = findViewById(R.id.myPostsNumTxt);
         mListView = findViewById(R.id.listViewProfileLends);
         pf = findViewById(R.id.profilePic);
-
+        pf.setImageResource(R.drawable.profile);
         // display name
-        name.setText(username);
+       // name.setText(username);
 
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
