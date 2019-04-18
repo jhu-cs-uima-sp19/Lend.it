@@ -34,8 +34,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cup" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toStartOf="@+id/posted_by_TV"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
         android:id="@+id/itemName"
@@ -45,7 +55,6 @@
         android:layout_marginLeft="24dp"
         android:layout_marginEnd="309dp"
         android:layout_marginRight="309dp"
-        android:text="Cup"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -58,32 +67,28 @@
 
     <TextView
         android:id="@+id/posted_by_TV"
-        android:layout_width="189dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_width="116dp"
+        android:layout_height="22dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="320dp"
         android:layout_marginRight="320dp"
-        android:text=" Posted By: Mary Joseph"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePic"
         app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
         android:id="@+id/building_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Charles Commons"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
+        android:layout_marginEnd="8dp"
         android:textColor="#202020"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
+        app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
+        tools:layout_editor_absoluteY="419dp" />
 
     <TextView
         android:id="@+id/item_descrip_label"
@@ -104,16 +109,16 @@
 
     <TextView
         android:id="@+id/item_descrip_text"
-        android:layout_width="253dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginRight="132dp"
-        android:text="Come use my really cool CS cup!"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:textColor="#202020"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_label" />
 
@@ -121,8 +126,6 @@
         android:id="@+id/message_giver"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
         android:layout_marginTop="123dp"
         android:layout_marginBottom="97dp"
         android:background="@color/green"
@@ -130,28 +133,11 @@
         android:text="Message"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text"
-        app:layout_constraintVertical_bias="0.477" />
-
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="57dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="32dp"
-        android:background="@color/green"
-        android:onClick="closePost"
-        android:text="x"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/message_giver" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,9 @@
 package com.example.lendit;
 
-public class PostCard {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PostCard implements Parcelable {
 
     private String imgURL;
     private String postTitle;
@@ -21,6 +24,16 @@ public class PostCard {
         this.description = desc;
     }
 
+    PostCard(Parcel p){
+        this.imgURL = p.readString();
+        this.postTitle = p.readString();
+        this.personName = p.readString();
+        this.building = p.readString();
+        this.profileImgURL = p.readString();
+        this.deposit = p.readString();
+        this.description = p.readString();
+    }
+
     // Constructor for ask
     PostCard(String item, String person, String building, String profile, String desc){
         this.postTitle = item;
@@ -33,6 +46,32 @@ public class PostCard {
         // default deposit amount - will never be accessed
         this.deposit = "0";
     }
+
+    @Override
+    public int describeContents() {return 0;}
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        // out.writeBundle(new (this.imgURL, this.postTitle, this.personName, this.building, this.profileImgURL, this.deposit, this.description));
+        out.writeString(this.imgURL);
+        out.writeString(this.postTitle);
+        out.writeString(this.personName);
+        out.writeString(this.building);
+        out.writeString(this.profileImgURL);
+        out.writeString(this.deposit);
+        out.writeString(this.description);
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<PostCard> CREATOR = new Parcelable.Creator<PostCard>() {
+        public PostCard createFromParcel(Parcel in) {
+            return new PostCard(in);
+        }
+
+        public PostCard[] newArray(int size) {
+            return new PostCard[size];
+        }
+    };
 
     public String getImgURL() {
         return imgURL;
