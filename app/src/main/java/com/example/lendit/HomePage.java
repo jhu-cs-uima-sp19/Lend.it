@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -162,7 +163,7 @@ public class HomePage extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Intent i;
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
 
 
         int id = item.getItemId();
@@ -182,7 +183,23 @@ public class HomePage extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_lends) {
 
+        }  else if (id == R.id.nav_logout)  {
+            i = new Intent(HomePage.this, MainActivity.class);
+            startActivity(i);
+
         }
+//        Button logout = (Button) findViewById(R.id.logoutBTN);
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent j = new Intent(HomePage.this, MainActivity.class);
+//                //j.putExtras(bundle);
+//                startActivity(j);
+//                //bundle.clear();
+//
+//            }
+//        });
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

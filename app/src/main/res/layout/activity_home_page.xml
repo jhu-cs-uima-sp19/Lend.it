@@ -14,13 +14,37 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
+
+
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home_page"
-        app:menu="@menu/activity_home_page_drawer" />
+        app:menu="@menu/activity_home_page_drawer">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:orientation="vertical"-->
+        <!--android:padding="16dp">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/logoutBTN"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:text="LogOut" />-->
+    <!--</LinearLayout>-->
+    </android.support.design.widget.NavigationView>
+
+
+
+
+
+
+
 
 
     <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
