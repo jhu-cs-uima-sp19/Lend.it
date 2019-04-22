@@ -12,9 +12,10 @@ public class PostCard implements Parcelable {
     private String profileImgURL;
     private String deposit;
     private String description;
+    private String username;
 
     // Constructor for lend
-    PostCard(String img, String item, String person, String building, String profile, String dep, String desc){
+    PostCard(String img, String item, String person, String building, String profile, String dep, String desc, String u){
         this.imgURL = "lendImages/" + img;
         this.postTitle = item;
         this.personName = person;
@@ -22,6 +23,7 @@ public class PostCard implements Parcelable {
         this.profileImgURL = profile;
         this.deposit = dep;
         this.description = desc;
+        this.username = u;
     }
 
     PostCard(Parcel p){
@@ -32,10 +34,11 @@ public class PostCard implements Parcelable {
         this.profileImgURL = p.readString();
         this.deposit = p.readString();
         this.description = p.readString();
+        this.username = p.readString();
     }
 
     // Constructor for ask
-    PostCard(String item, String person, String building, String profile, String desc){
+    PostCard(String item, String person, String building, String profile, String desc, String u){
         this.postTitle = item;
         this.personName = person;
         this.building = building;
@@ -45,6 +48,7 @@ public class PostCard implements Parcelable {
         this.imgURL = "appImages/opploans-how-to-lend-to-family.jpeg";
         // default deposit amount - will never be accessed
         this.deposit = "0";
+        this.username = u;
     }
 
     @Override
@@ -52,7 +56,6 @@ public class PostCard implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        // out.writeBundle(new (this.imgURL, this.postTitle, this.personName, this.building, this.profileImgURL, this.deposit, this.description));
         out.writeString(this.imgURL);
         out.writeString(this.postTitle);
         out.writeString(this.personName);
@@ -60,6 +63,7 @@ public class PostCard implements Parcelable {
         out.writeString(this.profileImgURL);
         out.writeString(this.deposit);
         out.writeString(this.description);
+        out.writeString(this.username);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -126,5 +130,13 @@ public class PostCard implements Parcelable {
 
     public void setDescription(String desc) {
         this.description = desc;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String u) {
+        this.username = u;
     }
 }

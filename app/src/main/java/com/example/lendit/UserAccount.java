@@ -130,10 +130,10 @@ public class UserAccount extends AppCompatActivity {
                     //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         Map<String, Object> d = s.getData();
-                        cardList.add(new PostCard(d.get("photoID").toString(), d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("deposit").toString(), d.get("description").toString()));
+                        cardList.add(new PostCard(d.get("photoID").toString(), d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("deposit").toString(), d.get("description").toString(), d.get("username").toString()));
                     }
 
-                    CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, cardList);
+                    CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
@@ -153,10 +153,10 @@ public class UserAccount extends AppCompatActivity {
                     //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         Map<String, Object> d = s.getData();
-                        cardList.add(new PostCard(d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("description").toString()));
+                        cardList.add(new PostCard(d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("description").toString(), d.get("username").toString()));
                     }
 
-                    CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, cardList);
+                    CustomListAdapter adapter = new CustomListAdapter(UserAccount.this, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {

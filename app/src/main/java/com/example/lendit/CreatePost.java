@@ -70,7 +70,6 @@ public class CreatePost extends AppCompatActivity {
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-
                 profileData = documentSnapshot.getData();
                 userInfoBundle.put("username", username);
                 userInfoBundle.put("profileImg", profileData.get("profileImg").toString());
