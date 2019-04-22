@@ -116,6 +116,7 @@ public class UserAccount extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 profileData = documentSnapshot.getData();
+                name.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
                 building.setText(profileData.get("building").toString());
                 //number of neighbors: are we querying a list of usernames stored in user data or just querying for all with same building field
                 // numNeighbors.setText(data.get().toString());
@@ -197,7 +198,7 @@ public class UserAccount extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
+        getMenuInflater().inflate(R.menu.user_account, menu);
         return true;
     }
 
@@ -207,11 +208,12 @@ public class UserAccount extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_mode_close_button) {
+            UserAccount.this.finish();
             return true;
         }
+
+        //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
     }

@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +48,10 @@ public class HomePage extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView = navigationView.getHeaderView(0);
+        TextView navUser = (TextView) hView.findViewById(R.id.titleTXT);
+//ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
+        navUser.setText(username);
 
 
     }
@@ -132,7 +138,7 @@ public class HomePage extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
+        //getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
     }
 
@@ -144,9 +150,9 @@ public class HomePage extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
