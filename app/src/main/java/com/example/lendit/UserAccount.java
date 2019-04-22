@@ -185,6 +185,15 @@ public class UserAccount extends AppCompatActivity {
 //        }
 
     }
+
+    public void editProfile(View v) {
+
+        Intent i = new Intent(UserAccount.this, UserAccountEditable.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
