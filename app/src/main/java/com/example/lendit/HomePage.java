@@ -151,6 +151,16 @@ public class HomePage extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void toAccount(View v) {
+        Intent i;
+        final Bundle bundle = new Bundle();
+        i = new Intent(HomePage.this, UserAccount.class);
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
