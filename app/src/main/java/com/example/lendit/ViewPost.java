@@ -2,7 +2,6 @@ package com.example.lendit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,16 +32,16 @@ public class ViewPost extends AppCompatActivity {
         username = i.getStringExtra("username");
 
         TextView title = findViewById(R.id.itemName);
-        title.setText(p.getPostTitle());
+        title.setText(p.postTitle);
         TextView name = findViewById(R.id.posted_by_TV);
-        name.setText(p.getPersonName());
+        name.setText(p.personName);
         TextView building = findViewById(R.id.building_tv);
-        building.setText(p.getBuilding());
+        building.setText(p.building);
         TextView description = findViewById(R.id.item_descrip_text);
-        description.setText(p.getDescription());
+        description.setText(p.description);
         // if posted by you, make button invisible and unclickable
         Button message = findViewById(R.id.message_giver);
-        if (username.equals(p.getUsername())) {
+        if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
         } else {
@@ -52,17 +51,17 @@ public class ViewPost extends AppCompatActivity {
 
         TextView deposit = findViewById(R.id.deposit_TV);
         // if deposit is 0, don't show field (for asks and for lends)
-        if (p.getDeposit() == "0") {
+        if (p.deposit == "0") {
             deposit.setVisibility(View.INVISIBLE);
         } else {
             deposit.setVisibility(View.VISIBLE);
-            deposit.setText(p.getDeposit());
+            deposit.setText(p.deposit);
         }
 
         final ImageView profile = findViewById(R.id.profilePic);
         final ImageView pic = findViewById(R.id.uploadedPic);
         final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.child(p.getImgURL()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -74,7 +73,7 @@ public class ViewPost extends AppCompatActivity {
                 // Handle any errors
             }
         });
-        storageRef.child(p.getProfileImg()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

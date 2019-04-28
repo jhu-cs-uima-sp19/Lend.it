@@ -53,8 +53,6 @@ public class HomePage extends AppCompatActivity
         TextView navUser = (TextView) hView.findViewById(R.id.titleTXT);
 //ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
         navUser.setText(username);
-
-
     }
 
     public void createPost(View view) {
@@ -88,7 +86,7 @@ public class HomePage extends AppCompatActivity
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString(), username));
                     }
-                    CustomListAdapter adapter = new CustomListAdapter(H, cardList, username);
+                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
@@ -108,7 +106,7 @@ public class HomePage extends AppCompatActivity
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), username));
                     }
-                    CustomListAdapter adapter = new CustomListAdapter(H, cardList, username);
+                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
@@ -121,11 +119,6 @@ public class HomePage extends AppCompatActivity
         });
     }
 
-       /* dummy data for testing
-        cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-        cardList.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-        cardList.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

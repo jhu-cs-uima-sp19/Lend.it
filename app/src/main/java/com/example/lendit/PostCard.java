@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 public class PostCard implements Parcelable {
 
-    private String imgURL;
-    private String postTitle;
-    private String personName;
-    private String building;
-    private String profileImgURL;
-    private String deposit;
-    private String description;
-    private String username;
+    public String imgURL;
+    public String postTitle;
+    public String personName;
+    public String building;
+    public String profileImgURL;
+    public String deposit;
+    public String description;
+    public String username;
 
     // Constructor for lend
     PostCard(String img, String item, String person, String building, String profile, String dep, String desc, String u){
@@ -76,67 +76,4 @@ public class PostCard implements Parcelable {
             return new PostCard[size];
         }
     };
-
-    public String getImgURL() {
-        return imgURL;
-    }
-
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String itemName) {
-        this.postTitle = itemName;
-    }
-
-    public String getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(String personName) {
-        this.personName = personName;
-    }
-
-    public String getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(String b) {
-        this.building = b;
-    }
-
-    public String getProfileImg() {
-        return profileImgURL;
-    }
-
-    public void setProfileImgURL(String img) {
-        this.profileImgURL = img;
-    }
-    public String getDeposit() {
-        return this.deposit;
-    }
-
-    public void setDeposit(String d) {
-        this.deposit = d;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String desc) {
-        this.description = desc;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String u) {
-        this.username = u;
-    }
 }
