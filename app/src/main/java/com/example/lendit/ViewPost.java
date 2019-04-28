@@ -34,8 +34,8 @@ public class ViewPost extends AppCompatActivity {
 
         TextView title = findViewById(R.id.itemName);
         title.setText(p.getPostTitle());
-        TextView username = findViewById(R.id.posted_by_TV);
-        username.setText(p.getPersonName());
+        TextView name = findViewById(R.id.posted_by_TV);
+        name.setText(p.getPersonName());
         TextView building = findViewById(R.id.building_tv);
         building.setText(p.getBuilding());
         TextView description = findViewById(R.id.item_descrip_text);
@@ -45,6 +45,18 @@ public class ViewPost extends AppCompatActivity {
         if (username.equals(p.getUsername())) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
+        } else {
+            message.setClickable(true);
+            message.setVisibility(View.VISIBLE);
+        }
+
+        TextView deposit = findViewById(R.id.deposit_TV);
+        // if deposit is 0, don't show field (for asks and for lends)
+        if (p.getDeposit() == "0") {
+            deposit.setVisibility(View.INVISIBLE);
+        } else {
+            deposit.setVisibility(View.VISIBLE);
+            deposit.setText(p.getDeposit());
         }
 
         final ImageView profile = findViewById(R.id.profilePic);
