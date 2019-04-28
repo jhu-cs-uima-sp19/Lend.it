@@ -14,6 +14,12 @@
             android:label="@string/title_activity_other_user_account"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".NeighborList"
+            android:label="My Neighbors"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MessageInbox"
             android:label="Message Inbox"

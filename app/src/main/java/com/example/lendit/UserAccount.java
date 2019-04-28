@@ -145,6 +145,13 @@ public class UserAccount extends AppCompatActivity {
             }
         });
 
+        numNeighbors.setClickable(true);
+        numNeighbors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toNeighborList();
+            }
+        });
     }
 
     public void toNeighborList() {

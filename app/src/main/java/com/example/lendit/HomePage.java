@@ -84,7 +84,7 @@ public class HomePage extends AppCompatActivity
                     Log.d(TAG, "task successful");
                     String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString(), username));
+                        cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString(), s.getData().get("username").toString()));
                     }
                     PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
@@ -104,7 +104,7 @@ public class HomePage extends AppCompatActivity
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task successful lends");
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), username));
+                        cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString()));
                     }
                     PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
@@ -191,18 +191,6 @@ public class HomePage extends AppCompatActivity
             startActivity(i);
 
         }
-//        Button logout = (Button) findViewById(R.id.logoutBTN);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent j = new Intent(HomePage.this, MainActivity.class);
-//                //j.putExtras(bundle);
-//                startActivity(j);
-//                //bundle.clear();
-//
-//            }
-//        });
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
