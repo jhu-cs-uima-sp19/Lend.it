@@ -9,8 +9,7 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    tools:context=".HomePage">
+    android:paddingTop="16dp">
 
 
     <android.support.v7.widget.CardView

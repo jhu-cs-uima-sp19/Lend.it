@@ -16,7 +16,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import android.content.Intent;
 
-public class CustomListAdapter extends ArrayAdapter<PostCard> {
+public class PostCardListAdapter extends ArrayAdapter<PostCard> {
     private static final String TAG = "CustomListAdapter";
     private final ArrayList<PostCard> posts;
     private Context context;
@@ -24,7 +24,7 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    public CustomListAdapter(Context c, ArrayList<PostCard> objects, String u) {
+    public PostCardListAdapter(Context c, ArrayList<PostCard> objects, String u) {
         super(c, 0, objects);
         this.context = c;
         this.posts = objects;
@@ -60,11 +60,11 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.titleTxt.setText(p.getPostTitle());
-        holder.personTxt.setText(p.getPersonName());
-        holder.buildingTxt.setText(p.getBuilding());
+        holder.titleTxt.setText(p.postTitle);
+        holder.personTxt.setText(p.personName);
+        holder.buildingTxt.setText(p.building);
         final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.child(p.getImgURL()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -76,7 +76,7 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
                 // Handle any errors
             }
         });
-        storageRef.child(p.getProfileImg()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -132,14 +132,3 @@ public class CustomListAdapter extends ArrayAdapter<PostCard> {
         context.startActivity(i);
     }
 }
-            /* dummy data
-            personTxt.setText(person);
-            if (person.equals("Ryan")) {
-                postImgView.setImageResource(R.drawable.bath);
-            } else if (person.equals("Taryn")) {
-                postImgView.setImageResource(R.drawable.kitchen);
-            } else if (person.equals("Ravina")) {
-                postImgView.setImageResource(R.drawable.stove);
-            }
-            profilePicView.setImageResource(R.drawable.ic_person_black_24dp);
-*/
