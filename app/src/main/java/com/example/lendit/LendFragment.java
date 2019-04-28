@@ -119,7 +119,7 @@ public class LendFragment extends Fragment {
                 Log.w(TAG, "Error writing document", e);
             }
         });
-        getActivity().finish();
+        //getActivity().finish();
     }
 
     /**

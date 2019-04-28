@@ -23,4 +23,5 @@
     <string name="toast_message">Hurra!</string>
     <string name="input_placeholder">Write a message</string>
     <string name="title_activity_create_lend_transaction">CreateLendTransaction</string>
+    <string name="title_activity_view_lend_transaction">ViewLendTransaction</string>
 </resources>
