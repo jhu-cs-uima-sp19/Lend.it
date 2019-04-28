@@ -60,7 +60,7 @@ public class CreatePost extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         username = b.getString("username");
-        Log.d(TAG, "username: " + username);
+        //Log.d(TAG, "username: " + username);
 
     }
 
