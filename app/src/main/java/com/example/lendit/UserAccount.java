@@ -162,7 +162,7 @@ public class UserAccount extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_time").toString()));
+                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_time").toString()));
                     }
                     PostCardListAdapter adapter = new PostCardListAdapter(activity, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
