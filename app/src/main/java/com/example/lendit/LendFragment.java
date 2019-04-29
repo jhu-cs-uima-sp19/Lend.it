@@ -50,7 +50,7 @@ public class LendFragment extends Fragment {
         createLend = rootView.findViewById(R.id.createLendBTN);
         lendTitle = rootView.findViewById(R.id.lendTitleET);
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
-        deposit = rootView.findViewById(R.id.depositET);
+        deposit = rootView.findViewById(R.id.depET);
         display = rootView.findViewById(R.id.displayIV);
         activity = (CreatePost) getActivity();
 

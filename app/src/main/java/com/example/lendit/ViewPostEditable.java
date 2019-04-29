@@ -9,31 +9,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.UUID;
 
 public class ViewPostEditable extends AppCompatActivity {
@@ -70,7 +62,7 @@ public class ViewPostEditable extends AppCompatActivity {
         apply = (Button) findViewById(R.id.applyChangesBTN);
         cancel = (Button) findViewById(R.id.cancelBTN);
         desc = (EditText) findViewById(R.id.item_descrip_text);
-        deposit = (EditText) findViewById(R.id.depositET);
+        deposit = (EditText) findViewById(R.id.depET);
         title = (EditText) findViewById(R.id.title_ET);
         img = (ImageView) findViewById(R.id.editablePostImage);
         img.setOnClickListener(new View.OnClickListener() {

@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lendAddPhotoBTN" />-->
 
     <EditText
-        android:id="@+id/depositET"
+        android:id="@+id/depET"
         android:layout_width="128dp"
         android:layout_height="71dp"
         android:layout_marginRight="16dp"
@@ -129,7 +129,7 @@
         android:layout_marginTop="32dp"
         android:text="Deposit Amount (optional)"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/depositET"
+        app:layout_constraintEnd_toStartOf="@+id/depET"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lendDescriptionET" />
 

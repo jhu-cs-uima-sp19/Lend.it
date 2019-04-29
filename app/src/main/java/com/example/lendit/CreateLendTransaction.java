@@ -75,10 +75,15 @@ public class CreateLendTransaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_lend_transaction);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Intent i = getIntent();
         p = i.getParcelableExtra("post");
         username = i.getStringExtra("username");
+
+        createLendRequest = findViewById(R.id.createRequest);
 
         deposit = findViewById(R.id.depositET);
         deposit.setText(p.deposit);
@@ -104,9 +109,7 @@ public class CreateLendTransaction extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_create_lend_transaction);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         selectFrom = findViewById(R.id.borrowDate);
         selectTo = findViewById(R.id.returnDate);

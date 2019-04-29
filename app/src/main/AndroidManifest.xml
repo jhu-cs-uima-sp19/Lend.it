@@ -14,7 +14,7 @@
         <activity
             android:name=".TransactionLog"
             android:label="@string/title_activity_transaction_log"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreateLendTransaction"
             android:label="Create Lend Transaction"
