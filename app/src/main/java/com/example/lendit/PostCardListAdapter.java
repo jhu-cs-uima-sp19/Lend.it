@@ -11,9 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
+import java.util.Map;
+
 import android.content.Intent;
 
 public class PostCardListAdapter extends ArrayAdapter<PostCard> {
@@ -23,6 +27,7 @@ public class PostCardListAdapter extends ArrayAdapter<PostCard> {
     private String username;
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public PostCardListAdapter(Context c, ArrayList<PostCard> objects, String u) {
         super(c, 0, objects);
@@ -61,31 +66,39 @@ public class PostCardListAdapter extends ArrayAdapter<PostCard> {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.titleTxt.setText(p.postTitle);
-        holder.personTxt.setText(p.personName);
-        holder.buildingTxt.setText(p.building);
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.postImgView.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-        storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.profilePicView.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Map<String, Object>  profileData = documentSnapshot.getData();
+                holder.personTxt.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
+                holder.buildingTxt.setText(profileData.get("building").toString());
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        holder.postImgView.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+
+                storageRef.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        holder.profilePicView.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
             }
         });
 

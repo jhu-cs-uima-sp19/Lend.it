@@ -7,7 +7,6 @@ public class PostCard implements Parcelable {
 
     public String imgURL;
     public String postTitle;
-    public String personName;
     public String deposit;
     public String description;
     public String username;
