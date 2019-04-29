@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,14 +59,16 @@ public class CreateLendTransaction extends AppCompatActivity {
     final String TAG = "CreateLendTransaction";
     StorageReference storage = FirebaseStorage.getInstance().getReference();
     private Context context = this;
+    String username;
+    PostCard p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
-        PostCard p = i.getParcelableExtra("post");
-        String username = i.getStringExtra("username");
+        p = i.getParcelableExtra("post");
+        username = i.getStringExtra("username");
 
         setContentView(R.layout.activity_create_lend_transaction);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,6 +85,7 @@ public class CreateLendTransaction extends AppCompatActivity {
         fromTime = findViewById(R.id.fromTimeTxt);
         toTime = findViewById(R.id.toTimeTxt);
 
+        // from date
         selectFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +105,7 @@ public class CreateLendTransaction extends AppCompatActivity {
             }
         });
 
+        // to date
         selectTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +124,7 @@ public class CreateLendTransaction extends AppCompatActivity {
             }
         });
 
+        // from time
         selectTimeFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +139,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                         } else {
                             amPm = "AM";
                         }
-                        fromTime.setText(String.format("%2d:%2d", hourOfDay, minute) + amPm);
+                        fromTime.setText(String.format("%2d:%2d ", hourOfDay, minute) + amPm);
                     }
                 }
                         , currHour, currMin, false);
@@ -141,6 +147,7 @@ public class CreateLendTransaction extends AppCompatActivity {
             }
         });
 
+        // to time
         selectTimeTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +162,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                         } else {
                             amPm = "AM";
                         }
-                        toTime.setText(String.format("%2d:%2d", hourOfDay, minute) + amPm);
+                        toTime.setText(String.format("%2d:%2d ", hourOfDay, minute) + amPm);
                     }
                 }
                         , currHour, currMin, false);
@@ -176,7 +183,12 @@ public class CreateLendTransaction extends AppCompatActivity {
     public void createRequest(View v) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> request = new HashMap<String, Object>();
-        //request.put("")
+        request.put("borrower", username);
+        request.put("lender", p.username);
+        request.put("postID", p.postID);
+        //hh:mm
+        //request.put("from", new Date());
+        //request.put("to", );
 
         db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
