@@ -132,7 +132,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                fromDate.setText((month + 1) + "/" + dayOfMonth  + "/" + year);
+                                fromDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
                             }
                         }, year, month, day);
                 datePickerFrom.show();
@@ -151,7 +151,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                toDate.setText((month + 1) + "/" + dayOfMonth  + "/" + year);
+                                toDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
                             }
                         }, year, month, day);
                 datePickerTo.show();
@@ -193,23 +193,23 @@ public class CreateLendTransaction extends AppCompatActivity {
                 timePick.show();
             }
         });
+
+        createLendRequest.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               createRequest();
+            }
+        });
     }
 
 
-//        createLendRequest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                createRequest();
-//            }
-//        });
-
-
-    public void createRequest(View v) {
+    public void createRequest() {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> request = new HashMap<String, Object>();
         request.put("borrower", username);
         request.put("lender", p.username);
         request.put("postID", p.postID);
+        request.put("deposit", deposit.getText().toString());
 
         String pattern = "mm/dd/yyyy hh:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
