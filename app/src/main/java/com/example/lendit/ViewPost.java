@@ -2,6 +2,7 @@ package com.example.lendit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ public class ViewPost extends AppCompatActivity {
     String username;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> profileData;
+    Map<String, Object> postData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class ViewPost extends AppCompatActivity {
         TextView description = findViewById(R.id.item_descrip_text);
         description.setText(p.description);
 
-        TextView name = findViewById(R.id.posted_by_TV);
+        final TextView name = findViewById(R.id.posted_by_TV);
         TextView building = findViewById(R.id.building_tv);
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -51,8 +53,31 @@ public class ViewPost extends AppCompatActivity {
                 profileData = documentSnapshot.getData();
             }
         });
-        name.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
-        building.setText(profileData.get("building").toString());
+
+        final ImageView profile = findViewById(R.id.profilePic);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        db.collection("users").document(p.username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                postData = documentSnapshot.getData();
+                name.setText(postData.get("first").toString() + " " + postData.get("last").toString());
+                Log.d(TAG, postData.get("first").toString());
+                storageRef.child(postData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        profile.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+        });
+
+        //building.setText(postData.get("building").toString());
 
         // if posted by you, make button invisible and unclickable
         Button requestTransaction = findViewById(R.id.requestTransaction);
@@ -83,9 +108,9 @@ public class ViewPost extends AppCompatActivity {
             deposit.setText(p.deposit);
         }
 
-        final ImageView profile = findViewById(R.id.profilePic);
+
         final ImageView pic = findViewById(R.id.uploadedPic);
-        final long ONE_MEGABYTE = 1024 * 1024;
+
         storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -98,18 +123,7 @@ public class ViewPost extends AppCompatActivity {
                 // Handle any errors
             }
         });
-        storageRef.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                profile.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+
 
 
         requestTransaction.setOnClickListener(new View.OnClickListener() {

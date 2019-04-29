@@ -72,6 +72,7 @@ public class PostCardListAdapter extends ArrayAdapter<PostCard> {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object>  profileData = documentSnapshot.getData();
                 holder.buildingTxt.setText(profileData.get("building").toString());
+                holder.personTxt.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
                 final long ONE_MEGABYTE = 1024 * 1024;
                 storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override

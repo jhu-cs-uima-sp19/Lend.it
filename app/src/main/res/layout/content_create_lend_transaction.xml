@@ -208,7 +208,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/borrowerET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
         app:layout_constraintStart_toEndOf="@+id/borrowerTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/itemET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
         app:layout_constraintStart_toEndOf="@+id/titleTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/lenderET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
