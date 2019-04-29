@@ -150,9 +150,8 @@ public class ViewPost extends AppCompatActivity {
 
     public void editPost(View v) {
         Intent i = new Intent(ViewPost.this, ViewPostEditable.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        i.putExtras(bundle);
+        i.putExtra("username", username);
+        i.putExtra("post", p);
         startActivity(i);
     }
 

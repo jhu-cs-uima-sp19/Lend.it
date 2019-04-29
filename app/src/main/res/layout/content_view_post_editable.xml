@@ -8,6 +8,18 @@
     tools:context=".ViewPostEditable"
     tools:showIn="@layout/activity_view_post_editable">
 
+    <ImageView
+        android:id="@+id/editablePostImage"
+        android:layout_width="362dp"
+        android:layout_height="242dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginBottom="39dp"
+        app:layout_constraintBottom_toTopOf="@+id/itemName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/applyChangesBTN"
         android:layout_width="213dp"
