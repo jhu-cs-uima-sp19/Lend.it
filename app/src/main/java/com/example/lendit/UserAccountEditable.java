@@ -47,7 +47,7 @@ public class UserAccountEditable extends AppCompatActivity {
     Map<String, Object> profileData;
 
     private static final String TAG = "UserAccountEditableActivity";
-    String photo = "appImages/add-picture-icon-13.png";
+    String photo = "";
     Bitmap bitmap;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
 
@@ -132,6 +132,7 @@ public class UserAccountEditable extends AppCompatActivity {
     public void makeChanges() {
         //make database changes
         DocumentReference ref = db.collection("users").document(username);
+        uploadPhoto();
         ref.update("first", first.getText().toString());
         ref.update("last", last.getText().toString());
         ref.update("building", building.getSelectedItem().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -153,7 +154,7 @@ public class UserAccountEditable extends AppCompatActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-        UploadTask uploadTask = storage.child("lendImages/" + photo).putBytes(data);
+        UploadTask uploadTask = storage.child("profileImages/" + photo).putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

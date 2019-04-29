@@ -60,15 +60,13 @@ public class AskFragment extends Fragment {
         ask.put("description", askDesc.getText().toString());
         ask.put("id", uniqueID);
         ask.put("post_date", Calendar.getInstance().getTime());
-
+        ask.put("deposit", "0");
         ask.put("username", userData.get("username"));
-        ask.put("fullName", userData.get("fullName"));
-        ask.put("building", userData.get("building"));
-        ask.put("profileImg", userData.get("profileImg"));
+        ask.put("photo", "appImages/opploans-how-to-lend-to-family.jpeg");
 
         // get username from intent that launched this activity?
         // profile.put("username", );
-        db.collection("asks").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("posts").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");

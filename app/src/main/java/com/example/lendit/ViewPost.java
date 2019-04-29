@@ -14,14 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Map;
 
 public class ViewPost extends AppCompatActivity {
     private static String TAG = "ViewPostActivity";
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     PostCard p;
     String username;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Map<String, Object> profileData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +39,37 @@ public class ViewPost extends AppCompatActivity {
 
         TextView title = findViewById(R.id.itemName);
         title.setText(p.postTitle);
-        TextView name = findViewById(R.id.posted_by_TV);
-        name.setText(p.personName);
-        TextView building = findViewById(R.id.building_tv);
-        building.setText(p.building);
+
         TextView description = findViewById(R.id.item_descrip_text);
-        Button requestTransaction = findViewById(R.id.requestTransaction);
         description.setText(p.description);
+
+        TextView name = findViewById(R.id.posted_by_TV);
+        TextView building = findViewById(R.id.building_tv);
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileData = documentSnapshot.getData();
+            }
+        });
+        name.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
+        building.setText(profileData.get("building").toString());
+
         // if posted by you, make button invisible and unclickable
+        Button requestTransaction = findViewById(R.id.requestTransaction);
         Button message = findViewById(R.id.message_giver);
         Button editPost = findViewById(R.id.editPostBTN);
         if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
+            requestTransaction.setClickable(false);
+            requestTransaction.setVisibility(View.INVISIBLE);
             editPost.setClickable(true);
             editPost.setVisibility(View.VISIBLE);
         } else {
             message.setClickable(true);
             message.setVisibility(View.VISIBLE);
+            requestTransaction.setClickable(true);
+            requestTransaction.setVisibility(View.VISIBLE);
             editPost.setClickable(false);
             editPost.setVisibility(View.INVISIBLE);
         }
@@ -79,7 +98,7 @@ public class ViewPost extends AppCompatActivity {
                 // Handle any errors
             }
         });
-        storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -106,14 +125,6 @@ public class ViewPost extends AppCompatActivity {
 
     }
 
-    public void editPost(View v) {
-        Intent i = new Intent(ViewPost.this, ViewPostEditable.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        i.putExtras(bundle);
-        startActivity(i);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -135,6 +146,14 @@ public class ViewPost extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void editPost(View v) {
+        Intent i = new Intent(ViewPost.this, ViewPostEditable.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     public void sendMSG(View v) {

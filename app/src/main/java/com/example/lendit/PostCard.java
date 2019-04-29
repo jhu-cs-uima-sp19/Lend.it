@@ -8,47 +8,30 @@ public class PostCard implements Parcelable {
     public String imgURL;
     public String postTitle;
     public String personName;
-    public String building;
-    public String profileImgURL;
     public String deposit;
     public String description;
     public String username;
+    public String postID;
+    public String date;
 
-    // Constructor for lend
-    PostCard(String img, String item, String person, String building, String profile, String dep, String desc, String u){
-        this.imgURL = "lendImages/" + img;
+    PostCard(String img, String item, String dep, String desc, String u, String id, String d){
+        this.imgURL = img;
         this.postTitle = item;
-        this.personName = person;
-        this.building = building;
-        this.profileImgURL = profile;
         this.deposit = dep;
         this.description = desc;
         this.username = u;
+        this.postID = id;
+        this.date = d;
     }
 
     PostCard(Parcel p){
         this.imgURL = p.readString();
         this.postTitle = p.readString();
-        this.personName = p.readString();
-        this.building = p.readString();
-        this.profileImgURL = p.readString();
         this.deposit = p.readString();
         this.description = p.readString();
         this.username = p.readString();
-    }
-
-    // Constructor for ask
-    PostCard(String item, String person, String building, String profile, String desc, String u){
-        this.postTitle = item;
-        this.personName = person;
-        this.building = building;
-        this.profileImgURL = profile;
-        this.description = desc;
-        // default ask image
-        this.imgURL = "appImages/opploans-how-to-lend-to-family.jpeg";
-        // default deposit amount - will never be accessed
-        this.deposit = "0";
-        this.username = u;
+        this.postID = p.readString();
+        this.date = p.readString();
     }
 
     @Override
@@ -58,12 +41,11 @@ public class PostCard implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(this.imgURL);
         out.writeString(this.postTitle);
-        out.writeString(this.personName);
-        out.writeString(this.building);
-        out.writeString(this.profileImgURL);
         out.writeString(this.deposit);
         out.writeString(this.description);
         out.writeString(this.username);
+        out.writeString(this.postID);
+        out.writeString(this.date);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods

@@ -100,15 +100,13 @@ public class LendFragment extends Fragment {
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
-        lend.put("deposit", deposit.getText().toString());
         lend.put("id", uniqueID);
-        lend.put("photoID", photo);
         lend.put("post_date", Calendar.getInstance().getTime());
+        lend.put("deposit", deposit.getText().toString());
         lend.put("username", userData.get("username"));
-        lend.put("fullName", userData.get("fullName"));
-        lend.put("building", userData.get("building"));
-        lend.put("profileImg", userData.get("profileImg"));
-        db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
+        lend.put("photo", "lendImages/" + photo);
+
+        db.collection("posts").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");

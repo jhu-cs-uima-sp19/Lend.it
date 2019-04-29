@@ -46,6 +46,7 @@ public class UserAccount extends AppCompatActivity {
     ArrayList<UserCard> userCards = new ArrayList();
     QuerySnapshot neighborData;
     int count = 0;
+    UserAccount activity;
 
 
     @Override
@@ -152,44 +153,18 @@ public class UserAccount extends AppCompatActivity {
             }
 
         });
+
         // get users' lend data (most recent at top)
         /*orderBy("post_date", Query.Direction.DESCENDING)*/
-        db.collection("lends").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("posts").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    //String practiceImg = "gs6://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
+                    Log.d(TAG, "task successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        Map<String, Object> d = s.getData();
-                        count++;
-                        cardList.add(new PostCard(d.get("photoID").toString(), d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("deposit").toString(), d.get("description").toString(), d.get("username").toString()));
+                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_time").toString()));
                     }
-
-                    PostCardListAdapter adapter = new PostCardListAdapter(UserAccount.this, cardList, username);
-                    if ((adapter != null) && (mListView != null)) {
-                        mListView.setAdapter(adapter);
-                    } else {
-                        System.out.println("Null Reference");
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-
-        // get users' ask data (most recent at top)
-        db.collection("asks").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    for (QueryDocumentSnapshot s : task.getResult()) {
-                        Map<String, Object> d = s.getData();
-                        cardList.add(new PostCard(d.get("title").toString(), d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("description").toString(), d.get("username").toString()));
-                        count++;
-                    }
-
-                    PostCardListAdapter adapter = new PostCardListAdapter(UserAccount.this, cardList, username);
+                    PostCardListAdapter adapter = new PostCardListAdapter(activity, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
