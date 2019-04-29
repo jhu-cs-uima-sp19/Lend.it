@@ -1,5 +1,6 @@
 package com.example.lendit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,7 +47,7 @@ public class UserAccount extends AppCompatActivity {
     ArrayList<UserCard> userCards = new ArrayList();
     QuerySnapshot neighborData;
     int count = 0;
-    UserAccount activity;
+    Context context = this;
 
 
     @Override
@@ -164,7 +165,7 @@ public class UserAccount extends AppCompatActivity {
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_time").toString()));
                     }
-                    PostCardListAdapter adapter = new PostCardListAdapter(activity, cardList, username);
+                    PostCardListAdapter adapter = new PostCardListAdapter(context, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
