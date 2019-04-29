@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +52,10 @@ public class CreateLendTransaction extends AppCompatActivity {
     Button selectTimeFrom;
     Button selectTimeTo;
     Button createLendRequest;
+    EditText deposit;
+    TextView borrower;
+    TextView lender;
+    TextView item;
     int year;
     int month;
     int day;
@@ -63,6 +69,8 @@ public class CreateLendTransaction extends AppCompatActivity {
     private Context context = this;
     String username;
     PostCard p;
+    Map<String, Object> profileData;
+    Map<String, Object> postData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,30 @@ public class CreateLendTransaction extends AppCompatActivity {
         Intent i = getIntent();
         p = i.getParcelableExtra("post");
         username = i.getStringExtra("username");
+
+        deposit = findViewById(R.id.depositET);
+        deposit.setText(p.deposit);
+
+        item = findViewById(R.id.itemET);
+        item.setText(p.postTitle);
+
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileData = documentSnapshot.getData();
+                borrower = findViewById(R.id.borrowerET);
+                borrower.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
+            }
+        });
+
+        db.collection("users").document(p.username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                postData = documentSnapshot.getData();
+                lender = findViewById(R.id.lenderET);
+                lender.setText(postData.get("first").toString() + " " + postData.get("last").toString());
+            }
+        });
 
         setContentView(R.layout.activity_create_lend_transaction);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -203,7 +235,7 @@ public class CreateLendTransaction extends AppCompatActivity {
             Log.d(TAG, "parse exception");
             Toast.makeText(CreateLendTransaction.this, "Error creating request.", Toast.LENGTH_LONG).show();
         }
-        
+
         CreateLendTransaction.this.finish();
     }
 
