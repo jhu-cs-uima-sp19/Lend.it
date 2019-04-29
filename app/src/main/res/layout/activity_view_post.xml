@@ -183,5 +183,18 @@
         app:layout_constraintStart_toEndOf="@+id/deposit_PT"
         app:layout_constraintTop_toTopOf="@+id/item_descrip_text" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editPostBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="36dp"
+        android:clickable="true"
+        android:onClick="editPost"
+        app:backgroundTint="@color/green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -42,16 +42,17 @@ public class ViewPost extends AppCompatActivity {
         description.setText(p.description);
         // if posted by you, make button invisible and unclickable
         Button message = findViewById(R.id.message_giver);
+        Button editPost = findViewById(R.id.editPostBTN);
         if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
-            requestTransaction.setClickable(false);
-            requestTransaction.setVisibility(View.INVISIBLE);
+            editPost.setClickable(true);
+            editPost.setVisibility(View.VISIBLE);
         } else {
             message.setClickable(true);
             message.setVisibility(View.VISIBLE);
-            requestTransaction.setClickable(true);
-            requestTransaction.setVisibility(View.VISIBLE);
+            editPost.setClickable(false);
+            editPost.setVisibility(View.INVISIBLE);
         }
 
         TextView deposit = findViewById(R.id.deposit_TV);
@@ -103,6 +104,14 @@ public class ViewPost extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void editPost(View v) {
+        Intent i = new Intent(ViewPost.this, ViewPostEditable.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     @Override
