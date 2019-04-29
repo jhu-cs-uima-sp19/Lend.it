@@ -124,8 +124,6 @@ public class ViewPost extends AppCompatActivity {
             }
         });
 
-
-
         requestTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
