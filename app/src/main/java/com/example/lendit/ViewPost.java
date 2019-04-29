@@ -38,15 +38,20 @@ public class ViewPost extends AppCompatActivity {
         TextView building = findViewById(R.id.building_tv);
         building.setText(p.building);
         TextView description = findViewById(R.id.item_descrip_text);
+        Button requestTransaction = findViewById(R.id.requestTransaction);
         description.setText(p.description);
         // if posted by you, make button invisible and unclickable
         Button message = findViewById(R.id.message_giver);
         if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
+            requestTransaction.setClickable(false);
+            requestTransaction.setVisibility(View.INVISIBLE);
         } else {
             message.setClickable(true);
             message.setVisibility(View.VISIBLE);
+            requestTransaction.setClickable(true);
+            requestTransaction.setVisibility(View.VISIBLE);
         }
 
         TextView deposit = findViewById(R.id.deposit_TV);
@@ -85,6 +90,19 @@ public class ViewPost extends AppCompatActivity {
                 // Handle any errors
             }
         });
+
+
+        requestTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ViewPost.this, CreateLendTransaction.class);
+                i.putExtra("username", username);
+                i.putExtra("post", p);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     @Override
