@@ -175,10 +175,10 @@ public class CreateLendTransaction extends AppCompatActivity {
 
     public void createRequest(View v) {
         String uniqueID = UUID.randomUUID().toString();
-        Map<String, Object> lendRequest = new HashMap<String, Object>();
-        //lendRequest.put("")
+        Map<String, Object> request = new HashMap<String, Object>();
+        //request.put("")
 
-        db.collection("transactionRequests").document(uniqueID).set(lendRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");

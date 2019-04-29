@@ -62,7 +62,7 @@ public class AskFragment extends Fragment {
         ask.put("post_date", Calendar.getInstance().getTime());
         ask.put("deposit", "0");
         ask.put("username", userData.get("username"));
-        ask.put("photo", "appImages/opploans-how-to-lend-to-family.jpeg");
+        ask.put("photo", "appImages/ask.JPG");
 
         // get username from intent that launched this activity?
         // profile.put("username", );

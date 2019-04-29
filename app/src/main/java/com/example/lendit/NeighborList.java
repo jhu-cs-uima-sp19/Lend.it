@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
     public class NeighborList extends AppCompatActivity{
         String username;
-        private static String TAG = "HomePageActivity";
+        private static String TAG = "NeighborListActivity";
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         private ListView mListView;
         ArrayList<UserCard> userCards;
