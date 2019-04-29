@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CreateLendTransaction"
+            android:label="Create Lend Transaction"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ViewPostEditable"
             android:label="@string/title_activity_view_post_editable"
             android:theme="@style/AppTheme.NoActionBar"></activity>

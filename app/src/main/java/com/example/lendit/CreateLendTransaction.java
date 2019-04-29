@@ -1,7 +1,9 @@
 package com.example.lendit;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -26,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -54,6 +57,7 @@ public class CreateLendTransaction extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final String TAG = "CreateLendTransaction";
     StorageReference storage = FirebaseStorage.getInstance().getReference();
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,46 +71,112 @@ public class CreateLendTransaction extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        selectFrom = findViewById(R.id.borrowDate);
+        selectTo = findViewById(R.id.returnDate);
+
+        selectTimeFrom = findViewById(R.id.borrowTime);
+        selectTimeTo = findViewById(R.id.returnTime);
+
         fromDate = findViewById(R.id.fromDateTxt);
         toDate = findViewById(R.id.toDateTxt);
         fromTime = findViewById(R.id.fromTimeTxt);
         toTime = findViewById(R.id.toTimeTxt);
 
-        final View dialogView = View.inflate(this, R.layout.date_time_picker, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-
-        dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
-
-                Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-                        datePicker.getMonth(),
-                        datePicker.getDayOfMonth(),
-                        timePicker.getCurrentHour(),
-                        timePicker.getCurrentMinute());
-
-                time = calendar.getTimeInMillis();
-                alertDialog.dismiss();
-            }});
-        alertDialog.setView(dialogView);
-        alertDialog.show();
-
-        createLendRequest.setOnClickListener(new View.OnClickListener() {
+        selectFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createRequest();
+                cal = Calendar.getInstance();
+                year = cal.get(Calendar.YEAR);
+                month = cal.get(Calendar.MONTH);
+                day = cal.get(Calendar.DAY_OF_MONTH);
+
+                datePickerFrom = new DatePickerDialog(CreateLendTransaction.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                fromDate.setText((month + 1) + "/" + dayOfMonth  + "/" + year);
+                            }
+                        }, year, month, day);
+                datePickerFrom.show();
             }
         });
 
+        selectTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = Calendar.getInstance();
+                year = cal.get(Calendar.YEAR);
+                month = cal.get(Calendar.MONTH);
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                datePickerTo = new DatePickerDialog(CreateLendTransaction.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                toDate.setText((month + 1) + "/" + dayOfMonth  + "/" + year);
+                            }
+                        }, year, month, day);
+                datePickerTo.show();
+            }
+        });
+
+        selectTimeFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = Calendar.getInstance();
+                currHour = cal.get(Calendar.HOUR_OF_DAY);
+                currMin = cal.get(Calendar.MINUTE);
+                timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                        } else {
+                            amPm = "AM";
+                        }
+                        fromTime.setText(String.format("%2d:%2d", hourOfDay, minute) + amPm);
+                    }
+                }
+                        , currHour, currMin, false);
+                timePick.show();
+            }
+        });
+
+        selectTimeTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = Calendar.getInstance();
+                currHour = cal.get(Calendar.HOUR_OF_DAY);
+                currMin = cal.get(Calendar.MINUTE);
+                timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                        } else {
+                            amPm = "AM";
+                        }
+                        toTime.setText(String.format("%2d:%2d", hourOfDay, minute) + amPm);
+                    }
+                }
+                        , currHour, currMin, false);
+                timePick.show();
+            }
+        });
     }
 
-    public void createRequest() {
+
+//        createLendRequest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                createRequest();
+//            }
+//        });
+
+
+    public void createRequest(View v) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> lendRequest = new HashMap<String, Object>();
-        lendRequest.put("")
+        //lendRequest.put("")
 
         db.collection("transactionRequests").document(uniqueID).set(lendRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
