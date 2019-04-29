@@ -40,7 +40,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.scaledrone:scaledrone-java:0.6.0'
-    compile group:'com.squareup.picasso', name:'picasso', version:'2.5.0'
+    compile group: 'com.squareup.picasso', name: 'picasso', version: '2.5.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

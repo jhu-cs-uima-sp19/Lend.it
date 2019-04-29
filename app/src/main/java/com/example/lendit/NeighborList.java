@@ -33,6 +33,9 @@ import java.util.ArrayList;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
             mListView = (ListView) findViewById(R.id.neighborListView);
             Intent i = getIntent();
             userCards = i.getParcelableArrayListExtra("userList");
