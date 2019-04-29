@@ -27,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -134,12 +136,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                 timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (hourOfDay >= 12) {
-                            amPm = "PM";
-                        } else {
-                            amPm = "AM";
-                        }
-                        fromTime.setText(String.format("%2d:%2d ", hourOfDay, minute) + amPm);
+                        fromTime.setText(String.format("%2d:%2d ", hourOfDay, minute));
                     }
                 }
                         , currHour, currMin, false);
@@ -157,12 +154,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                 timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (hourOfDay >= 12) {
-                            amPm = "PM";
-                        } else {
-                            amPm = "AM";
-                        }
-                        toTime.setText(String.format("%2d:%2d ", hourOfDay, minute) + amPm);
+                        toTime.setText(String.format("%2d:%2d ", hourOfDay, minute));
                     }
                 }
                         , currHour, currMin, false);
@@ -186,22 +178,32 @@ public class CreateLendTransaction extends AppCompatActivity {
         request.put("borrower", username);
         request.put("lender", p.username);
         request.put("postID", p.postID);
-        //hh:mm
-        //request.put("from", new Date());
-        //request.put("to", );
 
-        db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        String pattern = "mm/dd/yyyy hh:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        try {
+            Date from = simpleDateFormat.parse(fromDate.getText().toString() + " " + fromTime.getText().toString());
+            Date to = simpleDateFormat.parse(toDate.getText().toString() + " " + toTime.getText().toString());
+            request.put("from", from);
+            request.put("to", to);
+            db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+        } catch(ParseException e) {
+            Log.d(TAG, "parse exception");
+            Toast.makeText(CreateLendTransaction.this, "Error creating request.", Toast.LENGTH_LONG).show();
+        }
+        
         CreateLendTransaction.this.finish();
     }
 
