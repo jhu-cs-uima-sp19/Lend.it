@@ -67,17 +67,17 @@ public class ViewPostEditable extends AppCompatActivity {
     public void makeChanges() {
         //make database changes
         DocumentReference ref = db.collection("lendTransactions").document(username);
-        ref.update("first", first.getText().toString());
-        ref.update("last", last.getText().toString());
-        ref.update("building", building.getSelectedItem().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(UserAccountEditable.this, "Updated Successfully",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        ref.update("first", first.getText().toString());
+//        ref.update("last", last.getText().toString());
+//        ref.update("building", building.getSelectedItem().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toast.makeText(ViewPostEditable.this, "Updated Successfully",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        UserAccountEditable.this.finish();
+        ViewPostEditable.this.finish();
     }
 
 }
