@@ -192,6 +192,7 @@ public class ViewPostEditable extends AppCompatActivity {
         }
 
         ref.update("description", desc.getText().toString());
+        ref.update("title", title.getText().toString());
         ref.update("deposit", deposit.getText().toString());
         ref.update("photo", photo);
 

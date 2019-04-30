@@ -26,11 +26,12 @@
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="28dp"
         android:background="@color/green"
         android:text="Apply Changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cancelBTN"
+        app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -39,7 +40,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="200dp"
         android:layout_marginLeft="200dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="28dp"
         android:background="@color/green"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="476dp"
         android:text="Deposit"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="18sp"
@@ -93,7 +94,7 @@
         android:layout_height="87dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="356dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:textColor="#202020"
@@ -118,12 +119,12 @@
         android:id="@+id/depET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="464dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/depositLabel"
-        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
