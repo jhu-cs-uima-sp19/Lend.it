@@ -24,27 +24,25 @@
         android:id="@+id/applyChangesBTN"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="28dp"
         android:background="@color/green"
         android:text="Apply Changes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cancelBTN"
-        app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/cancelBTN"
         android:layout_width="213dp"
         android:layout_height="45dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="28dp"
         android:background="@color/green"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/descLabel"
@@ -52,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="380dp"
         android:text="Description"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="18sp"
@@ -80,21 +78,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="476dp"
+        android:layout_marginBottom="168dp"
         android:text="Deposit"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/item_descrip_text"
         android:layout_width="357dp"
-        android:layout_height="87dp"
+        android:layout_height="125dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="356dp"
+        android:layout_marginTop="432dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:textColor="#202020"
@@ -119,12 +117,12 @@
         android:id="@+id/depET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="464dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginBottom="160dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/depositLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/depositLabel" />
 
 </android.support.constraint.ConstraintLayout>

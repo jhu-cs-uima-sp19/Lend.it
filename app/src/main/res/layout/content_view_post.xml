@@ -35,8 +35,8 @@
         android:id="@+id/itemName"
         android:layout_width="109dp"
         android:layout_height="38dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginLeft="160dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginLeft="204dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="24sp"
@@ -48,8 +48,8 @@
         android:id="@+id/posted_by_TV"
         android:layout_width="129dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginTop="20dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
@@ -97,7 +97,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
 
@@ -156,17 +156,21 @@
 
     <Button
         android:id="@+id/editPostBTN"
-        android:layout_width="355dp"
-        android:layout_height="53dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="546dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
         android:clickable="true"
         android:onClick="editPost"
         android:text="Edit"
         app:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.69"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

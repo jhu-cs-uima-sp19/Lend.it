@@ -29,6 +29,7 @@
         <activity
             android:name=".ViewPostEditable"
             android:label="Edit Post"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".OtherUserAccount"
