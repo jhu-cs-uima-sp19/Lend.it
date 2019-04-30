@@ -12,9 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ViewPost"
+            android:label="@string/title_activity_view_post"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".TransactionLog"
             android:label="@string/title_activity_transaction_log"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreateLendTransaction"
             android:label="Create Lend Transaction"
@@ -52,11 +56,6 @@
         <activity
             android:name=".UserAccountEditable"
             android:label="@string/title_activity_user_account_editable"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ViewPost"
-            android:label="ViewPost"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

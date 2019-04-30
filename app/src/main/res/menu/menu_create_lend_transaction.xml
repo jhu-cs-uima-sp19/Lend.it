@@ -2,7 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.lendit.CreateLendTransaction">
-
     <item
         android:id="@+id/action_mode_close_button"
         android:checkable="true"

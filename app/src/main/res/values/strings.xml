@@ -116,4 +116,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_viewing_post">ViewingPost</string>
+    <string name="title_activity_view_post">ViewPost</string>
 </resources>
