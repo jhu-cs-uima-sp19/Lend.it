@@ -61,12 +61,12 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final TransactionCard p = transactions.get(position);
-
+        Log.d(TAG, "ID " + p.transactionID);
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.transaction_card_activity, parent, false);
+            convertView = inflater.inflate(R.layout.request_card_activity, parent, false);
             holder.building = convertView.findViewById(R.id.requestBuilding);
             holder.name = convertView.findViewById(R.id.requestName);
             holder.title = convertView.findViewById(R.id.requestTitle);
@@ -89,7 +89,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     otherName = t.get("borrower").toString();
                 }
                 holder.name.setText(otherName);
-                holder.rating.setText(t.get("rating").toString());
+//                holder.rating.setText(t.get("rating").toString());
 
                 db.collection("posts").document(t.get("postID").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -105,7 +105,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                         Map<String, Object> u = documentSnapshot.getData();
                         holder.building.setText(u.get("building").toString());
                         final long ONE_MEGABYTE = 1024 * 1024;
-                        storageRef.child(u.get("photo").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                             @Override
                             public void onSuccess(byte[] bytes) {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

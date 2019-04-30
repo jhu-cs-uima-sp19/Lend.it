@@ -187,15 +187,21 @@ public class UserAccount extends AppCompatActivity {
         db.collection("posts").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task successful");
+                    int count = 0;
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));
+                        count++;
                     }
+                    numPosts.setText("" + count);
+                    mListView = findViewById(R.id.listViewProfileLends);
                     PostCardListAdapter adapter = new PostCardListAdapter(context, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
+                        Log.d(TAG, "not success");
                         System.out.println("Null Reference");
                     }
                 } else {
@@ -211,6 +217,6 @@ public class UserAccount extends AppCompatActivity {
                 toNeighborList();
             }
         });
-        numPosts.setText("" + count);
+
     }
 }

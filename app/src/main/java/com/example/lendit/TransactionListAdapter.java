@@ -50,7 +50,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final TransactionCard p = transactions.get(position);
-
+        Log.d(TAG, "ID " + p.transactionID);
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -71,6 +71,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> t = documentSnapshot.getData();
                 String otherName = "";
+
                 if (t.get("borrower").toString().equals(username)) {
                     otherName = t.get("lender").toString();
                 } else {

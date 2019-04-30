@@ -98,10 +98,11 @@ public class RequestFragment extends Fragment {
         cardList.add(new TransactionCard("8ade8990-caaf-4809-8c78-2a8ac7f0b39f"));
         cardList.add(new TransactionCard("914f76f2-47e5-4028-993b-8d8cad7a87c7"));
         cardList.add(new TransactionCard("ab9ab2e5-42b0-4eed-b97a-988c5d626cc3"));
-        TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
+        RequestListAdapter adapter = new RequestListAdapter(getActivity(), cardList, username);
         if ((adapter != null) && (mListView != null)) {
             mListView.setAdapter(adapter);
         } else {
+            Log.d(TAG, "null");
             System.out.println("Null Reference");
         }
 
