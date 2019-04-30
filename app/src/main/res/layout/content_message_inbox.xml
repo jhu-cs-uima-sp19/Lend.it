@@ -9,8 +9,10 @@
     tools:showIn="@layout/app_bar_message_inbox">
 
     <ListView
+        android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewMessages"></ListView>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"></ListView>
 
 </android.support.constraint.ConstraintLayout>
