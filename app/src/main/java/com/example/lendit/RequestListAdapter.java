@@ -49,7 +49,6 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
     private class ViewHolder {
         TextView building;
         TextView name;
-        TextView rating;
         TextView title;
         ImageView profilePic;
         Button approve;
@@ -89,7 +88,6 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     otherName = t.get("borrower").toString();
                 }
                 holder.name.setText(otherName);
-                holder.rating.setText(t.get("rating").toString());
 
                 db.collection("posts").document(t.get("postID").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
