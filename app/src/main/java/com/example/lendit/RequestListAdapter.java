@@ -89,7 +89,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     otherName = t.get("borrower").toString();
                 }
                 holder.name.setText(otherName);
-                holder.rating.setText(t.get("rating").toString());
+
 
                 db.collection("posts").document(t.get("postID").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
