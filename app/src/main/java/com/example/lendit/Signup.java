@@ -105,7 +105,7 @@ public class Signup extends AppCompatActivity {
         profile.put("last", last.getText().toString());
         profile.put("building", building.getSelectedItem().toString());
         // default profile image
-        profile.put("profileImg", "appImages/logo.png");
+        profile.put("profileImg", "appImages/avatar.png");
         db.collection("users").document(username).set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

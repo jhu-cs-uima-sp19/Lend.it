@@ -104,6 +104,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> u = documentSnapshot.getData();
                         holder.building.setText(u.get("building").toString());
+                        /*
                         final long ONE_MEGABYTE = 1024 * 1024;
                         storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                             @Override
@@ -116,7 +117,10 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors
                             }
-                        });
+                        });*/
+
+                        // hard coded
+                        holder.profilePic.setImageResource(R.drawable.avatar);
 
                     }
                 });
