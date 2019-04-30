@@ -35,6 +35,7 @@ import java.util.ArrayList;
             super.onCreate(savedInstanceState);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
+            setContentView(R.layout.activity_neighborlist);
 
             mListView = (ListView) findViewById(R.id.neighborListView);
             Intent i = getIntent();

@@ -61,9 +61,10 @@ public class HomePage extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView = navigationView.getHeaderView(0);
-        TextView navUser = (TextView) hView.findViewById(R.id.titleTXT);
+        final TextView navUser = (TextView) hView.findViewById(R.id.userFullName);
+        TextView title = (TextView) hView.findViewById(R.id.appTitle);
+        title.setText("lend.it");
 
-        navUser.setText(username);
 
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -83,11 +84,10 @@ public class HomePage extends AppCompatActivity
                         // Handle any errors
                     }
                 });
+
+                navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
-
-
-
     }
 
     public void createPost(View view) {

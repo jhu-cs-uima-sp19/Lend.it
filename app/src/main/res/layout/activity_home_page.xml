@@ -11,6 +11,7 @@
     <include
         layout="@layout/app_bar_home_page"
         android:layout_width="match_parent"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView

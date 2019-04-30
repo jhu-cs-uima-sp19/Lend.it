@@ -31,6 +31,11 @@ public class ViewPost extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> profileData;
     Map<String, Object> postData;
+    TextView name;
+    TextView building;
+    TextView title;
+    TextView description;
+    TextView deposit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,9 @@ public class ViewPost extends AppCompatActivity {
         p = i.getParcelableExtra("post");
         username = i.getStringExtra("username");
 
-        TextView title = findViewById(R.id.itemName);
-        title.setText(p.postTitle);
+        title = findViewById(R.id.itemName);
 
-        TextView description = findViewById(R.id.item_descrip_text);
-        description.setText(p.description);
+        description = findViewById(R.id.item_descrip_text);
 
         final TextView name = findViewById(R.id.posted_by_TV);
         final TextView building = findViewById(R.id.building_tv);
@@ -104,30 +107,33 @@ public class ViewPost extends AppCompatActivity {
             editPost.setVisibility(View.INVISIBLE);
         }
 
-        TextView deposit = findViewById(R.id.deposit_TV);
+        deposit = findViewById(R.id.deposit_TV);
         // if deposit is 0, don't show field (for asks and for lends)
-        if (p.deposit == "0") {
-            deposit.setVisibility(View.INVISIBLE);
-        } else {
-            deposit.setVisibility(View.VISIBLE);
-            deposit.setText("$"+p.deposit);
-        }
+//        if (p.deposit == "0") {
+//            deposit.setVisibility(View.INVISIBLE);
+//        } else {
+//            deposit.setVisibility(View.VISIBLE);
+//            deposit.setText("$"+p.deposit);
+//        }
 
 
         final ImageView pic = findViewById(R.id.uploadedPic);
-
-        storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                pic.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if (p.imgURL.equals("appImages/ask.JPG")) {
+            pic.setImageResource(R.drawable.ask);
+        } else {
+            storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    pic.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
         requestTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +143,27 @@ public class ViewPost extends AppCompatActivity {
                 i.putExtra("post", p);
                 startActivity(i);
 
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        db.collection("posts").document(p.postID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                postData = documentSnapshot.getData();
+                title.setText(postData.get("title").toString());
+                description.setText(postData.get("description").toString());
+                if (postData.get("deposit").toString() == "0") {
+                    deposit.setVisibility(View.INVISIBLE);
+                } else {
+                    deposit.setVisibility(View.VISIBLE);
+                    deposit.setText("$"+postData.get("deposit").toString());
+                }
             }
         });
 

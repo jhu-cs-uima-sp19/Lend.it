@@ -14,10 +14,12 @@
         <activity
             android:name=".ViewPost"
             android:label="@string/title_activity_view_post"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TransactionLog"
             android:label="@string/title_activity_transaction_log"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreateLendTransaction"
