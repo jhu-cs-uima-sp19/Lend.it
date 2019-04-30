@@ -1,5 +1,7 @@
 package com.example.lendit;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -13,15 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +39,8 @@ public class HomePage extends AppCompatActivity
     private static String TAG = "HomePageActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
-    ArrayList<PostCard> cardList = new ArrayList();
+
+    StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +62,32 @@ public class HomePage extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView = navigationView.getHeaderView(0);
         TextView navUser = (TextView) hView.findViewById(R.id.titleTXT);
-//ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
+
         navUser.setText(username);
+
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Map<String, Object> profileData = documentSnapshot.getData();
+                final ImageView img = (ImageView) findViewById(R.id.navImg);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        img.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+        });
+
+
+
     }
 
     public void createPost(View view) {
@@ -74,6 +109,7 @@ public class HomePage extends AppCompatActivity
         super.onStart();
         final HomePage H = this;
         mListView = (ListView) findViewById(R.id.listViewLends);
+        final ArrayList<PostCard> cardList = new ArrayList();
 
         Log.d(TAG, "Card Act" + R.layout.card_activity);
         //query based on timestamp (most recent will be displayed first)

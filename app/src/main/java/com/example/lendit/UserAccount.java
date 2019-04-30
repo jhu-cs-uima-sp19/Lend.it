@@ -2,6 +2,8 @@ package com.example.lendit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,6 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +55,8 @@ public class UserAccount extends AppCompatActivity {
     QuerySnapshot neighborData;
     int count = 0;
     Context context = this;
+    ImageView pic;
+    StorageReference storage = FirebaseStorage.getInstance().getReference();
 
 
     @Override
@@ -62,6 +71,10 @@ public class UserAccount extends AppCompatActivity {
         if (b != null) {
             username = b.getString("username");
         }
+
+        pic = findViewById(R.id.profilePic);
+
+
 
         name = findViewById(R.id.nameTxt);
         building = findViewById(R.id.buildingTxt);
@@ -135,6 +148,19 @@ public class UserAccount extends AppCompatActivity {
                 String full_name = profileData.get("first").toString() + " " + profileData.get("last").toString();
                 name.setText(full_name);
                 building.setText(buildingName);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        pic.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
             }
         });
 
