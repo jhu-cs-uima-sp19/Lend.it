@@ -52,16 +52,17 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="20dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/profilePic"
         app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
         android:id="@+id/building_tv"
-        android:layout_width="169dp"
-        android:layout_height="42dp"
+        android:layout_width="202dp"
+        android:layout_height="39dp"
         android:layout_marginTop="12dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/posted_by_TV"
         app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
 
@@ -71,7 +72,7 @@
         android:layout_height="35dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
         android:text="Description"
@@ -105,15 +106,11 @@
         android:id="@+id/item_descrip_text"
         android:layout_width="373dp"
         android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
+        android:gravity="center_horizontal"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_label" />
 
     <Button
@@ -147,8 +144,8 @@
         android:id="@+id/deposit_TV"
         android:layout_width="67dp"
         android:layout_height="23dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintStart_toEndOf="@+id/deposit_PT"

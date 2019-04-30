@@ -13,12 +13,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ViewPost"
-            android:label="@string/title_activity_view_post"
+            android:label="View Postt"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TransactionLog"
-            android:label="@string/title_activity_transaction_log"
+            android:label="Transaction Log"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -58,12 +58,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserAccountEditable"
-            android:label="@string/title_activity_user_account_editable"
+            android:label="Edit Account"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomePage"
-            android:label="Feed"
+            android:label="Post Feed"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -78,7 +78,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="Lend.it"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

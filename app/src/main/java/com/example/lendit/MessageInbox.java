@@ -21,11 +21,11 @@ public class MessageInbox extends AppCompatActivity
 
     Bundle b;
     String username;
-    String[] nameArray = {"Ryan Teshima","Ravina Sashti" };
+    String[] nameArray = {"Taryn Wong" };
 
     String[] messageArray = {
-            "When should we meet?",
-            "I'm interested in your blender!"
+            "Can I borrow your USB?",
+
 
     };
 

@@ -107,16 +107,15 @@
 
     <ListView
         android:id="@+id/listViewProfileLends"
-        android:layout_width="509dp"
-        android:layout_height="397dp"
+        android:layout_width="609dp"
+        android:layout_height="483dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MyPostsTxt"></ListView>
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"></ListView>
 
     <TextView
         android:id="@+id/MyPostsTxt"
