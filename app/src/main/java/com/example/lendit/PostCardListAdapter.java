@@ -74,18 +74,22 @@ public class PostCardListAdapter extends ArrayAdapter<PostCard> {
                 holder.buildingTxt.setText(profileData.get("building").toString());
                 holder.personTxt.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
                 final long ONE_MEGABYTE = 1024 * 1024;
-                storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        holder.postImgView.setImageBitmap(bitmap);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                    }
-                });
+                if (p.imgURL.equals("appImages/ask.JPG")) {
+                    holder.postImgView.setImageResource(R.drawable.ask);
+                } else {
+                    storageRef.child(p.imgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            holder.postImgView.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+                }
 
                 storageRef.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
