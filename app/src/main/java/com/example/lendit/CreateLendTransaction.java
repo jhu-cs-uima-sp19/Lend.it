@@ -213,6 +213,7 @@ public class CreateLendTransaction extends AppCompatActivity {
         request.put("lender", p.username);
         request.put("postID", p.postID);
         request.put("deposit", deposit.getText().toString());
+        request.put("id", uniqueID);
 
         String pattern = "mm/dd/yyyy hh:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

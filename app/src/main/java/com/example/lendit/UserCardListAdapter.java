@@ -45,7 +45,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.card_activity, parent, false);
+            convertView = inflater.inflate(R.layout.neighbor_activity, parent, false);
             holder.userName = convertView.findViewById(R.id.userName);
             holder.userBuilding = convertView.findViewById(R.id.userBuilding);
             holder.userImage = convertView.findViewById(R.id.userImage);
