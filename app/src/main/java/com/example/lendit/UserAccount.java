@@ -48,7 +48,7 @@ public class UserAccount extends AppCompatActivity {
     List<DocumentSnapshot> lendsData;
     private static final String TAG = "UserAccountActivity";
     private ListView mListView;
-    ArrayList<PostCard> cardList = new ArrayList();
+
     Map<String, Object> postInfo;
     String buildingName = "";
     ArrayList<UserCard> userCards = new ArrayList();
@@ -139,6 +139,7 @@ public class UserAccount extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        final ArrayList<PostCard> cardList = new ArrayList();
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
