@@ -22,40 +22,39 @@ import java.util.ArrayList;
 public class PastTransactionsFragment extends Fragment {
 
     String username;
-    private static String TAG = "HomePageActivity";
+    private static String TAG = "PastTransactionsFragment";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
     ArrayList<TransactionCard> cardList = new ArrayList<TransactionCard>();
-    Context context = this.getContext();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.past_transactions_fragment, container, false);
 
-            mListView = (ListView) rootView.findViewById(R.id.listViewPastTransactions);
-
+        mListView = (ListView) rootView.findViewById(R.id.listViewPastTransactions);
+/*
             // populate w/ request fragments
             db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "task successful");
+                        Log.d(TAG, "task borrower successful");
                         for (QueryDocumentSnapshot s : task.getResult()) {
                             // give -1 as rating since none exists
-                            cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
+                            cardList.add(new TransactionCard(Double.parseDouble(s.getData().get("rating").toString()), s.getData().get("id").toString()));
                         }
                         // populate w/ request fragments
                         db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d(TAG, "task successful");
+                                    Log.d(TAG, "task lender successful");
                                     for (QueryDocumentSnapshot s : task.getResult()) {
                                         // give -1 as rating since none exists
-                                        cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
+                                        cardList.add(new TransactionCard(Double.parseDouble(s.getData().get("rating").toString()), s.getData().get("id").toString()));
                                     }
-                                    RequestListAdapter adapter = new RequestListAdapter(context, cardList, username);
+                                    TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
                                     if ((adapter != null) && (mListView != null)) {
                                         mListView.setAdapter(adapter);
                                     } else {
@@ -68,9 +67,17 @@ public class PastTransactionsFragment extends Fragment {
                         });
                     }
                 }
-            });
+            });*/
 
-            return rootView;
-
+        // hard code
+        cardList.add(new TransactionCard("77oshRdzBozJNMdUpyOR"));
+        TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
+        if ((adapter != null) && (mListView != null)) {
+            mListView.setAdapter(adapter);
+        } else {
+            System.out.println("Null Reference");
         }
+        return rootView;
+
+    }
 }

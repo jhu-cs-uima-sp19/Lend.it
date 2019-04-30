@@ -2,6 +2,7 @@ package com.example.lendit;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,6 +22,7 @@ import android.widget.TextView;
 public class TransactionLog extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    String username;
 
     private ViewPager mViewPager;
 
@@ -37,8 +39,14 @@ public class TransactionLog extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        setupViewPager(mViewPager);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
+        Bundle b = getIntent().getExtras();
+        username = b.getString("username");
+        //Log.d(TAG, "username: " + username);
     }
 
 
@@ -62,6 +70,13 @@ public class TransactionLog extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new RequestFragment(), "REQUESTS");
+        adapter.addFragment(new PastTransactionsFragment(), "TRANSACTIONS");
+        viewPager.setAdapter(adapter);
     }
 
     /**

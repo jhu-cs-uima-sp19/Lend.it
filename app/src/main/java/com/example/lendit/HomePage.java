@@ -163,6 +163,10 @@ public class HomePage extends AppCompatActivity
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {
+            i = new Intent(HomePage.this, TransactionLog.class);
+            bundle.putString("username", username);
+            i.putExtras(bundle);
+            startActivity(i);
 
         }  else if (id == R.id.nav_logout)  {
             i = new Intent(HomePage.this, MainActivity.class);

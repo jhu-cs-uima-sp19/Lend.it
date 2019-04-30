@@ -3,17 +3,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TransactionCard implements Parcelable {
-
-    public double rating;
     public String transactionID;
 
-    TransactionCard(double r, String tID){
-        this.rating = r;
+    TransactionCard(String tID){
         this.transactionID = tID;
     }
 
     TransactionCard(Parcel p){
-        this.rating = p.readDouble();
         this.transactionID = p.readString();
     }
 
@@ -22,7 +18,6 @@ public class TransactionCard implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeDouble(this.rating);
         out.writeString(this.transactionID);
     }
 

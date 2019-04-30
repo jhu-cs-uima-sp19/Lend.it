@@ -3,6 +3,7 @@ package com.example.lendit;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.support.annotation.NonNull;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -18,11 +19,13 @@ package com.example.lendit;
         import java.util.ArrayList;
         import java.util.Map;
 
+        import static android.support.constraint.Constraints.TAG;
 
 public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
     private final ArrayList<TransactionCard> transactions;
     private Context context;
     private String username;
+    final String TAG = "TransactionListAdapter";
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -67,7 +70,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> t = documentSnapshot.getData();
-                String otherName;
+                String otherName = "";
                 if (t.get("borrower").toString().equals(username)) {
                     otherName = t.get("lender").toString();
                 } else {
@@ -83,26 +86,43 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                         holder.title.setText(p.get("title").toString());
                     }
                 });
+/*
+                    db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Map<String, Object> u = documentSnapshot.getData();
+                            holder.building.setText(u.get("building").toString());
+                            final long ONE_MEGABYTE = 1024 * 1024;
+                            storageRef.child(u.get("photo").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    holder.profilePic.setImageBitmap(bitmap);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
 
-                db.collection("users").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        }
+                    });*/
+
+
+                // hard code
+                holder.building.setText("Charles Commons");
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storageRef.child("appImages/logo.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> u = documentSnapshot.getData();
-                        holder.building.setText(u.get("building").toString());
-                        final long ONE_MEGABYTE = 1024 * 1024;
-                        storageRef.child(u.get("photo").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] bytes) {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                holder.profilePic.setImageBitmap(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                            }
-                        });
-
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        holder.profilePic.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
                     }
                 });
             }

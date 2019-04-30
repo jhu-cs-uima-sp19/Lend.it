@@ -78,7 +78,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        db.collection("transactions").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> t = documentSnapshot.getData();
@@ -99,7 +99,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     }
                 });
 
-                db.collection("users").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> u = documentSnapshot.getData();

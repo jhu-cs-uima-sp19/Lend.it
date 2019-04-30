@@ -42,11 +42,10 @@ import java.util.UUID;
 
 public class RequestFragment extends Fragment {
     String username;
-    private static String TAG = "HomePageActivity";
+    private static String TAG = "RequestFragment";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
     ArrayList<TransactionCard> cardList = new ArrayList<TransactionCard>();
-    Context context = this.getContext();
 
     @Nullable
     @Override
@@ -56,11 +55,11 @@ public class RequestFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listViewRequests);
 
         // populate w/ request fragments
-        db.collection("transactionRequests").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+       /* db.collection("transactionRequests").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    Log.d(TAG, "task successful");
+                    Log.d(TAG, "task borrower successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         // give -1 as rating since none exists
                         cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
@@ -70,12 +69,12 @@ public class RequestFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                Log.d(TAG, "task successful");
+                                Log.d(TAG, "task lender successful");
                                 for (QueryDocumentSnapshot s : task.getResult()) {
                                     // give -1 as rating since none exists
                                     cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
                                 }
-                                RequestListAdapter adapter = new RequestListAdapter(context, cardList, username);
+                                RequestListAdapter adapter = new RequestListAdapter(getActivity(), cardList, username);
                                 if ((adapter != null) && (mListView != null)) {
                                     mListView.setAdapter(adapter);
                                 } else {
@@ -88,7 +87,23 @@ public class RequestFragment extends Fragment {
                     });
                 }
             }
-        });
+        });*/
+
+
+
+
+
+// hard code
+        cardList.add(new TransactionCard("71754437-98dc-4fc9-854e-fe3364e0fa24"));
+        cardList.add(new TransactionCard("8ade8990-caaf-4809-8c78-2a8ac7f0b39f"));
+        cardList.add(new TransactionCard("914f76f2-47e5-4028-993b-8d8cad7a87c7"));
+        cardList.add(new TransactionCard("ab9ab2e5-42b0-4eed-b97a-988c5d626cc3"));
+        TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
+        if ((adapter != null) && (mListView != null)) {
+            mListView.setAdapter(adapter);
+        } else {
+            System.out.println("Null Reference");
+        }
 
         return rootView;
     }
