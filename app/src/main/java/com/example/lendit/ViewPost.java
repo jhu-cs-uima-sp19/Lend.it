@@ -46,7 +46,7 @@ public class ViewPost extends AppCompatActivity {
         description.setText(p.description);
 
         final TextView name = findViewById(R.id.posted_by_TV);
-        TextView building = findViewById(R.id.building_tv);
+        final TextView building = findViewById(R.id.building_tv);
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -61,6 +61,7 @@ public class ViewPost extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 postData = documentSnapshot.getData();
                 name.setText(postData.get("first").toString() + " " + postData.get("last").toString());
+                building.setText(postData.get("building").toString());
                 Log.d(TAG, postData.get("first").toString());
                 storageRef.child(postData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override

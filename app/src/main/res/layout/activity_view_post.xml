@@ -30,70 +30,56 @@
 
     <ImageView
         android:id="@+id/uploadedPic"
-        android:layout_width="362dp"
-        android:layout_height="242dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginBottom="39dp"
-        app:layout_constraintBottom_toTopOf="@+id/itemName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="365dp"
+        android:layout_height="220dp"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="72dp" />
 
     <ImageView
         android:id="@+id/profilePic"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="104dp"
-        app:layout_constraintEnd_toStartOf="@+id/posted_by_TV"
-        app:layout_constraintHorizontal_bias="0.489"
+        android:layout_width="100dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemName" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
 
     <TextView
         android:id="@+id/itemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginEnd="309dp"
-        android:layout_marginRight="309dp"
+        android:layout_width="109dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginRight="168dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
 
     <TextView
         android:id="@+id/posted_by_TV"
         android:layout_width="116dp"
-        android:layout_height="22dp"
-        android:layout_marginRight="320dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginRight="160dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/profilePic"
         app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
         android:id="@+id/building_tv"
-        android:layout_width="107dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="169dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
         android:textColor="#202020"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.613"
-        app:layout_constraintStart_toEndOf="@+id/posted_by_TV"
-        app:layout_constraintTop_toBottomOf="@+id/uploadedPic" />
+        app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
 
     <TextView
         android:id="@+id/item_descrip_label"
@@ -101,7 +87,7 @@
         android:layout_height="21dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
         android:text="Description"
@@ -111,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePic" />
 
     <TextView
         android:id="@+id/deposit_PT"
@@ -119,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
         android:text="Deposit"
@@ -129,15 +115,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
 
     <TextView
         android:id="@+id/item_descrip_text"
-        android:layout_width="0dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:textColor="#202020"
@@ -179,9 +165,9 @@
         android:layout_height="23dp"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toEndOf="@+id/deposit_PT"
-        app:layout_constraintTop_toTopOf="@+id/item_descrip_text" />
+        app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
 
     <Button
         android:id="@+id/editPostBTN"
