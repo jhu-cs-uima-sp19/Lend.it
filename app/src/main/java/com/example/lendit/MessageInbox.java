@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MessageInbox extends AppCompatActivity
@@ -20,6 +21,19 @@ public class MessageInbox extends AppCompatActivity
 
     Bundle b;
     String username;
+    String[] nameArray = {"Ryan","Ravina" };
+
+    String[] messageArray = {
+            "When should we meet?",
+            "I'm interested in your blender!"
+
+    };
+
+    Integer[] imageArray = {R.drawable.girl1,
+            R.drawable.guy1,
+    };
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +41,16 @@ public class MessageInbox extends AppCompatActivity
         setContentView(R.layout.activity_message_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        MessageCustomListAdapter whatever = new MessageCustomListAdapter(this, nameArray, messageArray, imageArray);
+        listView = (ListView) findViewById(R.id.listViewMessages);
+        listView.setAdapter(whatever);
+
+
+
+
+
+
 
         b = getIntent().getExtras();
         if (b != null) {
