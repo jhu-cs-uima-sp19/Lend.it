@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     EditText emailAddress;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final String TAG = "LogInActivity";
+    //private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

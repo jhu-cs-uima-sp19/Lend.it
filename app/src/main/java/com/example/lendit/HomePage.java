@@ -1,5 +1,7 @@
 package com.example.lendit;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -13,15 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +39,8 @@ public class HomePage extends AppCompatActivity
     private static String TAG = "HomePageActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
-    ArrayList<PostCard> cardList = new ArrayList();
+
+    StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +62,30 @@ public class HomePage extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView = navigationView.getHeaderView(0);
         TextView navUser = (TextView) hView.findViewById(R.id.titleTXT);
-//ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
+
         navUser.setText(username);
+
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Map<String, Object> profileData = documentSnapshot.getData();
+                final ImageView img = (ImageView) findViewById(R.id.navImg);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        img.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+        });
+
 
 
     }
@@ -76,39 +109,18 @@ public class HomePage extends AppCompatActivity
         super.onStart();
         final HomePage H = this;
         mListView = (ListView) findViewById(R.id.listViewLends);
+        final ArrayList<PostCard> cardList = new ArrayList();
 
         Log.d(TAG, "Card Act" + R.layout.card_activity);
         //query based on timestamp (most recent will be displayed first)
-        db.collection("asks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task successful");
-                    String practiceImg = "gs://lendit-af5be.appspot.com/appImages/opploans-how-to-lend-to-family.jpg";
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("description").toString(), username));
-                    }
-                    CustomListAdapter adapter = new CustomListAdapter(H, cardList, username);
-                    if ((adapter != null) && (mListView != null)) {
-                        mListView.setAdapter(adapter);
-                    } else {
-                        System.out.println("Null Reference");
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-
-        db.collection("lends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "task successful lends");
-                    for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("photoID").toString(), s.getData().get("title").toString(), s.getData().get("fullName").toString(), s.getData().get("building").toString(), s.getData().get("profileImg").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), username));
-                    }
-                    CustomListAdapter adapter = new CustomListAdapter(H, cardList, username);
+                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));                    }
+                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
                     if ((adapter != null) && (mListView != null)) {
                         mListView.setAdapter(adapter);
                     } else {
@@ -121,11 +133,6 @@ public class HomePage extends AppCompatActivity
         });
     }
 
-       /* dummy data for testing
-        cardList.add(new PostCard("drawable://" + R.drawable.bath, "Bath", "Ryan", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-        cardList.add(new PostCard("drawable://" + R.drawable.stove, "Stove", "Ravina", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-        cardList.add(new PostCard("drawable://" + R.drawable.kitchen, "Kitchen", "Taryn", "Charles Commons", "drawable://" + R.drawable.ask, "$10", "a great appliance!"));
-*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,6 +165,16 @@ public class HomePage extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void toAccount(View v) {
+        Intent i;
+        final Bundle bundle = new Bundle();
+        i = new Intent(HomePage.this, UserAccount.class);
+        bundle.putString("username", username);
+        i.putExtras(bundle);
+        startActivity(i);
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -182,24 +199,16 @@ public class HomePage extends AppCompatActivity
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {
+            i = new Intent(HomePage.this, TransactionLog.class);
+            bundle.putString("username", username);
+            i.putExtras(bundle);
+            startActivity(i);
 
         }  else if (id == R.id.nav_logout)  {
             i = new Intent(HomePage.this, MainActivity.class);
             startActivity(i);
 
         }
-//        Button logout = (Button) findViewById(R.id.logoutBTN);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent j = new Intent(HomePage.this, MainActivity.class);
-//                //j.putExtras(bundle);
-//                startActivity(j);
-//                //bundle.clear();
-//
-//            }
-//        });
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

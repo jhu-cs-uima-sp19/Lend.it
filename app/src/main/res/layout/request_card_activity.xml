@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="15dp"
+        app:contentPaddingLeft="10dp"
+        app:contentPaddingRight="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/requestBuilding"
+                android:layout_width="216dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/posterImage"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_toEndOf="@+id/posterImage"
+                android:layout_toRightOf="@+id/posterImage"
+                app:layout_constraintTop_toBottomOf="@+id/posterName"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/requestApprove"
+                android:layout_width="266dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="108dp"
+                android:layout_marginRight="108dp"
+                android:drawableLeft="@drawable/ic_menu_camera"
+                android:text="Take Photo"
+                android:textColor="@color/green"
+                android:textColorLink="@color/green"
+                android:textCursorDrawable="@color/green"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/requestBuilding" />
+            <Button
+                android:id="@+id/requestReject"
+                android:layout_width="266dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="108dp"
+                android:layout_marginRight="108dp"
+                android:drawableLeft="@drawable/ic_menu_camera"
+                android:text="Take Photo"
+                android:textColor="@color/green"
+                android:textColorLink="@color/green"
+                android:textCursorDrawable="@color/green"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/requestApprove" />
+
+            <TextView
+                android:id="@+id/requestName"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="16dp"
+                android:layout_toEndOf="@+id/posterImage"
+                android:layout_toRightOf="@+id/posterImage"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/posterImage" />
+
+            <TextView
+                android:id="@+id/requestTitle"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="16dp"
+                android:layout_toEndOf="@+id/posterImage"
+                android:layout_toRightOf="@+id/posterImage"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/posterImage" />
+
+            <ImageView
+                android:id="@+id/requestImage"
+                android:layout_width="wrap_content"
+                android:layout_height="118dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginBottom="14dp"
+                tools:srcCompat="@tools:sample/avatars" />
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

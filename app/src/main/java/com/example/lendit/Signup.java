@@ -105,7 +105,7 @@ public class Signup extends AppCompatActivity {
         profile.put("last", last.getText().toString());
         profile.put("building", building.getSelectedItem().toString());
         // default profile image
-        profile.put("profileImg", "appImages/opploans-how-to-lend-to-family.jpg");
+        profile.put("profileImg", "appImages/logo.png");
         db.collection("users").document(username).set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

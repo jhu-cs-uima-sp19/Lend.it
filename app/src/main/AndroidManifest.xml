@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lendit">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TransactionLog"
+            android:label="@string/title_activity_transaction_log"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".CreateLendTransaction"
+            android:label="Create Lend Transaction"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewPostEditable"
+            android:label="Edit Post"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".OtherUserAccount"
             android:label="@string/title_activity_other_user_account"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NeighborList"
+            android:label="My Neighbors"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MessageInbox"
             android:label="Message Inbox"
@@ -34,7 +54,8 @@
             android:label="@string/title_activity_user_account_editable"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewPost"
+        <activity
+            android:name=".ViewPost"
             android:label="ViewPost"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

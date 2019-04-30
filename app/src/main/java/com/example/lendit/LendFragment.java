@@ -50,7 +50,7 @@ public class LendFragment extends Fragment {
         createLend = rootView.findViewById(R.id.createLendBTN);
         lendTitle = rootView.findViewById(R.id.lendTitleET);
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
-        deposit = rootView.findViewById(R.id.depositET);
+        deposit = rootView.findViewById(R.id.depET);
         display = rootView.findViewById(R.id.displayIV);
         activity = (CreatePost) getActivity();
 
@@ -75,6 +75,7 @@ public class LendFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createLend(userData);
+                activity.launchHome();
             }
         });
 
@@ -100,15 +101,13 @@ public class LendFragment extends Fragment {
         Map<String, Object> lend = new HashMap<>();
         lend.put("title", lendTitle.getText().toString());
         lend.put("description", lendDesc.getText().toString());
-        lend.put("deposit", deposit.getText().toString());
         lend.put("id", uniqueID);
-        lend.put("photoID", photo);
         lend.put("post_date", Calendar.getInstance().getTime());
+        lend.put("deposit", deposit.getText().toString());
         lend.put("username", userData.get("username"));
-        lend.put("fullName", userData.get("fullName"));
-        lend.put("building", userData.get("building"));
-        lend.put("profileImg", userData.get("profileImg"));
-        db.collection("lends").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
+        lend.put("photo", "lendImages/" + photo);
+
+        db.collection("posts").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");
@@ -119,7 +118,7 @@ public class LendFragment extends Fragment {
                 Log.w(TAG, "Error writing document", e);
             }
         });
-        getActivity().finish();
+        //getActivity().finish();
     }
 
     /**

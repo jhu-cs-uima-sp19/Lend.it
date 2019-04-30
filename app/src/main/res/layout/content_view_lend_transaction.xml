@@ -5,111 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CreateLendTransaction"
-    tools:showIn="@layout/activity_create_lend_transaction">
-
-    <Button
-        android:id="@+id/borrowDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="292dp"
-        android:background="@color/green"
-        android:text="From:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/returnDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="292dp"
-        android:background="@color/green"
-        android:text="To:"
-        app:layout_constraintStart_toEndOf="@+id/fromDateTxt"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/borrowTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="404dp"
-        android:background="@color/green"
-        android:text="From:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/returnTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="404dp"
-        android:background="@color/green"
-        android:text="To:"
-        app:layout_constraintStart_toEndOf="@+id/fromDateTxt"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".ViewLendTransaction"
+    tools:showIn="@layout/activity_view_lend_transaction">
 
     <TextView
         android:id="@+id/fromDateTxt"
         android:layout_width="81dp"
         android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="296dp"
         android:hint="Start Date"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/borrowDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/toDateTxt"
-        android:layout_width="74dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="300dp"
-        android:hint="End Date"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/returnDate"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fromTimeTxt"
         android:layout_width="81dp"
         android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="412dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="376dp"
         android:hint="Start Time"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/borrowTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toDateTxt"
+        android:layout_width="74dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="296dp"
+        android:hint="End Date"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/fromDateTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/toTimeTxt"
         android:layout_width="74dp"
         android:layout_height="39dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="408dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="376dp"
         android:hint="End Time"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/returnTime"
+        app:layout_constraintStart_toEndOf="@+id/fromTimeTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -132,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="368dp"
+        android:layout_marginTop="340dp"
         android:text="Times"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="18sp"
@@ -155,7 +107,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/depositET"
+        android:id="@+id/depET"
         android:layout_width="125dp"
         android:layout_height="43dp"
         android:layout_marginStart="8dp"
@@ -208,7 +160,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/borrowerET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -220,7 +172,7 @@
         app:layout_constraintStart_toEndOf="@+id/borrowerTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/itemET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -232,7 +184,7 @@
         app:layout_constraintStart_toEndOf="@+id/titleTxt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/lenderET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -245,48 +197,44 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/createRequest"
+        android:id="@+id/accept"
         android:layout_width="272dp"
         android:layout_height="46dp"
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginTop="504dp"
+        android:layout_marginTop="456dp"
         android:background="@color/green"
-        android:text="Send Lend Request"
+        android:text="Accept Lend Request"
         android:textColor="@color/common_google_signin_btn_text_light_pressed"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--<DatePicker-->
-        <!--android:id="@+id/to_date_picker"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:layout_marginBottom="240dp"-->
-        <!--android:layout_weight="4"-->
-        <!--android:calendarViewShown="true"-->
-        <!--android:spinnersShown="false"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent" />-->
 
-    <!--<TimePicker-->
-        <!--android:id="@+id/to_time_picker"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginBottom="288dp"-->
-        <!--android:layout_weight="4"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent" />-->
+    <Button
+        android:id="@+id/changes"
+        android:layout_width="272dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="524dp"
+        android:background="@color/gray"
+        android:text="Propose Changes"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<Button-->
-        <!--android:id="@+id/to_date_time_set"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginBottom="148dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="Set"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent" />-->
-
+    <Button
+        android:id="@+id/reject"
+        android:layout_width="272dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="588dp"
+        android:background="@color/red"
+        android:text="Propose Changes"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
