@@ -106,7 +106,7 @@ public class ViewPost extends AppCompatActivity {
             deposit.setVisibility(View.INVISIBLE);
         } else {
             deposit.setVisibility(View.VISIBLE);
-            deposit.setText(p.deposit);
+            deposit.setText("$"+p.deposit);
         }
 
 

@@ -65,12 +65,12 @@
         android:id="@+id/posted_by_TV"
         android:layout_width="116dp"
         android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginRight="160dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePic"
         app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="108dp"
         android:layout_marginRight="108dp"
-        android:textColor="#202020"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/posted_by_TV" />
 
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
         android:text="Deposit"
@@ -129,7 +129,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:textColor="#202020"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +169,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintStart_toEndOf="@+id/deposit_PT"
         app:layout_constraintTop_toBottomOf="@+id/item_descrip_text" />
 
