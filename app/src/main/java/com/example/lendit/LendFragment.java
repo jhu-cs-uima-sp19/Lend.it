@@ -75,6 +75,7 @@ public class LendFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createLend(userData);
+                activity.launchHome();
             }
         });
 
