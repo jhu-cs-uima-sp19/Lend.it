@@ -22,14 +22,16 @@ package com.example.lendit;
 public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
     private final ArrayList<TransactionCard> transactions;
     private Context context;
+    private String username;
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public TransactionListAdapter(Context c, ArrayList<TransactionCard> objects) {
+    public TransactionListAdapter(Context c, ArrayList<TransactionCard> objects, String u) {
         super(c, 0, objects);
         this.context = c;
         this.transactions = objects;
+        this.username = u;
     }
 
     private class ViewHolder {
@@ -66,7 +68,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> t = documentSnapshot.getData();
                 String otherName;
-                if (t.get("borrower").toString().equals(p.username)) {
+                if (t.get("borrower").toString().equals(username)) {
                     otherName = t.get("lender").toString();
                 } else {
                     otherName = t.get("borrower").toString();

@@ -6,18 +6,15 @@ public class TransactionCard implements Parcelable {
 
     public double rating;
     public String transactionID;
-    String username;
 
-    TransactionCard(double r, String tID, String u){
-        this.rating = r;;
+    TransactionCard(double r, String tID){
+        this.rating = r;
         this.transactionID = tID;
-        this.username = u;
     }
 
     TransactionCard(Parcel p){
         this.rating = p.readDouble();
         this.transactionID = p.readString();
-        this.username = p.readString();
     }
 
     @Override
@@ -27,7 +24,6 @@ public class TransactionCard implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeDouble(this.rating);
         out.writeString(this.transactionID);
-        out.writeString(this.username);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
