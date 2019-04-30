@@ -13,65 +13,69 @@
         android:id="@+id/nameTxt"
         android:layout_width="183dp"
         android:layout_height="34dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginLeft="188dp"
+        android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/buildingTxt"
         android:layout_width="185dp"
         android:layout_height="31dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="64dp"
         android:gravity="center_horizontal"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/neighborsTxt"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="108dp"
         android:text="Neighbors"
         android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/profilePic"
-        app:layout_constraintTop_toBottomOf="@+id/buildingTxt" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/myPostsTxt"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="108dp"
         android:text="My Posts"
         android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@+id/neighborsTxt"
-        app:layout_constraintTop_toBottomOf="@+id/buildingTxt" />
+        app:layout_constraintStart_toEndOf="@+id/neighborsTxt"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/neighborsNumTxt"
         android:layout_width="76dp"
         android:layout_height="31dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginRight="144dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginLeft="216dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neighborsTxt" />
 
     <TextView
         android:id="@+id/myPostsNumTxt"
         android:layout_width="74dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         app:layout_constraintLeft_toRightOf="@+id/neighborsNumTxt"
         app:layout_constraintTop_toBottomOf="@+id/myPostsTxt" />
@@ -80,13 +84,13 @@
         android:id="@+id/editProfileBTN"
         android:layout_width="138dp"
         android:layout_height="37dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="36dp"
         android:background="@color/green"
         android:onClick="editProfile"
         android:text="Edit Profile"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neighborsNumTxt" />
 
     <ImageView
@@ -103,24 +107,31 @@
 
     <ListView
         android:id="@+id/listViewProfileLends"
-        android:layout_width="408dp"
-        android:layout_height="334dp"
+        android:layout_width="588dp"
+        android:layout_height="359dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"></ListView>
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ListView>
 
     <TextView
         android:id="@+id/MyPostsTxt"
-        android:layout_width="421dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="615dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="80dp"
         android:background="@color/green"
         android:gravity="center"
         android:text="My Posts"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilePic" />
 
 </android.support.constraint.ConstraintLayout>

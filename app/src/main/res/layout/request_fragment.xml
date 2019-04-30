@@ -20,11 +20,12 @@
 
     <ListView
         android:id="@+id/listViewRequests"
-        android:layout_width="418dp"
-        android:layout_height="591dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="584dp"
+        android:layout_height="588dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"></ListView>
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ListView>
 
 </android.support.constraint.ConstraintLayout>
