@@ -113,8 +113,10 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
 
                 // hard code
                 holder.building.setText("Charles Commons");
-                final long ONE_MEGABYTE = 1024 * 1024;
-                storageRef.child("appImages/logo.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                holder.profilePic.setImageResource(R.drawable.avatar);
+                //final long ONE_MEGABYTE = 1024 * 1024;
+                /*
+                storageRef.child("appImages/avatar.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -125,7 +127,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle any errors
                     }
-                });
+                });*/
             }
         });
 

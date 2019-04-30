@@ -56,18 +56,22 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
         holder.userName.setText(p.personName);
         holder.userBuilding.setText(p.building);
         final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.userImage.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if (p.profileImgURL.equals("appImages/avatar.png")) {
+            holder.userImage.setImageResource(R.drawable.avatar);
+        } else {
+            storageRef.child(p.profileImgURL).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    holder.userImage.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
         // making entire post clickable
         holder.userName.setOnClickListener(new View.OnClickListener() {

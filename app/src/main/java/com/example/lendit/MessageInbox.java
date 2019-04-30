@@ -21,7 +21,7 @@ public class MessageInbox extends AppCompatActivity
 
     Bundle b;
     String username;
-    String[] nameArray = {"Ryan","Ravina" };
+    String[] nameArray = {"Ryan Teshima","Ravina Sashti" };
 
     String[] messageArray = {
             "When should we meet?",
@@ -29,8 +29,8 @@ public class MessageInbox extends AppCompatActivity
 
     };
 
-    Integer[] imageArray = {R.drawable.girl1,
-            R.drawable.guy1,
+    Integer[] imageArray = {R.drawable.avatar,
+            R.drawable.avatar,
     };
 
     ListView listView;
