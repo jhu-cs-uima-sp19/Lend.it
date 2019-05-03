@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ViewPost"
-            android:label="View Postt"
+            android:name=".TransactionLog"
+            android:label="@string/title_activity_transaction_log"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".TransactionLog"
-            android:label="Transaction Log"
+            android:name=".ViewPost"
+            android:label="View Postt"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
