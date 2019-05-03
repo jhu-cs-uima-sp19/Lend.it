@@ -1,6 +1,9 @@
 package com.example.lendit;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -54,7 +57,9 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
         ImageView profilePic;
         Button approve;
         Button reject;
-        public ViewHolder() {}
+
+        public ViewHolder() {
+        }
     }
 
     @NonNull
@@ -131,32 +136,92 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
         holder.approve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                        .setTitle("Confirm Transaction")
+                        .setMessage("Are you sure you want to create this transaction?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> t = documentSnapshot.getData();
-                        Map<String, Object> transaction = new HashMap<String, Object>();
-                        transaction.put("borrower", t.get("borrower").toString());
-                        transaction.put("deposit", t.get("deposit").toString());
-                        transaction.put("from", t.get("from").toString());
-                        transaction.put("to", t.get("to").toString());
-                        transaction.put("id", t.get("id").toString());
-                        transaction.put("lender", t.get("lender").toString());
-                        transaction.put("postID", t.get("postID").toString());
-                        transaction.put("deposit", t.get("deposit").toString());
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Map<String, Object> t = documentSnapshot.getData();
+                                Map<String, Object> transaction = new HashMap<String, Object>();
+                                transaction.put("borrower", t.get("borrower").toString());
+                                transaction.put("deposit", t.get("deposit").toString());
+                                transaction.put("from", t.get("from").toString());
+                                transaction.put("to", t.get("to").toString());
+                                transaction.put("id", t.get("id").toString());
+                                transaction.put("lender", t.get("lender").toString());
+                                transaction.put("postID", t.get("postID").toString());
+                                transaction.put("deposit", t.get("deposit").toString());
+                                // no rating yet - will be updated once lend has transpired
+                                transaction.put("rating", "");
+                                db.collection("transactions").document(t.get("id").toString()).set(transaction);
+                            }
+                        });
+                        db.collection("transactionRequests").document(p.transactionID)
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
-                        db.collection("transactions").document(t.get("id").toString()).set(transaction);
                     }
                 });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
         // set on click listener for rejection - delete from request db collection
-                holder.reject.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        db.collection("transactionRequests").document(p.transactionID).delete();
-                    }
-                });
+        holder.reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                            .setTitle("Confirm Transaction Rejection")
+                            .setMessage("Are you sure you want to reject this transaction?")
+                            .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    db.collection("transactionRequests").document(p.transactionID)
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error deleting document", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+            }
+        });
         return convertView;
     }
 }
