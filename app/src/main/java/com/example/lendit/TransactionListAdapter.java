@@ -94,7 +94,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                             Map<String, Object> u = documentSnapshot.getData();
                             holder.building.setText(u.get("building").toString());
                             final long ONE_MEGABYTE = 1024 * 1024;
-                            storageRef.child(u.get("photo").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                 @Override
                                 public void onSuccess(byte[] bytes) {
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -113,7 +113,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
 
                 /* hard code
                 holder.buildingsetText("Charles Commons");
-                holder.profilePic.setImageResource(R.drawable.avatar);*/
+                holder.profilePic.setImageResource(R.drawable.avatar);
                 final long ONE_MEGABYTE = 1024 * 1024;
 
                 storageRef.child("appImages/avatar.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -127,7 +127,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle any errors
                     }
-                });
+                });*/
             }
         });
 

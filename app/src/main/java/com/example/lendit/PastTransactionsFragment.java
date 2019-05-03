@@ -69,14 +69,14 @@ public class PastTransactionsFragment extends Fragment {
                 }
             });
 
-        //* hard code
+        /* hard code
         cardList.add(new TransactionCard("77oshRdzBozJNMdUpyOR"));
         TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
         if ((adapter != null) && (mListView != null)) {
             mListView.setAdapter(adapter);
         } else {
             System.out.println("Null Reference");
-        }
+        }*/
         return rootView;
 
     }
