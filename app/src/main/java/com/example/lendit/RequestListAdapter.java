@@ -158,22 +158,22 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                 // no rating yet - will be updated once lend has transpired
                                 transaction.put("rating", "");
                                 db.collection("transactions").document(t.get("id").toString()).set(transaction);
+                                db.collection("transactionRequests").document(p.transactionID)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document", e);
+                                            }
+                                        });
                             }
                         });
-                        db.collection("transactionRequests").document(p.transactionID)
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error deleting document", e);
-                                    }
-                                });
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
