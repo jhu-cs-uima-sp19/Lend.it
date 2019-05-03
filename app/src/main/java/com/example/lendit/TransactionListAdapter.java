@@ -87,7 +87,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                         holder.title.setText(p.get("title").toString());
                     }
                 });
-/*
+
                     db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -108,14 +108,14 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                             });
 
                         }
-                    });*/
+                    });
 
 
-                // hard code
-                holder.building.setText("Charles Commons");
-                holder.profilePic.setImageResource(R.drawable.avatar);
-                //final long ONE_MEGABYTE = 1024 * 1024;
-                /*
+                /* hard code
+                holder.buildingsetText("Charles Commons");
+                holder.profilePic.setImageResource(R.drawable.avatar);*/
+                final long ONE_MEGABYTE = 1024 * 1024;
+
                 storageRef.child("appImages/avatar.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
@@ -127,7 +127,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle any errors
                     }
-                });*/
+                });
             }
         });
 

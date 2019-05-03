@@ -33,7 +33,7 @@ public class PastTransactionsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.past_transactions_fragment, container, false);
 
         mListView = (ListView) rootView.findViewById(R.id.listViewPastTransactions);
-/*
+
             // populate w/ request fragments
             db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -42,7 +42,7 @@ public class PastTransactionsFragment extends Fragment {
                         Log.d(TAG, "task borrower successful");
                         for (QueryDocumentSnapshot s : task.getResult()) {
                             // give -1 as rating since none exists
-                            cardList.add(new TransactionCard(Double.parseDouble(s.getData().get("rating").toString()), s.getData().get("id").toString()));
+                            cardList.add(new TransactionCard(s.getData().get("id").toString()));
                         }
                         // populate w/ request fragments
                         db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -52,7 +52,7 @@ public class PastTransactionsFragment extends Fragment {
                                     Log.d(TAG, "task lender successful");
                                     for (QueryDocumentSnapshot s : task.getResult()) {
                                         // give -1 as rating since none exists
-                                        cardList.add(new TransactionCard(Double.parseDouble(s.getData().get("rating").toString()), s.getData().get("id").toString()));
+                                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
                                     }
                                     TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
                                     if ((adapter != null) && (mListView != null)) {
@@ -67,9 +67,9 @@ public class PastTransactionsFragment extends Fragment {
                         });
                     }
                 }
-            });*/
+            });
 
-        // hard code
+        //* hard code
         cardList.add(new TransactionCard("77oshRdzBozJNMdUpyOR"));
         TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
         if ((adapter != null) && (mListView != null)) {

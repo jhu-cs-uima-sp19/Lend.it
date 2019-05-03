@@ -55,14 +55,14 @@ public class RequestFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listViewRequests);
 
         // populate w/ request fragments
-       /* db.collection("transactionRequests").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+       db.collection("transactionRequests").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task borrower successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         // give -1 as rating since none exists
-                        cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
+                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
                     }
                     // populate w/ request fragments
                     db.collection("transactionsRequests").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -72,7 +72,7 @@ public class RequestFragment extends Fragment {
                                 Log.d(TAG, "task lender successful");
                                 for (QueryDocumentSnapshot s : task.getResult()) {
                                     // give -1 as rating since none exists
-                                    cardList.add(new TransactionCard(-1, s.getData().get("id").toString()));
+                                    cardList.add(new TransactionCard(s.getData().get("id").toString()));
                                 }
                                 RequestListAdapter adapter = new RequestListAdapter(getActivity(), cardList, username);
                                 if ((adapter != null) && (mListView != null)) {
@@ -87,13 +87,13 @@ public class RequestFragment extends Fragment {
                     });
                 }
             }
-        });*/
+        });
 
 
 
 
 
-// hard code
+/* hard code
         cardList.add(new TransactionCard("71754437-98dc-4fc9-854e-fe3364e0fa24"));
         cardList.add(new TransactionCard("8ade8990-caaf-4809-8c78-2a8ac7f0b39f"));
         cardList.add(new TransactionCard("914f76f2-47e5-4028-993b-8d8cad7a87c7"));
@@ -104,7 +104,7 @@ public class RequestFragment extends Fragment {
         } else {
             Log.d(TAG, "null");
             System.out.println("Null Reference");
-        }
+        }*/
 
         return rootView;
     }
