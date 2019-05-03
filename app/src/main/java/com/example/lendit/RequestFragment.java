@@ -46,6 +46,7 @@ public class RequestFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
     ArrayList<TransactionCard> cardList = new ArrayList<TransactionCard>();
+    QuerySnapshot dbResults;
 
     @Nullable
     @Override
@@ -55,25 +56,17 @@ public class RequestFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listViewRequests);
 
         // populate w/ request fragments
-       db.collection("transactionRequests").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+       db.collection("transactionRequests").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task borrower successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
+                        dbResults = task.getResult();
                         // give -1 as rating since none exists
+                        printDebug();
                         cardList.add(new TransactionCard(s.getData().get("id").toString()));
                     }
-                    // populate w/ request fragments
-                    db.collection("transactionsRequests").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "task lender successful");
-                                for (QueryDocumentSnapshot s : task.getResult()) {
-                                    // give -1 as rating since none exists
-                                    cardList.add(new TransactionCard(s.getData().get("id").toString()));
-                                }
                                 RequestListAdapter adapter = new RequestListAdapter(getActivity(), cardList, username);
                                 if ((adapter != null) && (mListView != null)) {
                                     mListView.setAdapter(adapter);
@@ -85,13 +78,6 @@ public class RequestFragment extends Fragment {
                             }
                         }
                     });
-                }
-            }
-        });
-
-
-
-
 
 /* hard code
         cardList.add(new TransactionCard("71754437-98dc-4fc9-854e-fe3364e0fa24"));
@@ -107,6 +93,13 @@ public class RequestFragment extends Fragment {
         }*/
 
         return rootView;
+    }
+
+    public void printDebug() {
+        for (QueryDocumentSnapshot s : dbResults) {
+            Log.d(TAG, "request id: " + s.getData().get("id").toString());
+        }
+
     }
 
 
