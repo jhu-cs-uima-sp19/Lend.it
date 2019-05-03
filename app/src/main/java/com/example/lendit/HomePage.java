@@ -201,6 +201,7 @@ public class HomePage extends AppCompatActivity
         } else if (id == R.id.nav_lends) {
             i = new Intent(HomePage.this, TransactionLog.class);
             bundle.putString("username", username);
+            i.putExtra("username", username);
             i.putExtras(bundle);
             startActivity(i);
 
