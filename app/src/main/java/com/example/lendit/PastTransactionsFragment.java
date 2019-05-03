@@ -25,49 +25,59 @@ public class PastTransactionsFragment extends Fragment {
     private static String TAG = "PastTransactionsFragment";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
-    ArrayList<TransactionCard> cardList = new ArrayList<TransactionCard>();
+    View rootView;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.past_transactions_fragment, container, false);
+        rootView = inflater.inflate(R.layout.past_transactions_fragment, container, false);
+        return rootView;
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         mListView = (ListView) rootView.findViewById(R.id.listViewPastTransactions);
+        final ArrayList<TransactionCard> cardList = new ArrayList<TransactionCard>();
 
-            // populate w/ request fragments
-            db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "task borrower successful");
-                        for (QueryDocumentSnapshot s : task.getResult()) {
-                            // give -1 as rating since none exists
-                            cardList.add(new TransactionCard(s.getData().get("id").toString()));
-                        }
-                        // populate w/ request fragments
-                        db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "task lender successful");
-                                    for (QueryDocumentSnapshot s : task.getResult()) {
-                                        // give -1 as rating since none exists
-                                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
-                                    }
-                                    TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
-                                    if ((adapter != null) && (mListView != null)) {
-                                        mListView.setAdapter(adapter);
-                                    } else {
-                                        System.out.println("Null Reference");
-                                    }
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
-                            }
-                        });
+        // populate w/ request fragments
+        db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "task borrower successful");
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        // give -1 as rating since none exists
+                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
                     }
+                    // populate w/ request fragments
+                    db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "task lender successful");
+                                for (QueryDocumentSnapshot s : task.getResult()) {
+                                    // give -1 as rating since none exists
+                                    cardList.add(new TransactionCard(s.getData().get("id").toString()));
+                                }
+                                TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
+                                if ((adapter != null) && (mListView != null)) {
+                                    mListView.setAdapter(adapter);
+                                } else {
+                                    System.out.println("Null Reference");
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
                 }
-            });
+            }
+        });
+    }
+}
+
 
         /* hard code
         cardList.add(new TransactionCard("77oshRdzBozJNMdUpyOR"));
@@ -77,7 +87,5 @@ public class PastTransactionsFragment extends Fragment {
         } else {
             System.out.println("Null Reference");
         }*/
-        return rootView;
 
-    }
-}
+
