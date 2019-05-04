@@ -85,7 +85,7 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                     rating = "N/A: Lend still in progress";
                 }
 
-                holder.rating.setText("Rating " + rating);
+                holder.rating.setText("Rating: " + rating);
                 holder.title.setText(t.get("postTitle").toString());
 
                 db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
