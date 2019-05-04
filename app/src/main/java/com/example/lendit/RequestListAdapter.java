@@ -138,8 +138,8 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                 Map<String, Object> transaction = new HashMap<String, Object>();
                                 transaction.put("borrower", t.get("borrower").toString());
                                 transaction.put("deposit", t.get("deposit").toString());
-                                transaction.put("from", t.get("from").toString());
-                                transaction.put("to", t.get("to").toString());
+                                transaction.put("from", t.get("from"));
+                                transaction.put("to", t.get("to"));
                                 transaction.put("id", t.get("id").toString());
                                 transaction.put("lender", t.get("lender").toString());
                                 transaction.put("postTitle", t.get("postTitle").toString());

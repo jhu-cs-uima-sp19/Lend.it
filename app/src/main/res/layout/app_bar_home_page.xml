@@ -20,6 +20,12 @@
             android:background="@color/green"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <Spinner
+            android:id="@+id/filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+
     </android.support.design.widget.AppBarLayout>
 
     <include
