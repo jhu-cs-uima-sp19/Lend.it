@@ -1,5 +1,9 @@
-# Lend.it
+Lend.it
 
-The features that we have completed so far are logging in/signing up, viewing posts on the main feed, creating asks and borrows, viewing individual post pages,user profiles, and the frontend aspects of messaging. Messaging, ratings, the population of the neighbors list have all been slated for sprint 2. 
+Sprint 1 features: log in/sign up, view posts on main feed, create asks and lends, view individual posts, user profiles, and the frontend aspects of messaging.
 
-We also did not fully implement authentication, but we verify email addresses by the inclusion of the "@" symbol, and check email addresses for existence in our database. Password authentication has not yet been implemented, but an email address that we have been using to test is rsashti1@jhu.edu. 
+Sprint 2 features: log in/sign up with Firebase Auth, homepage with updated ask images & more readable text design, editing capabilities for users' own posts, request transaction and messaging capabilities on other users' posts, messaging and message inbox, neighbor list accessed via user account, requests and transactions log, user account editing capabilites. 
+
+Valid testing account:
+Username: t@jhu.edu
+Password: password
