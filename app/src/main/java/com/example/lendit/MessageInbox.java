@@ -1,7 +1,10 @@
 package com.example.lendit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,8 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.Map;
 
 public class MessageInbox extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +47,9 @@ public class MessageInbox extends AppCompatActivity
     };
 
     ListView listView;
+    StorageReference storage = FirebaseStorage.getInstance().getReference();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +61,6 @@ public class MessageInbox extends AppCompatActivity
         MessageCustomListAdapter whatever = new MessageCustomListAdapter(this, nameArray, messageArray, imageArray);
         listView = (ListView) findViewById(R.id.listViewMessages);
         listView.setAdapter(whatever);
-
-
-
-
-
-
 
         b = getIntent().getExtras();
         if (b != null) {
@@ -66,9 +76,32 @@ public class MessageInbox extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView = navigationView.getHeaderView(0);
-        TextView navUser = (TextView) hView.findViewById(R.id.nameTxt);
+        final TextView navUser = (TextView) hView.findViewById(R.id.nameTxt);
         //ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
         navUser.setText(username);
+
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Map<String, Object> profileData = documentSnapshot.getData();
+                final ImageView img = (ImageView) findViewById(R.id.imageView);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        img.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+
+                navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
+            }
+        });
     }
 
     @Override
