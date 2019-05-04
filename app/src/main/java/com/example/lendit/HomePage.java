@@ -62,6 +62,7 @@ public class HomePage extends AppCompatActivity
     List<String> spinnerFilters;
     String[] ratingList = {"1", "2", "3", "4", "5"};
     String rating = "";
+    String myBuilding;
 
     StorageReference storage = FirebaseStorage.getInstance().getReference();
 
@@ -120,7 +121,7 @@ public class HomePage extends AppCompatActivity
                         // Handle any errors
                     }
                 });
-
+                myBuilding = profileData.get("building").toString();
                 navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
@@ -329,7 +330,7 @@ public class HomePage extends AppCompatActivity
         super.onStart();
         final HomePage H = this;
         mListView = (ListView) findViewById(R.id.listViewLends);
-        final ArrayList<PostCard> cardList = new ArrayList();
+
 
         Log.d(TAG, "Card Act" + R.layout.card_activity);
         //query based on timestamp (most recent will be displayed first)
@@ -340,6 +341,7 @@ public class HomePage extends AppCompatActivity
                 switch(position) {
                     // post date
                     case(0):
+                        final ArrayList<PostCard> cardList = new ArrayList();
                         db.collection("posts").orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -361,9 +363,62 @@ public class HomePage extends AppCompatActivity
                         break;
                         // availability
                     case(1):
+                        final ArrayList<PostCard> cardList1 = new ArrayList();
+                        db.collection("posts").whereEqualTo("available", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "task successful");
+                                    for (QueryDocumentSnapshot s : task.getResult()) {
+                                        cardList1.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));
+                                    }
+                                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList1, username);
+                                    if ((adapter != null) && (mListView != null)) {
+                                        mListView.setAdapter(adapter);
+                                    } else {
+                                        System.out.println("Null Reference");
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
                         break;
                         // neighbors
                     case(2):
+                        final ArrayList<PostCard> cardList2 = new ArrayList();
+                        db.collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "task successful");
+                                    for (final QueryDocumentSnapshot s : task.getResult()) {
+                                        db.collection("users").document(s.get("username").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Log.d(TAG, "my building " + myBuilding);
+                                                Log.d(TAG, "other building " + documentSnapshot.getData().get("building").toString());
+                                                if (documentSnapshot.getData().get("building").toString().equals(myBuilding)) {
+                                                    Log.d(TAG, "my building " + myBuilding);
+                                                    cardList2.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));
+                                                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList2, username);
+                                                    if ((adapter != null) && (mListView != null)) {
+                                                        mListView.setAdapter(adapter);
+                                                    } else {
+                                                        System.out.println("Null Reference");
+                                                    }
+                                                }
+                                            }
+
+                                        });
+                                    }
+
+                                    Log.d(TAG, "card list size" + cardList2.size());
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
                         break;
                     default:
 
