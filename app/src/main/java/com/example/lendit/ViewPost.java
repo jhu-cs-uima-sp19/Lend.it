@@ -151,6 +151,8 @@ public class ViewPost extends AppCompatActivity {
             });
 
         delete.setVisibility(View.VISIBLE);
+        availableTV.setVisibility(View.VISIBLE);
+        availability.setVisibility(View.VISIBLE);
 
     } else {
             message.setClickable(true);
@@ -161,6 +163,8 @@ public class ViewPost extends AppCompatActivity {
             editPost.setVisibility(View.INVISIBLE);
             delete.setClickable(false);
             delete.setVisibility(View.INVISIBLE);
+            availableTV.setVisibility(View.INVISIBLE);
+            availability.setVisibility(View.INVISIBLE);
         }
 
         deposit = findViewById(R.id.deposit_TV);
