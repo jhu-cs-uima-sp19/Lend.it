@@ -52,7 +52,7 @@ public class PastTransactionsFragment extends Fragment {
                     Log.d(TAG, "task borrower successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
                         // give -1 as rating since none exists
-                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
+                        cardList.add(new TransactionCard(s.getData().get("id").toString(), s.get("postTitle").toString()));
                     }
                     // populate w/ request fragments
                     db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -62,7 +62,7 @@ public class PastTransactionsFragment extends Fragment {
                                 Log.d(TAG, "task lender successful");
                                 for (QueryDocumentSnapshot s : task.getResult()) {
                                     // give -1 as rating since none exists
-                                    cardList.add(new TransactionCard(s.getData().get("id").toString()));
+                                    cardList.add(new TransactionCard(s.getData().get("id").toString(), s.get("postTitle").toString()));
                                 }
                                 TransactionListAdapter adapter = new TransactionListAdapter(getActivity(), cardList, username);
                                 if ((adapter != null) && (mListView != null)) {

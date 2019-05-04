@@ -173,7 +173,11 @@ public class TransactionLog extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_feed) {
-            // Handle the camera action
+            i = new Intent(TransactionLog.this, HomePage.class);
+            bundle.putString("username", username);
+            i.putExtra("username", username);
+            i.putExtras(bundle);
+            startActivity(i);
         } else if (id == R.id.nav_msg) {
             i = new Intent(TransactionLog.this, MessageInbox.class);
             bundle.putString("username", username);
@@ -183,14 +187,11 @@ public class TransactionLog extends AppCompatActivity
         } else if (id == R.id.nav_acc) { //Account
             i = new Intent(TransactionLog.this, UserAccount.class);
             bundle.putString("username", username);
+            bundle.putString("myUsername", username);
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {
-            i = new Intent(TransactionLog.this, TransactionLog.class);
-            bundle.putString("username", username);
-            i.putExtra("username", username);
-            i.putExtras(bundle);
-            startActivity(i);
+
 
         }  else if (id == R.id.nav_logout)  {
             i = new Intent(TransactionLog.this, MainActivity.class);

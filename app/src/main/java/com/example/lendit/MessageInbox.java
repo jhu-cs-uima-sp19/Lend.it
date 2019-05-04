@@ -131,6 +131,7 @@ public class MessageInbox extends AppCompatActivity
         } else if (id == R.id.nav_acc) { //Account
             i = new Intent(MessageInbox.this, UserAccount.class);
             bundle.putString("username", username);
+             bundle.putString("myUsername", username);
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {

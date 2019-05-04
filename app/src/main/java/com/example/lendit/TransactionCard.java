@@ -4,13 +4,16 @@ import android.os.Parcelable;
 
 public class TransactionCard implements Parcelable {
     public String transactionID;
+    public String postTitle;
 
-    TransactionCard(String tID){
+    TransactionCard(String tID, String title){
         this.transactionID = tID;
+        this.postTitle = title;
     }
 
     TransactionCard(Parcel p){
         this.transactionID = p.readString();
+        this.postTitle = p.readString();
     }
 
     @Override
@@ -19,6 +22,7 @@ public class TransactionCard implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(this.transactionID);
+        out.writeString(this.postTitle);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods

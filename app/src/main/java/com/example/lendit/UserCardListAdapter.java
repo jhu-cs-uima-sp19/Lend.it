@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +33,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
         private TextView userName;
         private TextView userBuilding;
         private ImageView userImage;
+         private Button message;
 
         public ViewHolder() {}
     }
@@ -48,6 +50,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
             convertView = inflater.inflate(R.layout.neighbor_activity, parent, false);
             holder.userName = convertView.findViewById(R.id.userName);
             holder.userBuilding = convertView.findViewById(R.id.userBuilding);
+             holder.message = convertView.findViewById(R.id.messageButton);
             holder.userImage = convertView.findViewById(R.id.userImage);
             convertView.setTag(holder);
         } else {
@@ -72,6 +75,16 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
                 }
             });
         }
+
+        holder.message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MessageActivity.class);
+                //need to send name?
+                context.startActivity(i);
+            }
+        });
+
 
         // making entire post clickable
         holder.userName.setOnClickListener(new View.OnClickListener() {

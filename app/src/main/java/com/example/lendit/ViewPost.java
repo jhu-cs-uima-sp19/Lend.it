@@ -1,4 +1,6 @@
 package com.example.lendit;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ public class ViewPost extends AppCompatActivity {
     TextView title;
     TextView description;
     TextView deposit;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class ViewPost extends AppCompatActivity {
         Button requestTransaction = findViewById(R.id.requestTransaction);
         Button message = findViewById(R.id.message_giver);
         Button editPost = findViewById(R.id.editPostBTN);
+        delete = findViewById(R.id.deleteButton);
         if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
@@ -102,13 +106,55 @@ public class ViewPost extends AppCompatActivity {
             requestTransaction.setVisibility(View.INVISIBLE);
             editPost.setClickable(true);
             editPost.setVisibility(View.VISIBLE);
-        } else {
+            delete.setClickable(true);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewPost.this)
+                            .setTitle("Confirm Deletion")
+                            .setMessage("Are you sure you want to delete this post?")
+                            .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    db.collection("posts").document(p.postID)
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error deleting document", e);
+                                                }
+                                            });
+                                    ViewPost.this.finish();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+
+        delete.setVisibility(View.VISIBLE);
+
+    } else {
             message.setClickable(true);
             message.setVisibility(View.VISIBLE);
             requestTransaction.setClickable(true);
             requestTransaction.setVisibility(View.VISIBLE);
             editPost.setClickable(false);
             editPost.setVisibility(View.INVISIBLE);
+            delete.setClickable(false);
+            delete.setVisibility(View.INVISIBLE);
         }
 
         deposit = findViewById(R.id.deposit_TV);

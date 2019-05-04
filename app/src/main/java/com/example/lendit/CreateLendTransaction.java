@@ -211,7 +211,7 @@ public class CreateLendTransaction extends AppCompatActivity {
         Map<String, Object> request = new HashMap<String, Object>();
         request.put("borrower", username);
         request.put("lender", p.username);
-        request.put("postID", p.postID);
+        request.put("postTitle", p.postTitle);
         request.put("deposit", deposit.getText().toString());
         request.put("id", uniqueID);
 

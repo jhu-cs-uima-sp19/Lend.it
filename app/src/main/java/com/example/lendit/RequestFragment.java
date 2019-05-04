@@ -60,9 +60,8 @@ public class RequestFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "task borrower successful");
                     for (QueryDocumentSnapshot s : task.getResult()) {
-                        Log.d(TAG, "request id: " + s.getData().get("id").toString());
                         // give -1 as rating since none exists
-                        cardList.add(new TransactionCard(s.getData().get("id").toString()));
+                        cardList.add(new TransactionCard(s.getData().get("id").toString(), s.get("postTitle").toString()));
                     }
                     RequestListAdapter adapter = new RequestListAdapter(getActivity(), cardList, username);
                     if ((adapter != null) && (mListView != null)) {

@@ -80,6 +80,18 @@
         app:layout_constraintLeft_toRightOf="@+id/neighborsNumTxt"
         app:layout_constraintTop_toBottomOf="@+id/myPostsTxt" />
 
+    <TextView
+        android:id="@+id/ratingTxtView"
+        android:layout_width="138dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/neighborsNumTxt" />
+
+
     <Button
         android:id="@+id/editProfileBTN"
         android:layout_width="138dp"
@@ -88,7 +100,6 @@
         android:layout_marginLeft="212dp"
         android:layout_marginTop="36dp"
         android:background="@color/green"
-        android:onClick="editProfile"
         android:text="Edit Profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neighborsNumTxt" />

@@ -39,6 +39,7 @@ public class UserAccountEditable extends AppCompatActivity {
     String username;
     EditText first;
     EditText last;
+    EditText pass;
     Button apply;
     Button cancel;
     Button changePic;
@@ -70,7 +71,7 @@ public class UserAccountEditable extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.cancelBTN);
         changePic = findViewById(R.id.changePicBTN);
         pic = findViewById(R.id.profilePic);
-
+        pass = (EditText) findViewById(R.id.passET);
         first = (EditText) findViewById(R.id.firstNameET);
         last = (EditText) findViewById(R.id.lastNameET);
         building = (Spinner) findViewById(R.id.buildingSpinner);
@@ -101,6 +102,8 @@ public class UserAccountEditable extends AppCompatActivity {
                         // Handle any errors
                     }
                 });
+
+                pass.setText(profileData.get("password").toString());
 
             }
         });
@@ -135,6 +138,7 @@ public class UserAccountEditable extends AppCompatActivity {
         uploadPhoto();
         ref.update("first", first.getText().toString());
         ref.update("last", last.getText().toString());
+        ref.update("password", pass.getText().toString());
         ref.update("building", building.getSelectedItem().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

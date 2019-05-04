@@ -93,23 +93,16 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                 } else {
                     otherName = t.get("borrower").toString();
                 }
-                holder.name.setText(otherName);
 
-
-                db.collection("posts").document(t.get("postID").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> p = documentSnapshot.getData();
-                        holder.title.setText(p.get("title").toString());
-                    }
-                });
+                holder.title.setText(t.get("postTitle").toString());
 
                 db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> u = documentSnapshot.getData();
+                         holder.name.setText(u.get("first").toString() + " " + u.get("last").toString());
                         holder.building.setText(u.get("building").toString());
-                        /*
+                        
                         final long ONE_MEGABYTE = 1024 * 1024;
                         storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                             @Override
@@ -122,11 +115,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors
                             }
-                        });*/
-
-                        // hard coded
-                        holder.profilePic.setImageResource(R.drawable.avatar);
-
+                        });
                     }
                 });
             }
@@ -153,10 +142,11 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                 transaction.put("to", t.get("to").toString());
                                 transaction.put("id", t.get("id").toString());
                                 transaction.put("lender", t.get("lender").toString());
-                                transaction.put("postID", t.get("postID").toString());
+                                transaction.put("postTitle", t.get("postTitle").toString());
                                 transaction.put("deposit", t.get("deposit").toString());
                                 // no rating yet - will be updated once lend has transpired
-                                transaction.put("rating", "");
+                                transaction.put("borrowerRating", "");
+                                transaction.put("lenderRating", "");
                                 db.collection("transactions").document(t.get("id").toString()).set(transaction);
                                 db.collection("transactionRequests").document(p.transactionID)
                                         .delete()

@@ -71,68 +71,44 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> t = documentSnapshot.getData();
                 String otherName = "";
+                String rating;
 
                 if (t.get("borrower").toString().equals(username)) {
                     otherName = t.get("lender").toString();
+                    rating = t.get("lenderRating").toString();
                 } else {
                     otherName = t.get("borrower").toString();
+                    rating = t.get("borrowerRating").toString();
                 }
-                holder.name.setText(otherName);
 
-                String rating = t.get("rating").toString();
                 if (rating.equals("")) {
                     rating = "N/A: Lend still in progress";
                 }
-                holder.rating.setText("Rating " + rating);
 
-                db.collection("posts").document(t.get("postID").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                holder.rating.setText("Rating " + rating);
+                holder.title.setText(t.get("postTitle").toString());
+
+                db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> p = documentSnapshot.getData();
-                        holder.title.setText(p.get("title").toString());
+                        Map<String, Object> u = documentSnapshot.getData();
+                        holder.name.setText(u.get("first").toString() + " " + u.get("last").toString());
+                        holder.building.setText(u.get("building").toString());
+                        final long ONE_MEGABYTE = 1024 * 1024;
+                        storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                holder.profilePic.setImageBitmap(bitmap);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
                     }
                 });
-
-                    db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Map<String, Object> u = documentSnapshot.getData();
-                            holder.building.setText(u.get("building").toString());
-                            final long ONE_MEGABYTE = 1024 * 1024;
-                            storageRef.child(u.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                @Override
-                                public void onSuccess(byte[] bytes) {
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    holder.profilePic.setImageBitmap(bitmap);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle any errors
-                                }
-                            });
-
-                        }
-                    });
-
-
-                /* hard code
-                holder.buildingsetText("Charles Commons");
-                holder.profilePic.setImageResource(R.drawable.avatar);
-                final long ONE_MEGABYTE = 1024 * 1024;
-
-                storageRef.child("appImages/avatar.png").getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        holder.profilePic.setImageBitmap(bitmap);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                    }
-                });*/
             }
         });
 

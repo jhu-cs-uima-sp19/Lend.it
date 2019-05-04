@@ -1,9 +1,11 @@
 package com.example.lendit;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -65,6 +67,7 @@ public class HomePage extends AppCompatActivity
         TextView title = (TextView) hView.findViewById(R.id.appTitle);
         title.setText("lend.it");
 
+        showStartDialog();
 
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -88,6 +91,19 @@ public class HomePage extends AppCompatActivity
                 navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
+    }
+
+    private void showStartDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("ALERT")
+                .setMessage("Make sure to check your lend transactions!")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
     }
 
     public void createPost(View view) {
@@ -170,6 +186,7 @@ public class HomePage extends AppCompatActivity
         final Bundle bundle = new Bundle();
         i = new Intent(HomePage.this, UserAccount.class);
         bundle.putString("username", username);
+        bundle.putString("myUsername", username);
         i.putExtras(bundle);
         startActivity(i);
 
@@ -196,6 +213,7 @@ public class HomePage extends AppCompatActivity
         } else if (id == R.id.nav_acc) { //Account
             i = new Intent(HomePage.this, UserAccount.class);
             bundle.putString("username", username);
+             bundle.putString("myUsername", username);
             i.putExtras(bundle);
             startActivity(i);
         } else if (id == R.id.nav_lends) {

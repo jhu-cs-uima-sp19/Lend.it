@@ -2,6 +2,7 @@ package com.example.lendit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Button;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class UserAccount extends AppCompatActivity {
     TextView building;
     TextView numNeighbors;
     TextView numPosts;
+    TextView rating;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     // all data fields in user profile
     Map<String, Object> profileData;
@@ -51,13 +53,16 @@ public class UserAccount extends AppCompatActivity {
 
     Map<String, Object> postInfo;
     String buildingName = "";
-    ArrayList<UserCard> userCards = new ArrayList();
+    double total = -1.0;
+
     QuerySnapshot neighborData;
+    int transactionCount = 0;
     int count = 0;
     Context context = this;
     ImageView pic;
     StorageReference storage = FirebaseStorage.getInstance().getReference();
-
+    Button edit;
+    String myUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,38 +75,20 @@ public class UserAccount extends AppCompatActivity {
         b = getIntent().getExtras();
         if (b != null) {
             username = b.getString("username");
+             myUsername = b.getString("myUsername");
         }
+        edit = findViewById(R.id.editProfileBTN);
 
         pic = findViewById(R.id.profilePic);
 
 
-
+        rating = findViewById(R.id.ratingTxtView);
         name = findViewById(R.id.nameTxt);
         building = findViewById(R.id.buildingTxt);
         numNeighbors = findViewById(R.id.neighborsNumTxt);
         numPosts = findViewById(R.id.myPostsNumTxt);
     }
 
-    public void toNeighborList() {
-        for (QueryDocumentSnapshot s : neighborData) {
-            Map<String, Object> d = s.getData();
-            userCards.add(new UserCard(d.get("fullName").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString()));
-        }
-
-        Intent i;
-        i = new Intent(this, NeighborList.class);
-        i.putExtra("userList", userCards);
-        i.putExtra("username", username);
-        this.startActivity(i);
-    }
-
-    public void editProfile(View v) {
-        Intent i = new Intent(UserAccount.this, UserAccountEditable.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        i.putExtras(bundle);
-        startActivity(i);
-    }
 
     @Override
     public void onBackPressed() {
@@ -140,6 +127,7 @@ public class UserAccount extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         final ArrayList<PostCard> cardList = new ArrayList();
+        final ArrayList<UserCard> userCards = new ArrayList();
         // get users' profile data
         db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -176,8 +164,14 @@ public class UserAccount extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     int count = 0;
                     for (QueryDocumentSnapshot s : task.getResult()) {
+                         Map<String, Object> d = s.getData();
+
+                           if (!d.get("username").equals(username)) {
                         count++;
+                        userCards.add(new UserCard(d.get("first").toString() + " " + d.get("last").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString()));
                     }
+                }
+
                     numNeighbors.setText(Integer.toString(count));
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -214,13 +208,91 @@ public class UserAccount extends AppCompatActivity {
             }
         });
 
-        numNeighbors.setClickable(true);
-        numNeighbors.setOnClickListener(new View.OnClickListener() {
+
+
+        if (username.equals(myUsername)) {
+            edit.setVisibility(View.VISIBLE);
+            edit.setClickable(true);
+            edit.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(UserAccount.this, UserAccountEditable.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
+            });
+             numNeighbors.setClickable(true);
+            numNeighbors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toNeighborList();
+                  Intent i;
+                    i = new Intent(UserAccount.this, NeighborList.class);
+                    i.putExtra("userList", userCards);
+                    i.putExtra("username", username);
+                    startActivity(i);
             }
         });
+            rating.setVisibility(View.INVISIBLE);
+
+    } else {
+            edit.setVisibility(View.INVISIBLE);
+            edit.setClickable(false);
+            // num neighbors will only be clickable once it
+            numNeighbors.setClickable(false);
+            rating.setVisibility(View.VISIBLE);
+            db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "task borrower successful");
+                        for (QueryDocumentSnapshot s : task.getResult()) {
+                            // know that we are the borrower
+                            String r = s.get("borrowerRating").toString();
+                            if (!r.equals("")) {
+                                total += Double.parseDouble(r);
+                                transactionCount++;
+                            }
+                            if (total < 0) {
+                                rating.setText("Rating: N/A (No transactions completed)");
+                            } else {
+                                rating.setText("Rating: " + total / transactionCount);
+                            }
+                        }
+                        // populate w/ request fragments
+                        db.collection("transactions").whereEqualTo("lender", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "task lender successful");
+                                    for (QueryDocumentSnapshot s : task.getResult()) {
+                                        // know that we are the borrower
+                                        String r = s.get("lenderRating").toString();
+                                        if (!r.equals("")) {
+                                            total += Double.parseDouble(r);
+                                            transactionCount++;
+                                        }
+                                    }
+                                    if (total < 0) {
+                                        rating.setText("Rating: N/A (No transactions completed)");
+                                    } else {
+                                        rating.setText("Rating: " + total / transactionCount);
+                                    }
+                                } else{
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                        });
+
+                    }
+                    else{
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+
+        }
 
     }
 }

@@ -14,7 +14,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:clickable="true"
@@ -30,32 +30,39 @@
 
             <TextView
                 android:id="@+id/userBuilding"
-                android:layout_width="216dp"
+                android:layout_width="171dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/posterImage"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="80dp"
-                android:layout_toEndOf="@+id/posterImage"
-                android:layout_toRightOf="@+id/posterImage"
-                app:layout_constraintTop_toBottomOf="@+id/posterName"
-                android:layout_marginEnd="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="22dp"
                 android:layout_marginStart="16dp"
-                android:gravity="center_vertical" />
+                android:layout_marginEnd="29dp"
+                android:layout_marginRight="29dp"
+                android:layout_marginBottom="48dp"
+                android:layout_toEndOf="@+id/userImage"
+                android:layout_toRightOf="@+id/userImage"
+                android:gravity="center_horizontal|center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/posterImage"
+                app:layout_constraintTop_toBottomOf="@+id/posterName" />
 
             <TextView
                 android:id="@+id/userName"
-                android:layout_width="189dp"
+                android:layout_width="171dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="16dp"
-                android:layout_toEndOf="@+id/posterImage"
-                android:layout_toRightOf="@+id/posterImage"
-                android:gravity="center_vertical"
-                app:layout_constraintStart_toEndOf="@+id/posterImage" />
+                app:layout_constraintStart_toEndOf="@+id/posterImage"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="29dp"
+                android:layout_marginRight="29dp"
+                android:layout_toEndOf="@+id/userImage"
+                android:layout_toRightOf="@+id/userImage"
+                android:gravity="center_horizontal|center_vertical"/>
 
             <ImageView
                 android:id="@+id/userImage"
@@ -64,10 +71,30 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginLeft="9dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="18dp"
+                   android:layout_alignParentTop="true"
                 android:layout_marginBottom="14dp"
                 tools:srcCompat="@tools:sample/avatars" />
+                
+                <Button
+                android:id="@+id/messageButton"
+                android:layout_width="149dp"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="41dp"
+                android:layout_marginRight="41dp"
+                android:layout_marginBottom="11dp"
+                android:background="@color/green"
+                android:text="Message"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent" />
         </RelativeLayout>
 
 
