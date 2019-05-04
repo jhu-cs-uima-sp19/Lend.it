@@ -25,6 +25,6 @@
     <string name="title_activity_view_lend_transaction">ViewLendTransaction</string>
     <string name="title_activity_view_post_editable">ViewPostEditable</string>
     <string name="title_activity_transaction_log">TransactionLog</string>
-    <string name="title_activity_viewing_post">ViewingPost</string>
-    <string name="title_activity_view_post">ViewPost</string>
+    <string name="title_activity_viewing_post">View Post</string>
+    <string name="title_activity_view_post">View Post</string>
 </resources>

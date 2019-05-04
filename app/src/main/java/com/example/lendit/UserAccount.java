@@ -38,24 +38,14 @@ public class UserAccount extends AppCompatActivity {
 
     Bundle b;
     String username;
-    TextView name;
-    TextView building;
-    TextView numNeighbors;
-    TextView numPosts;
-    TextView rating;
+    TextView name, building, numNeighbors, numPosts, rating;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     // all data fields in user profile
     Map<String, Object> profileData;
-    List<DocumentSnapshot> asksData;
-    List<DocumentSnapshot> lendsData;
     private static final String TAG = "UserAccountActivity";
     private ListView mListView;
-
-    Map<String, Object> postInfo;
     String buildingName = "";
     double total = -1.0;
-
-    QuerySnapshot neighborData;
     int transactionCount = 0;
     int count = 0;
     Context context = this;
@@ -77,11 +67,9 @@ public class UserAccount extends AppCompatActivity {
             username = b.getString("username");
              myUsername = b.getString("myUsername");
         }
+
         edit = findViewById(R.id.editProfileBTN);
-
         pic = findViewById(R.id.profilePic);
-
-
         rating = findViewById(R.id.ratingTxtView);
         name = findViewById(R.id.nameTxt);
         building = findViewById(R.id.buildingTxt);
@@ -154,31 +142,32 @@ public class UserAccount extends AppCompatActivity {
                         }
                     });
                 }
-            }
-        });
+                // querying for users w/ same building field
+                db.collection("users").whereEqualTo("building", buildingName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 0;
+                            for (QueryDocumentSnapshot s : task.getResult()) {
+                                Map<String, Object> d = s.getData();
 
-        // querying for users w/ same building field
-        db.collection("users").whereEqualTo("building", buildingName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int count = 0;
-                    for (QueryDocumentSnapshot s : task.getResult()) {
-                         Map<String, Object> d = s.getData();
+                                if (!d.get("username").equals(username)) {
+                                    count++;
+                                    userCards.add(new UserCard(d.get("first").toString() + " " + d.get("last").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString()));
+                                }
+                            }
 
-                           if (!d.get("username").equals(username)) {
-                        count++;
-                        userCards.add(new UserCard(d.get("first").toString() + " " + d.get("last").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString()));
+                            numNeighbors.setText(Integer.toString(count));
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                }
 
-                    numNeighbors.setText(Integer.toString(count));
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
+                });
             }
-
         });
+
+
 
         // get users' lend data (most recent at top)
         /*orderBy("post_date", Query.Direction.DESCENDING)*/
@@ -207,8 +196,6 @@ public class UserAccount extends AppCompatActivity {
                 }
             }
         });
-
-
 
         if (username.equals(myUsername)) {
             edit.setVisibility(View.VISIBLE);
