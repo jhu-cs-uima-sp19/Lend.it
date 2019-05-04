@@ -14,11 +14,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -41,6 +43,7 @@ public class ViewPost extends AppCompatActivity {
     TextView deposit;
     Button delete;
     Switch availability;
+    TextView availableTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class ViewPost extends AppCompatActivity {
 
         title = findViewById(R.id.itemName);
         availability = findViewById(R.id.availableToggle);
-
+        availableTV = findViewById(R.id.availabilityTV);
         description = findViewById(R.id.item_descrip_text);
 
         final TextView name = findViewById(R.id.posted_by_TV);
@@ -148,6 +151,8 @@ public class ViewPost extends AppCompatActivity {
             });
 
         delete.setVisibility(View.VISIBLE);
+        availableTV.setVisibility(View.VISIBLE);
+        availability.setVisibility(View.VISIBLE);
 
     } else {
             message.setClickable(true);
@@ -158,6 +163,8 @@ public class ViewPost extends AppCompatActivity {
             editPost.setVisibility(View.INVISIBLE);
             delete.setClickable(false);
             delete.setVisibility(View.INVISIBLE);
+            availableTV.setVisibility(View.INVISIBLE);
+            availability.setVisibility(View.INVISIBLE);
         }
 
         deposit = findViewById(R.id.deposit_TV);
@@ -199,6 +206,22 @@ public class ViewPost extends AppCompatActivity {
             }
         });
 
+        availability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                DocumentReference ref = db.collection("posts").document(p.postID);
+                if (isChecked) {
+                    //make database changes
+                    ref.update("available", true);
+                    availableTV.setText("Available");
+                } else {
+                    ref.update("available", false);
+                    availableTV.setText("Unavailable");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -214,8 +237,10 @@ public class ViewPost extends AppCompatActivity {
 
                 if (postData.get("available").toString().equals("true")) {
                     availability.setChecked(true);
+                    availableTV.setText("Available");
                 } else {
                     availability.setChecked(false);
+                    availableTV.setText("Unavailable");
                 }
 
                 if (postData.get("deposit").toString() == "0") {

@@ -1,4 +1,5 @@
 package com.example.lendit;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,15 +17,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,6 +37,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class HomePage extends AppCompatActivity
@@ -41,6 +49,12 @@ public class HomePage extends AppCompatActivity
     private static String TAG = "HomePageActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView mListView;
+    Context context;
+    Date rightNow;
+    Timestamp toCompare;
+    Timestamp getToTime;
+    Spinner filters;
+    List<String> spinnerFilters;
 
     StorageReference storage = FirebaseStorage.getInstance().getReference();
 
@@ -48,6 +62,18 @@ public class HomePage extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        context = this;
+        rightNow = new Date();
+        toCompare = new Timestamp(rightNow);
+        filters = (Spinner) findViewById(R.id.filters);
+        spinnerFilters = new ArrayList<String>(Arrays.asList("Availability", "Users", "Post Date"));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerFilters);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filters.setAdapter(adapter);
+
+
+        //Log.d(TAG, "Current Date and Time " + rightNow.toString());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,16 +120,34 @@ public class HomePage extends AppCompatActivity
     }
 
     private void showStartDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("ALERT")
-                .setMessage("Make sure to check your lend transactions!")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        db.collection("transactions").whereEqualTo("borrower", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        Log.d(TAG, "toTime " + s.get("to"));
+                        getToTime = (Timestamp) s.get("to");
+                        if (toCompare.compareTo(getToTime) < 0) {
+                            // give -1 as rating since none exists
+                            new AlertDialog.Builder(context)
+                                    .setTitle("LEND DUE")
+                                    .setMessage(s.get("postTitle").toString() + " is due! Have you returned the item yet?")
+                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .create().show();
+                        }
                     }
-                })
-                .create().show();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
     }
 
     public void createPost(View view) {
