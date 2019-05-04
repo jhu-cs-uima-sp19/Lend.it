@@ -43,6 +43,7 @@ public class ViewPost extends AppCompatActivity {
     TextView deposit;
     Button delete;
     Switch availability;
+    TextView availableTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ViewPost extends AppCompatActivity {
 
         title = findViewById(R.id.itemName);
         availability = findViewById(R.id.availableToggle);
+        availableTV = findViewById(R.id.availabilityTV);
         description = findViewById(R.id.item_descrip_text);
 
         final TextView name = findViewById(R.id.posted_by_TV);
@@ -149,6 +151,7 @@ public class ViewPost extends AppCompatActivity {
             });
 
         delete.setVisibility(View.VISIBLE);
+        availableTV.setVisibility(View.VISIBLE);
         availability.setVisibility(View.VISIBLE);
 
     } else {
@@ -160,6 +163,7 @@ public class ViewPost extends AppCompatActivity {
             editPost.setVisibility(View.INVISIBLE);
             delete.setClickable(false);
             delete.setVisibility(View.INVISIBLE);
+            availableTV.setVisibility(View.INVISIBLE);
             availability.setVisibility(View.INVISIBLE);
         }
 
@@ -210,8 +214,10 @@ public class ViewPost extends AppCompatActivity {
                 if (isChecked) {
                     //make database changes
                     ref.update("available", true);
+                    availableTV.setText("Available");
                 } else {
                     ref.update("available", false);
+                    availableTV.setText("Unavailable");
                 }
             }
         });
@@ -231,8 +237,10 @@ public class ViewPost extends AppCompatActivity {
 
                 if (postData.get("available").toString().equals("true")) {
                     availability.setChecked(true);
+                    availableTV.setText("Available");
                 } else {
                     availability.setChecked(false);
+                    availableTV.setText("Unavailable");
                 }
 
                 if (postData.get("deposit").toString() == "0") {
