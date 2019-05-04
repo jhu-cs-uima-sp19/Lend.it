@@ -18,21 +18,16 @@
         android:text="Your go to place to get connected with your community"
         android:textColor="#424444"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.558"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.201" />
+        app:layout_constraintVertical_bias="0.214" />
 
     <TextView
         android:id="@+id/setUpTxt"
         android:layout_width="326dp"
         android:layout_height="105dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
@@ -46,21 +41,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginLeft="138dp"
         android:layout_marginTop="72dp"
-        android:layout_marginEnd="135dp"
-        android:layout_marginRight="135dp"
         android:background="@color/green"
-        android:textStyle="bold"
         android:text="Enter Your JHU Email:"
         android:textColor="#424444"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
