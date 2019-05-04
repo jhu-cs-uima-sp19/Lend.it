@@ -56,36 +56,36 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
         theirusername = bundle.getString("postuser");
 
         //frontend message bubble code
-        ChatBubbles = new ArrayList<>();
-
-        listView = (ListView) findViewById(R.id.list_msg);
-        btnSend = findViewById(R.id.btn_chat_send);
-        editText = (EditText) findViewById(R.id.msg_type);
-
-        //set ListView adapter first
-        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
-        listView.setAdapter(adapter);
-
-        //event for button SEND
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText.getText().toString().trim().equals("")) {
-                    Toast.makeText(Chat.this, "Please input some text...", Toast.LENGTH_SHORT).show();
-                } else {
-                    //add message to list
-                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
-                    ChatBubbles.add(ChatBubble);
-                    adapter.notifyDataSetChanged();
-                    editText.setText("");
-                    if (myMessage) {
-                        myMessage = false;
-                    } else {
-                        myMessage = true;
-                    }
-                }
-            }
-        });
+//        ChatBubbles = new ArrayList<>();
+//
+//        listView = (ListView) findViewById(R.id.list_msg);
+//        btnSend = findViewById(R.id.btn_chat_send);
+//        editText = (EditText) findViewById(R.id.msg_type);
+//
+//        //set ListView adapter first
+//        adapter = new MessageAdapter(this, R.layout.left_chat_bubble, ChatBubbles);
+//        listView.setAdapter(adapter);
+//
+//        //event for button SEND
+//        btnSend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (editText.getText().toString().trim().equals("")) {
+//                    Toast.makeText(Chat.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    //add message to list
+//                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
+//                    ChatBubbles.add(ChatBubble);
+//                    adapter.notifyDataSetChanged();
+//                    editText.setText("");
+//                    if (myMessage) {
+//                        myMessage = false;
+//                    } else {
+//                        myMessage = true;
+//                    }
+//                }
+//            }
+//        });
 
         //backend/database code
         layout = (LinearLayout) findViewById(R.id.layout1);
