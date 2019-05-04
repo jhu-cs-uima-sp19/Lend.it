@@ -211,7 +211,13 @@ public class ViewPost extends AppCompatActivity {
                 postData = documentSnapshot.getData();
                 title.setText(postData.get("title").toString());
                 description.setText(postData.get("description").toString());
-                availability.set
+
+                if (postData.get("available").toString().equals("true")) {
+                    availability.setChecked(true);
+                } else {
+                    availability.setChecked(false);
+                }
+
                 if (postData.get("deposit").toString() == "0") {
                     deposit.setVisibility(View.INVISIBLE);
                 } else {
