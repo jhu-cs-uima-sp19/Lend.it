@@ -51,6 +51,7 @@ public class LendFragment extends Fragment {
         lendTitle = rootView.findViewById(R.id.lendTitleET);
         lendDesc = rootView.findViewById(R.id.lendDescriptionET);
         deposit = rootView.findViewById(R.id.depET);
+        deposit.setText("0");
         display = rootView.findViewById(R.id.displayIV);
         activity = (CreatePost) getActivity();
 
@@ -75,7 +76,6 @@ public class LendFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createLend(userData);
-                activity.launchHome();
             }
         });
 
@@ -99,26 +99,34 @@ public class LendFragment extends Fragment {
             uploadPhoto();
         }
         Map<String, Object> lend = new HashMap<>();
-        lend.put("title", lendTitle.getText().toString());
-        lend.put("description", lendDesc.getText().toString());
-        lend.put("id", uniqueID);
-        lend.put("post_date", Calendar.getInstance().getTime());
-        lend.put("deposit", deposit.getText().toString());
-        lend.put("available", true);
-        lend.put("username", userData.get("username"));
-        lend.put("photo", "lendImages/" + photo);
+        String t = lendTitle.getText().toString();
+        String d = lendDesc.getText().toString();
+        if (t.equals("") || d.equals("") || photo.equals("appImages/add-picture-icon-13.png")) {
+            Toast.makeText(getContext(), "Please enter a title, description, and image", Toast.LENGTH_LONG).show();
+        } else {
+            lend.put("title", t);
+            lend.put("description", d);
+            lend.put("id", uniqueID);
+            lend.put("post_date", Calendar.getInstance().getTime());
+            // initialized to 0 & not required
+            lend.put("deposit", deposit.getText().toString());
+            lend.put("available", true);
+            lend.put("username", userData.get("username"));
+            lend.put("photo", "lendImages/" + photo);
 
-        db.collection("posts").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error writing document", e);
-            }
-        });
+            db.collection("posts").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error writing document", e);
+                }
+            });
+            activity.launchHome();
+        }
         //getActivity().finish();
     }
 

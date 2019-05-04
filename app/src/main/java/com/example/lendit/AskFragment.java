@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +29,7 @@ public class AskFragment extends Fragment {
     EditText askDesc;
     EditText askTitle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CreatePost activity;
 
     @Nullable
     @Override
@@ -46,7 +48,6 @@ public class AskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createAsk(userData);
-                activity.launchHome();
             }
         });
         return rootView;
@@ -56,32 +57,37 @@ public class AskFragment extends Fragment {
     public void createAsk(Map<String, String> userData) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> ask = new HashMap<>();
-        ask.put("title", askTitle.getText().toString());
-        ask.put("description", askDesc.getText().toString());
-        ask.put("id", uniqueID);
-        ask.put("post_date", Calendar.getInstance().getTime());
-        ask.put("deposit", "0");
-        ask.put("available", true);
-        ask.put("username", userData.get("username"));
-        ask.put("photo", "appImages/ask.JPG");
+        String t = askTitle.getText().toString();
+        String d = askDesc.getText().toString();
+        if (t.equals("") || d.equals("")) {
+            Toast.makeText(getContext(), "Please enter a title and description", Toast.LENGTH_LONG).show();
+        } else {
+            ask.put("title", t);
+            ask.put("description", d);
+            ask.put("id", uniqueID);
+            ask.put("post_date", Calendar.getInstance().getTime());
+            ask.put("deposit", "0");
+            ask.put("available", true);
+            ask.put("username", userData.get("username"));
+            ask.put("photo", "appImages/ask.JPG");
 
-        // get username from intent that launched this activity?
-        // profile.put("username", );
-        db.collection("posts").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully written!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-        //getActivity().finish();
-
+            // get username from intent that launched this activity?
+            // profile.put("username", );
+            db.collection("posts").document(uniqueID).set(ask).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+            //getActivity().finish();
+            Toast.makeText(getContext(), "Ask successfully created!", Toast.LENGTH_LONG).show();
+            activity.launchHome();
     }
-
-
+    }
 }

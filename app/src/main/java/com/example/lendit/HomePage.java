@@ -23,12 +23,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -55,6 +57,8 @@ public class HomePage extends AppCompatActivity
     Timestamp getToTime;
     Spinner filters;
     List<String> spinnerFilters;
+    String[] ratingList = {"1", "2", "3", "4", "5"};
+    String rating = "RATING ISN'T UPDATING";
 
     StorageReference storage = FirebaseStorage.getInstance().getReference();
 
@@ -66,7 +70,7 @@ public class HomePage extends AppCompatActivity
         rightNow = new Date();
         toCompare = new Timestamp(rightNow);
         filters = (Spinner) findViewById(R.id.filters);
-        spinnerFilters = new ArrayList<String>(Arrays.asList("Availability", "Users", "Post Date"));
+        spinnerFilters = new ArrayList<String>(Arrays.asList("Availability", "Neighbors", "Post Date"));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, spinnerFilters);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -125,17 +129,79 @@ public class HomePage extends AppCompatActivity
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
 
-                    for (QueryDocumentSnapshot s : task.getResult()) {
+                    for (final QueryDocumentSnapshot s : task.getResult()) {
                         Log.d(TAG, "toTime " + s.get("to"));
                         getToTime = (Timestamp) s.get("to");
-                        if (toCompare.compareTo(getToTime) < 0) {
+                        // if you're the borrower and you have not given the other person a rating (lender rating == "" when first created)
+                        if ((toCompare.compareTo(getToTime) < 0) && (s.get("lenderRating").toString().equals(""))) {
                             // give -1 as rating since none exists
                             new AlertDialog.Builder(context)
-                                    .setTitle("LEND DUE")
-                                    .setMessage(s.get("postTitle").toString() + " is due! Have you returned the item yet?")
-                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    .setTitle("LEND IS DUE")
+                                    .setMessage(s.get("postTitle").toString() + " is due! Have this item been returned?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            // rating popup
+                                            new AlertDialog.Builder(context)
+                                                    .setTitle("Rate the other user:")
+                                                    .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            rating = ratingList[which];
+                                                        }
+                                                    })
+                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // rating popup
+                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                                            ref.update("lenderRating", rating);
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    // need to be able to edit transaction
+                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // need to edit your transaction to extend time or report other user
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .create().show();
+                                        }
+                                    })
+                                    // need to be able to edit transaction
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // need to edit your transaction to extend time or report other user
+                                            new AlertDialog.Builder(context)
+                                                    .setTitle("The appliance was not returned")
+                                                    /*
+                                                    .setItems(ratingList, new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            rating = ratingList[which];
+                                                        }
+                                                    })
+                                                     // need to be able to edit transaction
+                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // rating popup
+                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                                            ref.update("lenderRating", rating);
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                   */
+                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // need to edit your transaction to extend time or report other user
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .create().show();
                                             dialog.dismiss();
                                         }
                                     })
