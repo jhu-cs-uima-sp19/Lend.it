@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,8 +34,10 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.OrderBy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -58,7 +61,7 @@ public class HomePage extends AppCompatActivity
     Spinner filters;
     List<String> spinnerFilters;
     String[] ratingList = {"1", "2", "3", "4", "5"};
-    String rating = "RATING ISN'T UPDATING";
+    String rating = "";
 
     StorageReference storage = FirebaseStorage.getInstance().getReference();
 
@@ -70,7 +73,7 @@ public class HomePage extends AppCompatActivity
         rightNow = new Date();
         toCompare = new Timestamp(rightNow);
         filters = (Spinner) findViewById(R.id.filters);
-        spinnerFilters = new ArrayList<String>(Arrays.asList("Availability", "Neighbors", "Post Date"));
+        spinnerFilters = new ArrayList<String>(Arrays.asList("Post Date", "Availability", "Neighbors"));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, spinnerFilters);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -330,23 +333,48 @@ public class HomePage extends AppCompatActivity
 
         Log.d(TAG, "Card Act" + R.layout.card_activity);
         //query based on timestamp (most recent will be displayed first)
-        db.collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        filters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "task successful");
-                    for (QueryDocumentSnapshot s : task.getResult()) {
-                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));                    }
-                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
-                    if ((adapter != null) && (mListView != null)) {
-                        mListView.setAdapter(adapter);
-                    } else {
-                        System.out.println("Null Reference");
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                switch(position) {
+                    // post date
+                    case(0):
+                        db.collection("posts").orderBy("post_date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "task successful");
+                                    for (QueryDocumentSnapshot s : task.getResult()) {
+                                        cardList.add(new PostCard(s.getData().get("photo").toString(), s.getData().get("title").toString(), s.getData().get("deposit").toString(), s.getData().get("description").toString(), s.getData().get("username").toString(), s.getData().get("id").toString(), s.getData().get("post_date").toString()));                    }
+                                    PostCardListAdapter adapter = new PostCardListAdapter(H, cardList, username);
+                                    if ((adapter != null) && (mListView != null)) {
+                                        mListView.setAdapter(adapter);
+                                    } else {
+                                        System.out.println("Null Reference");
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                        break;
+                        // availability
+                    case(1):
+                        break;
+                        // neighbors
+                    case(2):
+                        break;
+                    default:
+
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
     }
 
