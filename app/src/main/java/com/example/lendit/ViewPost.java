@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +40,7 @@ public class ViewPost extends AppCompatActivity {
     TextView description;
     TextView deposit;
     Button delete;
+    Switch availability;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class ViewPost extends AppCompatActivity {
         username = i.getStringExtra("username");
 
         title = findViewById(R.id.itemName);
+        availability = findViewById(R.id.availableToggle);
 
         description = findViewById(R.id.item_descrip_text);
 
@@ -98,7 +101,7 @@ public class ViewPost extends AppCompatActivity {
         Button requestTransaction = findViewById(R.id.requestTransaction);
         Button message = findViewById(R.id.message_giver);
         Button editPost = findViewById(R.id.editPostBTN);
-        delete = findViewById(R.id.deleteButton);
+        delete = findViewById(R.id.delete);
         if (username.equals(p.username)) {
             message.setClickable(false);
             message.setVisibility(View.INVISIBLE);
@@ -208,6 +211,7 @@ public class ViewPost extends AppCompatActivity {
                 postData = documentSnapshot.getData();
                 title.setText(postData.get("title").toString());
                 description.setText(postData.get("description").toString());
+                availability.set
                 if (postData.get("deposit").toString() == "0") {
                     deposit.setVisibility(View.INVISIBLE);
                 } else {

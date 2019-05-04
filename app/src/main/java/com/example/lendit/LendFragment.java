@@ -104,6 +104,7 @@ public class LendFragment extends Fragment {
         lend.put("id", uniqueID);
         lend.put("post_date", Calendar.getInstance().getTime());
         lend.put("deposit", deposit.getText().toString());
+        lend.put("available", true);
         lend.put("username", userData.get("username"));
         lend.put("photo", "lendImages/" + photo);
 

@@ -61,6 +61,7 @@ public class AskFragment extends Fragment {
         ask.put("id", uniqueID);
         ask.put("post_date", Calendar.getInstance().getTime());
         ask.put("deposit", "0");
+        ask.put("available", true);
         ask.put("username", userData.get("username"));
         ask.put("photo", "appImages/ask.JPG");
 
