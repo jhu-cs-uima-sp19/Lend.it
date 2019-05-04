@@ -57,6 +57,73 @@ Group work session to begin to link activities together and connect database to 
 Meeting: Sunday, 4/14/19
 Finalized colors, layouts, and fixed a few last minute bugs.
 
+Meeting 4-18-19
+Tested Sprint 1 app
+Sign out – firebase auth might be helpful for that 
+Settings
+Sign up: Make form scrollable so you can make text larger
+Maybe switch to firebase auth
+Make ask image say “ask”
+Create reach goals list
+Popup for lend 2 depending on if lend has expired
+Design
+Make background color for lends vs asks different & have text size larger & more bold
+ 
+Meeting 4-21-19
+Design decision: decided to back-populate neighbors upon account creation
+Emphasizes community creation within proximity-based relationships
+We didn’t want our app to become like a facebook, where people are driven to pursue meaningless connections just to increase their number of neighbors
+Planning for sprint 2 priorities
+Filters
+X buttons and general cleanup - mary
+User account neighbors - taryn
+Lends log
+Popup 
+Check out messaging data persistence: message other groups that are using this - ryan
+Logging out
+Account and post editing
+ratings
+Revision
+firebase auth - ravina
+Redesign
+Will meet tomorrow for another work session
 
+Meeting 4-24-19
+Taryn, Ryan, Ravina and Mary
+Made small fixes
+Changes text to black to make it more readable
+Added close buttons to activities that didn’t have them
+Fixed layouts so that they are the same on every device
+Started work on lend log
+Can now successfully log out
 
+Meeting 4-25-19
+5-7pm
+Taryn, Ryan, Ravina and Mary - Ryenne couldn’t meet with us today but we updated her on what we were working on
+Further work on lend log
+Querying from database
+Created tabbed view for lend log - Requests and Past Transactions
 
+Meeting 4-29-19
+3pm-10pm
+Taryn, Ryan, Ravina and Mary
+Looking into implementing Firebase Authentication
+Need to change some of database format?
+Creating Presentation for tomorrow’s demo
+Filmed video
+Fixed tablet layout
+
+Meeting 5-2-19
+Ryenne, Taryn, Ryan, Mary and Ravina
+Went over how much we have accomplished in Sprint 2
+Need to fix message backend
+Need to populate lend transactions properly
+Ryenne reminded us that we have “Sprint 3” to get the app fully functional
+
+Meeting 5-3-19
+Taryn, Ryan, Ravina and Mary
+Fixed Lend Transaction Log
+Populating neighbors list is working properly
+Implemented Firebase Authentication
+Working on Shared Preferences to display when a lend is due
+End of sprint 2!
