@@ -79,7 +79,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
         holder.message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, MessageActivity.class);
+                Intent i = new Intent(context, Chat.class);
                 //need to send name?
                 context.startActivity(i);
             }

@@ -1,80 +1,72 @@
 package com.example.lendit;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+public class MessageAdapter extends ArrayAdapter<ChatBubble> {
 
-public class MessageAdapter extends BaseAdapter {
+    private Activity activity;
+    private List<ChatBubble> messages;
 
-    List<Message> messages = new ArrayList<Message>();
-    Context context;
-
-    public MessageAdapter(Context context) {
-        this.context = context;
-    }
-
-
-    public void add(Message message) {
-        this.messages.add(message);
-        notifyDataSetChanged();
+    public MessageAdapter(Activity context, int resource, List<ChatBubble> objects) {
+        super(context, resource, objects);
+        this.activity = context;
+        this.messages = objects;
     }
 
     @Override
-    public int getCount() {
-        return messages.size();
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-    @Override
-    public Object getItem(int i) {
-        return messages.get(i);
-    }
+        int layoutResource = 0; // determined by view type
+        ChatBubble ChatBubble = getItem(position);
+        int viewType = getItemViewType(position);
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        MessageViewHolder holder = new MessageViewHolder();
-        LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        Message message = messages.get(i);
-
-        if (message.isBelongsToCurrentUser()) {
-            convertView = messageInflater.inflate(R.layout.my_message, null);
-            holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
-            convertView.setTag(holder);
-            holder.messageBody.setText(message.getText());
+        if (ChatBubble.myMessage()) {
+            layoutResource = R.layout.left_chat_bubble;
         } else {
-            convertView = messageInflater.inflate(R.layout.their_message, null);
-            holder.avatar = (View) convertView.findViewById(R.id.avatar);
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
-            convertView.setTag(holder);
-
-            holder.name.setText(message.getMemberData().getName());
-            holder.messageBody.setText(message.getText());
-            GradientDrawable drawable = (GradientDrawable) holder.avatar.getBackground();
-            drawable.setColor(Color.parseColor(message.getMemberData().getColor()));
+            layoutResource = R.layout.right_chat_bubble;
         }
+
+        if (convertView != null) {
+            holder = (ViewHolder) convertView.getTag();
+        } else {
+            convertView = inflater.inflate(layoutResource, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        }
+
+        //set message content
+        holder.msg.setText(ChatBubble.getContent());
 
         return convertView;
     }
 
-}
+    @Override
+    public int getViewTypeCount() {
+        // return the total number of view types. this value should never change
+        // at runtime. Value 2 is returned because of left and right views.
+        return 2;
+    }
 
-class MessageViewHolder {
-    public View avatar;
-    public TextView name;
-    public TextView messageBody;
+    @Override
+    public int getItemViewType(int position) {
+        // return a value between 0 and (getViewTypeCount - 1)
+        return position % 2;
+    }
+
+    private class ViewHolder {
+        private TextView msg;
+
+        public ViewHolder(View v) {
+            msg = (TextView) v.findViewById(R.id.txt_msg);
+        }
+    }
 }

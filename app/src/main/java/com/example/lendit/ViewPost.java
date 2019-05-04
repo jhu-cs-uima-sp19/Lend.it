@@ -280,13 +280,15 @@ public class ViewPost extends AppCompatActivity {
     public void editPost(View v) {
         Intent i = new Intent(ViewPost.this, ViewPostEditable.class);
         i.putExtra("username", username);
-        i.putExtra("post", p);
+
         startActivity(i);
     }
 
     public void sendMSG(View v) {
-        Intent i = new Intent(ViewPost.this, MessageActivity.class);
+        Intent i = new Intent(ViewPost.this, Chat.class);
         //need to send name?
+        i.putExtra("username", username);
+        i.putExtra("postuser", p.username);
         startActivity(i);
 
     }
