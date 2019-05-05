@@ -150,8 +150,7 @@ public class ViewPost extends AppCompatActivity {
             });
 
         delete.setVisibility(View.VISIBLE);
-        availableTV.setVisibility(View.VISIBLE);
-        availability.setVisibility(View.VISIBLE);
+
 
     } else {
             message.setClickable(true);
@@ -162,8 +161,15 @@ public class ViewPost extends AppCompatActivity {
             editPost.setVisibility(View.INVISIBLE);
             delete.setClickable(false);
             delete.setVisibility(View.INVISIBLE);
+
+        }
+
+        if (p.imgURL.equals("appImages/ask.JPG")) {
             availableTV.setVisibility(View.INVISIBLE);
             availability.setVisibility(View.INVISIBLE);
+        } else {
+            availableTV.setVisibility(View.VISIBLE);
+            availability.setVisibility(View.VISIBLE);
         }
 
         deposit = findViewById(R.id.deposit_TV);
