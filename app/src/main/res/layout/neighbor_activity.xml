@@ -79,7 +79,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
                 
                 <Button
-                android:id="@+id/messageButton"
+                android:id="@+id/messageBTN"
                 android:layout_width="149dp"
                 android:layout_height="29dp"
                 android:layout_alignParentEnd="true"

@@ -50,7 +50,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
             convertView = inflater.inflate(R.layout.neighbor_activity, parent, false);
             holder.userName = convertView.findViewById(R.id.userName);
             holder.userBuilding = convertView.findViewById(R.id.userBuilding);
-             holder.message = convertView.findViewById(R.id.messageButton);
+             holder.message = convertView.findViewById(R.id.messageBTN);
             holder.userImage = convertView.findViewById(R.id.userImage);
             convertView.setTag(holder);
         } else {
