@@ -141,6 +141,7 @@ public class UserAccountEditable extends AppCompatActivity {
         DocumentReference ref = db.collection("users").document(username);
         if (!photo.equals(initialPhoto)) {
             uploadPhoto();
+            ref.update("profileImg", "profileImages/" + photo);
         }
         ref.update("first", first.getText().toString());
         ref.update("last", last.getText().toString());
@@ -154,7 +155,6 @@ public class UserAccountEditable extends AppCompatActivity {
         });
 
         Log.d(TAG, "photo url " + photo);
-        ref.update("profileImg", "profileImages/" + photo);
 
         UserAccountEditable.this.finish();
     }
