@@ -64,7 +64,8 @@
                 android:layout_toRightOf="@+id/userImage"
                 android:gravity="center_horizontal|center_vertical"/>
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/userImage"
                 android:layout_width="wrap_content"
                 android:layout_height="118dp"
@@ -74,9 +75,12 @@
                 android:layout_marginStart="11dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginTop="18dp"
-                   android:layout_alignParentTop="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginBottom="14dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                app:civ_border_color="@color/white"
+                android:contentDescription="@string/nav_header_desc"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"/>
                 
                 <Button
                 android:id="@+id/messageBTN"

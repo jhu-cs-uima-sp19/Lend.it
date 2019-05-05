@@ -8,6 +8,7 @@
     tools:context=".ViewPostEditable"
     tools:showIn="@layout/activity_view_post_editable">
 
+
     <ImageView
         android:id="@+id/editablePostImage"
         android:layout_width="362dp"

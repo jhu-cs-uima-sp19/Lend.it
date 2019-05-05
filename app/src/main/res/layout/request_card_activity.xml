@@ -167,7 +167,8 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/posterImage" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/requestImage"
                 android:layout_width="wrap_content"
                 android:layout_height="118dp"
@@ -177,7 +178,10 @@
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginBottom="14dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                app:civ_border_color="@color/white"
+                android:contentDescription="@string/nav_header_desc"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"/>
         </RelativeLayout>
 
 
