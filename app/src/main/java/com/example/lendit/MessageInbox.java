@@ -84,7 +84,28 @@ public class MessageInbox extends AppCompatActivity
         //ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
         bundle = getIntent().getExtras();
         username = bundle.getString("username");
-        navUser.setText(username);
+        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Map<String, Object> profileData = documentSnapshot.getData();
+                final ImageView img = (ImageView) findViewById(R.id.navImg);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        img.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
+            }
+        });
+
     }
 
     @Override
