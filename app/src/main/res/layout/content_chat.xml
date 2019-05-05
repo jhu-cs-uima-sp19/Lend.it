@@ -13,10 +13,13 @@
     tools:context=".Chat">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="20"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView">
+        android:layout_marginTop="?attr/actionBarSize">
+
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout2"
             android:layout_width="match_parent"
