@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -28,11 +29,16 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TransactionLog extends AppCompatActivity
@@ -40,7 +46,7 @@ public class TransactionLog extends AppCompatActivity
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     String username;
-
+    final String TAG = "TransactionLog";
     private ViewPager mViewPager;
 
     @Override
@@ -103,6 +109,7 @@ public class TransactionLog extends AppCompatActivity
                 navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
             }
         });
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

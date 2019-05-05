@@ -88,6 +88,8 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        Log.d(TAG, "Transaction ID" + p.transactionID);
+
 
 
         db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
