@@ -1,16 +1,12 @@
 package com.example.lendit;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.annotations.Nullable;
@@ -30,7 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -52,7 +47,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
     private View btnSend;
     private EditText editText;
     boolean myMessage = true;
-    boolean justStarted = true;
+    boolean justStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
         Bundle bundle = getIntent().getExtras();
         username = bundle.getString("username");
         theirusername = bundle.getString("postuser");
+        justStarted = true;
 
         //frontend message bubble code
 //        ChatBubbles = new ArrayList<>();
@@ -243,14 +239,19 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp2.weight = 1.0f;
+        //lp2.setMargins(24, 0, 24, 0);
 
         if(type == 1) {
             lp2.gravity = Gravity.LEFT;
-            textView.setBackgroundResource(R.drawable.bubble_in);
+            //textView.setBackgroundColor(getResources().getColor(R.color.green));
+            textView.setPadding(70,40,50,40);
+            textView.setBackgroundResource(R.drawable.bubble_out);
         }
         else{
             lp2.gravity = Gravity.RIGHT;
-            textView.setBackgroundResource(R.drawable.bubble_out);
+            //textView.setBackgroundColor(getResources().getColor(R.color.gray));
+            textView.setBackgroundResource(R.drawable.bubble_in);
+            textView.setPadding(50,40,60,40);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
