@@ -48,7 +48,7 @@ public class UserAccountEditable extends AppCompatActivity {
     Bundle b;
     Map<String, Object> profileData;
 
-    private static final String TAG = "UserAccountEditableActivity";
+    private static final String TAG = "UserAccountEditable";
     String photo = "";
     String initialPhoto = "";
     Bitmap bitmap;
@@ -154,7 +154,7 @@ public class UserAccountEditable extends AppCompatActivity {
         });
 
         Log.d(TAG, "photo url " + photo);
-        ref.update("profileImg", photo);
+        ref.update("profileImg", "profileImages/" + photo);
 
         UserAccountEditable.this.finish();
     }
