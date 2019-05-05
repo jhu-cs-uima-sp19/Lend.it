@@ -209,6 +209,8 @@ public class CreateLendTransaction extends AppCompatActivity {
     public void createRequest() {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> request = new HashMap<String, Object>();
+        Date currDate = new Date();
+
         request.put("borrower", username);
         request.put("lender", p.username);
         request.put("postTitle", p.postTitle);
@@ -219,8 +221,15 @@ public class CreateLendTransaction extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
         try {
+            Date current = simpleDateFormat.parse(currDate.toString());
             Date from = simpleDateFormat.parse(fromDate.getText().toString() + " " + fromTime.getText().toString());
+            Log.d(TAG, fromDate.getText().toString() + " " + fromTime.getText().toString());
             Date to = simpleDateFormat.parse(toDate.getText().toString() + " " + toTime.getText().toString());
+            if (current.compareTo(from) > 0) {
+                throw new ParseException("Needs to be valid date", 1);
+            } else if (from.compareTo(to) > 0) {
+                throw new ParseException("Needs to be valid date", 1);
+            }
             request.put("from", from);
             request.put("to", to);
             db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
