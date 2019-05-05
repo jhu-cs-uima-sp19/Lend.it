@@ -88,9 +88,10 @@ public class UserAccountEditable extends AppCompatActivity {
                 first.setText(profileData.get("first").toString());
                 last.setText(profileData.get("last").toString());
                 building.setSelection(adapter.getPosition(profileData.get("building").toString()));
+                photo = profileData.get("profileImg").toString();
                 // populate with normal generic photo
                 final long ONE_MEGABYTE = 1024 * 1024;
-                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                storage.child(photo).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -146,6 +147,8 @@ public class UserAccountEditable extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        ref.update("profileImg", photo);
 
         UserAccountEditable.this.finish();
     }

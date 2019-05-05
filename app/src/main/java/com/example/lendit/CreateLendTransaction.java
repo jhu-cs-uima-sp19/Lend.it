@@ -225,13 +225,18 @@ public class CreateLendTransaction extends AppCompatActivity {
             Date from = simpleDateFormat.parse(fromDate.getText().toString() + " " + fromTime.getText().toString());
             Log.d(TAG, fromDate.getText().toString() + " " + fromTime.getText().toString());
             Date to = simpleDateFormat.parse(toDate.getText().toString() + " " + toTime.getText().toString());
-            if (current.compareTo(from) > 0) {
+            /*if (current.compareTo(from) > 0) {
+                throw new ParseException("From before current time", 1);
+            } else if (from.compareTo(to) < 0) {
                 throw new ParseException("Needs to be valid date", 1);
-            } else if (from.compareTo(to) > 0) {
-                throw new ParseException("Needs to be valid date", 1);
-            }
-            request.put("from", from);
-            request.put("to", to);
+            }*/
+            Calendar calendarTo = Calendar.getInstance();
+            calendarTo.setTime(to);
+            Calendar calendarFrom = Calendar.getInstance();
+            calendarFrom.setTime(from);
+
+            request.put("from", calendarFrom);
+            request.put("to", calendarTo);
             db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -244,12 +249,11 @@ public class CreateLendTransaction extends AppCompatActivity {
                             Log.w(TAG, "Error writing document", e);
                         }
                     });
+            CreateLendTransaction.this.finish();
         } catch(ParseException e) {
             Log.d(TAG, "parse exception");
-            Toast.makeText(CreateLendTransaction.this, "Error creating request.", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateLendTransaction.this, "Please choose valid start and end times.", Toast.LENGTH_LONG).show();
         }
-
-        CreateLendTransaction.this.finish();
     }
 
     @Override
