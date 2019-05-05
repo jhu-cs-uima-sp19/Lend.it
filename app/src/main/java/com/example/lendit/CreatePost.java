@@ -38,7 +38,7 @@ public class CreatePost extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private static final int REQUEST_IMAGE_CAPTURE = 111;
-    String username;
+    public String username;
     Map<String, Object> profileData;
     final String TAG = "CreatePostActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -64,20 +64,8 @@ public class CreatePost extends AppCompatActivity {
 
     }
 
-    public Map<String, String> getUserData() {
-        final Map<String, String> userInfoBundle = new HashMap<String, String>();
-        // get users' profile data
-        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                profileData = documentSnapshot.getData();
-                userInfoBundle.put("username", username);
-                userInfoBundle.put("profileImg", profileData.get("profileImg").toString());
-                userInfoBundle.put("building", profileData.get("building").toString());
-                userInfoBundle.put("fullName", profileData.get("first").toString() + " " + profileData.get("last").toString());
-            }
-        });
-        return userInfoBundle;
+    public String getUserData() {
+        return username;
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -111,9 +99,8 @@ public class CreatePost extends AppCompatActivity {
     }
 
     public void launchHome() {
-        Intent i;
+        Intent i = new Intent(CreatePost.this, HomePage.class);
         Bundle bundle = new Bundle();
-        i = new Intent(CreatePost.this, HomePage.class);
         bundle.putString("username", username);
         i.putExtras(bundle);
         startActivity(i);

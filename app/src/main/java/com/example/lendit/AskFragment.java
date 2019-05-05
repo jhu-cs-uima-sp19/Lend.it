@@ -30,6 +30,7 @@ public class AskFragment extends Fragment {
     EditText askTitle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CreatePost activity;
+    String username;
 
     @Nullable
     @Override
@@ -41,20 +42,20 @@ public class AskFragment extends Fragment {
         askTitle = rootView.findViewById(R.id.askTitleET);
 
         final CreatePost activity = (CreatePost) getActivity();
-        final Map<String, String> userData = activity.getUserData();
 
         // listener for create lend button
         createAsk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAsk(userData);
+                username = activity.getUserData();
+                createAsk(username);
             }
         });
         return rootView;
     }
 
 
-    public void createAsk(Map<String, String> userData) {
+    public void createAsk(String userData) {
         String uniqueID = UUID.randomUUID().toString();
         Map<String, Object> ask = new HashMap<>();
         String t = askTitle.getText().toString();
@@ -62,13 +63,14 @@ public class AskFragment extends Fragment {
         if (t.equals("") || d.equals("")) {
             Toast.makeText(getContext(), "Please enter a title and description", Toast.LENGTH_LONG).show();
         } else {
+            Log.d(TAG, "user data" + username);
             ask.put("title", t);
             ask.put("description", d);
             ask.put("id", uniqueID);
             ask.put("post_date", Calendar.getInstance().getTime());
             ask.put("deposit", "0");
             ask.put("available", true);
-            ask.put("username", userData.get("username"));
+            ask.put("username", username);
             ask.put("photo", "appImages/ask.JPG");
 
             // get username from intent that launched this activity?
@@ -77,6 +79,8 @@ public class AskFragment extends Fragment {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.d(TAG, "DocumentSnapshot successfully written!");
+                    Toast.makeText(getContext(), "Ask successfully created!", Toast.LENGTH_LONG).show();
+                    getActivity().finish();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
@@ -85,9 +89,10 @@ public class AskFragment extends Fragment {
                             Log.w(TAG, "Error writing document", e);
                         }
                     });
-            //getActivity().finish();
-            Toast.makeText(getContext(), "Ask successfully created!", Toast.LENGTH_LONG).show();
-            activity.launchHome();
-    }
+
+
+            //activity.launchHome();
+        }
     }
 }
+
