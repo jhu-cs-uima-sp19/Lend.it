@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class MessageCustomListAdapter extends ArrayAdapter<MessageCard> {
     private Context context;
 
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public MessageCustomListAdapter(Context c, ArrayList<MessageCard> objects) {
         super(c, 0, objects);
@@ -57,7 +60,15 @@ public class MessageCustomListAdapter extends ArrayAdapter<MessageCard> {
         }
         final String TAG = "MessageListAdapter";
         Log.d(TAG,"in the list adapter");
-        holder.userName.setText(p.personUsername);
+
+        db.collection("users").document(p.personUsername).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                holder.userName.setText( documentSnapshot.getData().get("first").toString() + " " +  documentSnapshot.getData().get("last").toString());
+            }
+
+        });
+
         holder.lastMessage.setText(p.lastMessage);
         final long ONE_MEGABYTE = 1024 * 1024;
         if (p.personImgURL.equals("appImages/avatar.png")) {
