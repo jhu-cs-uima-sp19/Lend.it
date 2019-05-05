@@ -3,8 +3,11 @@ package com.example.lendit;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -53,6 +56,8 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -76,7 +81,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
 //            @Override
 //            public void onClick(View v) {
 //                if (editText.getText().toString().trim().equals("")) {
-//                    Toast.makeText(Chat.this, "Please input some text...", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ChatOutdated.this, "Please input some text...", Toast.LENGTH_SHORT).show();
 //                } else {
 //                    //add message to list
 //                    ChatBubble ChatBubble = new ChatBubble(editText.getText().toString(), myMessage);
@@ -111,7 +116,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 ArrayList<Map<String, Object>> m = (ArrayList<Map<String, Object>>) documentSnapshot.get("messages");
-                if ((m != null) && m.size() > 0) {
+                if (m.size() > 0) {
                     for (int i = 0; i < m.size(); i++) {
                         Map<String, Object> lastChat = m.get(i);
                         String name = "";
@@ -204,13 +209,13 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
                     reference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                         ArrayList<Map<String, Object>> messages1 = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
-                         Log.d(TAG, "message text" + messageText);
-                         Map<String, Object> chatBubble1 = new HashMap<String, Object>();
-                         chatBubble1.put("content", messageText);
-                         chatBubble1.put("myMessage", true);
-                        messages1.add(chatBubble1);
-                         reference1.update("messages", messages1);
+                            ArrayList<Map<String, Object>> messages1 = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
+                            Log.d(TAG, "message text" + messageText);
+                            Map<String, Object> chatBubble1 = new HashMap<String, Object>();
+                            chatBubble1.put("content", messageText);
+                            chatBubble1.put("myMessage", true);
+                            messages1.add(chatBubble1);
+                            reference1.update("messages", messages1);
                         }
                     });
 
@@ -256,5 +261,28 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_mode_close_button) {
+            Chat.this.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
