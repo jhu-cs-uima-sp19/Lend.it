@@ -116,7 +116,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 ArrayList<Map<String, Object>> m = (ArrayList<Map<String, Object>>) documentSnapshot.get("messages");
-                if (m.size() > 0) {
+                if (m != null && m.size() > 0) {
                     for (int i = 0; i < m.size(); i++) {
                         Map<String, Object> lastChat = m.get(i);
                         String name = "";
