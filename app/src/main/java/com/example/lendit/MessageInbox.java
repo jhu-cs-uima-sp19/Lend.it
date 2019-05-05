@@ -187,6 +187,10 @@ public class MessageInbox extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_lends) {
 
+        }  else if (id == R.id.nav_logout)  {
+            i = new Intent(MessageInbox.this, MainActivity.class);
+            startActivity(i);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

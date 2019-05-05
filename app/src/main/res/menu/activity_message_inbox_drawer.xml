@@ -17,9 +17,13 @@
             android:icon="@drawable/ic_person_black_24dp"
             android:title="Account" />
         <item
-            android:id="@+id/nav_lends"
-            android:icon="@drawable/ic_attach_money_black_24dp"
-            android:title="My Lends" />
+        android:id="@+id/nav_lends"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="My Lends" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@android:drawable/ic_menu_set_as"
+            android:title="Log Out" />
     </group>
 
 </menu>
