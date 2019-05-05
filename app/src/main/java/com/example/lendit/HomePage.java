@@ -73,6 +73,7 @@ public class HomePage extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home_page);
         context = this;
         rightNow = new Date();
@@ -91,6 +92,7 @@ public class HomePage extends AppCompatActivity
         setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
         username = bundle.getString("username");
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -530,6 +532,7 @@ public class HomePage extends AppCompatActivity
         } else if (id == R.id.nav_msg) {
             i = new Intent(HomePage.this, MessageInbox.class);
             bundle.putString("username", username);
+            Log.d(TAG, "username" + username);
             i.putExtras(bundle);
             startActivity(i);
 

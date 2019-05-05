@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,20 +21,25 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MessageInbox extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Bundle b;
-    String username;
+    final String TAG = "MessageInbox";
+    /*
     String[] nameArray = {"Taryn Wong" };
 
     String[] messageArray = {
@@ -44,11 +50,13 @@ public class MessageInbox extends AppCompatActivity
 
     Integer[] imageArray = {R.drawable.avatar,
             R.drawable.avatar,
-    };
+    };*/
 
     ListView listView;
     StorageReference storage = FirebaseStorage.getInstance().getReference();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Bundle bundle;
+    String username;
 
 
     @Override
@@ -58,14 +66,10 @@ public class MessageInbox extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MessageCustomListAdapter whatever = new MessageCustomListAdapter(this, nameArray, messageArray, imageArray);
+        //MessageCustomListAdapter whatever = new MessageCustomListAdapter(this, nameArray, messageArray, imageArray);
         listView = (ListView) findViewById(R.id.listViewMessages);
-        listView.setAdapter(whatever);
+        //listView.setAdapter(whatever);
 
-        b = getIntent().getExtras();
-        if (b != null) {
-            username = b.getString("username");
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,29 +82,65 @@ public class MessageInbox extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         final TextView navUser = (TextView) hView.findViewById(R.id.nameTxt);
         //ImageView imgvw = (ImageView) hView.findViewById(R.id.profpic);
+        bundle = getIntent().getExtras();
+        username = bundle.getString("username");
         navUser.setText(username);
+    }
 
-        db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        final ArrayList<MessageCard> messageList = new ArrayList<MessageCard>();
+        db.collection("messages").whereArrayContains("chatters", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Map<String, Object> profileData = documentSnapshot.getData();
-                final ImageView img = (ImageView) findViewById(R.id.imageView);
-                final long ONE_MEGABYTE = 1024 * 1024;
-                storage.child(profileData.get("profileImg").toString()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        img.setImageBitmap(bitmap);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot s : task.getResult()) {
+                        ArrayList<String> users = (ArrayList<String>) s.getData().get("chatters");
+                        final ArrayList<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) s.getData().get("messages");
+                        final String theirName;
+                        if (users.get(0).equals(username)) {
+                            theirName = users.get(1);
+                            Log.d(TAG, "theirName" + theirName);
+                            db.collection("users").document(theirName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Map<String, Object> profileData = documentSnapshot.getData();
+                                    Log.d(TAG, "message" + messages.get(messages.size() - 1).get("content").toString());
+                                    messageList.add(new MessageCard(theirName, profileData.get("profileImg").toString(), messages.get(messages.size() - 1).get("content").toString(), username));
+                                    MessageCustomListAdapter adapter = new MessageCustomListAdapter(MessageInbox.this, messageList);
+                                    Log.d(TAG, "MESSAGE LIST SIZE" + messageList.size());
+                                    if ((adapter != null) && (listView != null)) {
+                                        listView.setAdapter(adapter);
+                                    } else {
+                                        System.out.println("Null Reference");
+                                    }
+                                }
+                            });
+                        } else {
+                            theirName = users.get(0);
+                            Log.d(TAG, "theirName" + theirName);
+                            db.collection("users").document(theirName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Map<String, Object> profileData = documentSnapshot.getData();
+                                    Log.d(TAG, "message" + messages.get(messages.size() - 1).get("content").toString());
+                                    messageList.add(new MessageCard(theirName, profileData.get("profileImg").toString(), messages.get(messages.size() - 1).get("content").toString(), username));
+                                    MessageCustomListAdapter adapter = new MessageCustomListAdapter(MessageInbox.this, messageList);
+                                    Log.d(TAG, "MESSAGE LIST SIZE" + messageList.size());
+                                    if ((adapter != null) && (listView != null)) {
+                                        listView.setAdapter(adapter);
+                                    } else {
+                                        System.out.println("Null Reference");
+                                    }
+                                }
+                            });
+                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
+                } else{
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
-
-                navUser.setText(profileData.get("first").toString() + " " + profileData.get("last").toString());
-            }
+                }
         });
     }
 

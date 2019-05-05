@@ -52,8 +52,6 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
     private View btnSend;
     private EditText editText;
     boolean myMessage = true;
-    private List<ChatBubble> ChatBubbles;
-    private ArrayAdapter<ChatBubble> adapter;
     boolean justStarted = true;
 
     @Override
@@ -116,16 +114,18 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
         reference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ArrayList<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
-                for (int i = 0; i < messages.size(); i++) {
-                    Map<String, Object> lastChat = messages.get(i);
-                    String name = "";
-                    if ((boolean)lastChat.get("myMessage") == true) {
-                        name = username;
-                        addMessageBox("You:-\n" + lastChat.get("content").toString(), 2);
-                    } else {
-                        name = theirusername;
-                        addMessageBox(theirusername + ":-\n" + lastChat.get("content").toString(), 1);
+                ArrayList<Map<String, Object>> m = (ArrayList<Map<String, Object>>) documentSnapshot.get("messages");
+                if (m.size() > 0) {
+                    for (int i = 0; i < m.size(); i++) {
+                        Map<String, Object> lastChat = m.get(i);
+                        String name = "";
+                        if ((boolean) lastChat.get("myMessage") == true) {
+                            name = username;
+                            addMessageBox("You:-\n" + lastChat.get("content").toString(), 2);
+                        } else {
+                            name = theirusername;
+                            addMessageBox(theirusername + ":-\n" + lastChat.get("content").toString(), 1);
+                        }
                     }
                 }
                 justStarted = false;
@@ -158,10 +158,13 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
                     }
                 } else {
                     Log.d(TAG, "Current data: null");
-                    Map<String, ArrayList<Map<String, Object>>> initialize = new HashMap<String, ArrayList<Map<String, Object>>>();
-
+                    Map<String, Object> initialize = new HashMap<String, Object>();
                     ArrayList<Map<String, Object>> m = new ArrayList<Map<String, Object>>();
                     initialize.put("messages", m);
+                    ArrayList<String> chatUsers = new ArrayList<String>();
+                    chatUsers.add(username);
+                    chatUsers.add(theirusername);
+                    initialize.put("chatters", chatUsers);
                     db.collection("messages").document(username + "_" + theirusername).set(initialize).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
