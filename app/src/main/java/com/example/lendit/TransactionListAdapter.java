@@ -12,11 +12,15 @@ package com.example.lendit;
         import android.widget.TextView;
         import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.firebase.Timestamp;
         import com.google.firebase.firestore.DocumentSnapshot;
         import com.google.firebase.firestore.FirebaseFirestore;
         import com.google.firebase.storage.FirebaseStorage;
         import com.google.firebase.storage.StorageReference;
+
+        import java.text.SimpleDateFormat;
         import java.util.ArrayList;
+        import java.util.Date;
         import java.util.Map;
 
         import static android.support.constraint.Constraints.TAG;
@@ -43,6 +47,8 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
         TextView rating;
         TextView title;
         ImageView profilePic;
+        TextView from;
+        TextView to;
         public ViewHolder() {}
     }
 
@@ -61,6 +67,8 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
             holder.rating = convertView.findViewById(R.id.otherRating);
             holder.title = convertView.findViewById(R.id.transactionTitle);
             holder.profilePic = convertView.findViewById(R.id.otherImage);
+            holder.from = convertView.findViewById(R.id.fromTime);
+            holder.to = convertView.findViewById(R.id.toTime);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,6 +92,15 @@ public class TransactionListAdapter extends ArrayAdapter<TransactionCard> {
                 if (rating.equals("")) {
                     rating = "N/A: Lend still in progress";
                 }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+                Timestamp from = (Timestamp)t.get("from");
+                Date fromDate = from.toDate();
+                Timestamp to =  (Timestamp)t.get("to");
+                Date toDate = to.toDate();
+                holder.from.setText("From: " + sdf.format(fromDate));
+                holder.to.setText("To: " + sdf.format(toDate));
+                holder.title.setText(t.get("postTitle").toString());
 
                 holder.rating.setText("Rating: " + rating);
                 holder.title.setText(t.get("postTitle").toString());
