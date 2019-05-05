@@ -8,27 +8,31 @@
 
     <Button
         android:id="@+id/createAskBTN"
-        android:layout_width="429dp"
-        android:layout_height="47dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="148dp"
+        android:layout_width="366dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="101dp"
         android:background="@color/green"
         android:text="Post"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/askDescriptionET" />
 
     <TextView
         android:id="@+id/askTitleTxt"
-        android:layout_width="117dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="368dp"
         android:text="Post Title"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/askDescriptionTxt"
+        app:layout_constraintEnd_toStartOf="@+id/askTitleET"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,15 +40,21 @@
         android:id="@+id/askTitleET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="40dp"
-        android:maxLength="140"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginBottom="81dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="140"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        app:layout_constraintBottom_toTopOf="@+id/askDescriptionET"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/askTitleTxt"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ask_post_title"
+        app:layout_constraintVertical_bias="0.413" />
 
     <TextView
         android:id="@+id/askDescriptionTxt"
@@ -52,30 +62,57 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="292dp"
+        android:layout_marginRight="292dp"
+        android:layout_marginBottom="12dp"
         android:text="Description"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/askDescriptionET"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/askTitleTxt" />
 
     <EditText
         android:id="@+id/askDescriptionET"
-        android:layout_width="303dp"
-        android:layout_height="wrap_content"
+        android:layout_width="381dp"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:maxLength="140"
         android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="140"
         android:scrollHorizontally="false"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/askDescriptionTxt" />
+
+    <TextView
+        android:id="@+id/ask_post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="14dp"
+        android:text="Create Ask Post"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="396dp"
+        android:layout_height="229dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ask" />
 
 
 </android.support.constraint.ConstraintLayout>
