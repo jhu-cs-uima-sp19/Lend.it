@@ -17,7 +17,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TransactionLog"
-            android:label="@string/title_activity_transaction_log"
+            android:label="My Lends"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
