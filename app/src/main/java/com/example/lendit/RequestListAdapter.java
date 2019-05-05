@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -101,8 +102,13 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     otherName = t.get("borrower").toString();
                 }
 
-                holder.timeFrom.setText("From: " + t.get("from"));
-                holder.timeTo.setText("To: " + t.get("to"));
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+                Timestamp from = (Timestamp)t.get("from");
+                Date fromDate = from.toDate();
+                Timestamp to =  (Timestamp)t.get("to");
+                Date toDate = to.toDate();
+                holder.timeFrom.setText("From: " + sdf.format(fromDate));
+                holder.timeTo.setText("To: " + sdf.format(toDate));
                 holder.title.setText(t.get("postTitle").toString());
 
                 db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
