@@ -90,42 +90,21 @@ public class MessageInbox extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
-        final ArrayList<MessageCard> messageList = new ArrayList<MessageCard>();
-        db.collection("messages").whereArrayContains("chatters", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("messages").whereEqualTo("user1", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot s : task.getResult()) {
+                    final ArrayList<MessageCard> messageList = new ArrayList<MessageCard>();
+                    for (final QueryDocumentSnapshot s : task.getResult()) {
                         ArrayList<String> users = (ArrayList<String>) s.getData().get("chatters");
                         final ArrayList<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) s.getData().get("messages");
                         final String theirName;
-                        if (users.get(0).equals(username)) {
-                            theirName = users.get(1);
-                            Log.d(TAG, "theirName" + theirName);
-                            db.collection("users").document(theirName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            db.collection("users").document(s.get("user2").toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     Map<String, Object> profileData = documentSnapshot.getData();
                                     Log.d(TAG, "message" + messages.get(messages.size() - 1).get("content").toString());
-                                    messageList.add(new MessageCard(theirName, profileData.get("profileImg").toString(), messages.get(messages.size() - 1).get("content").toString(), username));
-                                    MessageCustomListAdapter adapter = new MessageCustomListAdapter(MessageInbox.this, messageList);
-                                    Log.d(TAG, "MESSAGE LIST SIZE" + messageList.size());
-                                    if ((adapter != null) && (listView != null)) {
-                                        listView.setAdapter(adapter);
-                                    } else {
-                                        System.out.println("Null Reference");
-                                    }
-                                }
-                            });
-                        } else {
-                            theirName = users.get(0);
-                            Log.d(TAG, "theirName" + theirName);
-                            db.collection("users").document(theirName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Map<String, Object> profileData = documentSnapshot.getData();
-                                    Log.d(TAG, "message" + messages.get(messages.size() - 1).get("content").toString());
-                                    messageList.add(new MessageCard(theirName, profileData.get("profileImg").toString(), messages.get(messages.size() - 1).get("content").toString(), username));
+                                    messageList.add(new MessageCard(s.get("user2").toString(), profileData.get("profileImg").toString(), messages.get(messages.size() - 1).get("content").toString(), username));
                                     MessageCustomListAdapter adapter = new MessageCustomListAdapter(MessageInbox.this, messageList);
                                     Log.d(TAG, "MESSAGE LIST SIZE" + messageList.size());
                                     if ((adapter != null) && (listView != null)) {
@@ -136,7 +115,6 @@ public class MessageInbox extends AppCompatActivity
                                 }
                             });
                         }
-                    }
                 } else{
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }

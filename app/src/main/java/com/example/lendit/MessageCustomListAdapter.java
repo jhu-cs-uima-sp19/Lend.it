@@ -108,6 +108,7 @@ public class MessageCustomListAdapter extends ArrayAdapter<MessageCard> {
         // passing selected user's username
         b.putString("username", myUsername);
         b.putString("postuser", otherUsername);
+        i.putExtras(b);
         context.startActivity(i);
     }
 }

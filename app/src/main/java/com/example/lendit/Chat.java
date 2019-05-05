@@ -158,14 +158,13 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
                     }
                 } else {
                     Log.d(TAG, "Current data: null");
-                    Map<String, Object> initialize = new HashMap<String, Object>();
+                    Map<String, Object> initialize1 = new HashMap<String, Object>();
                     ArrayList<Map<String, Object>> m = new ArrayList<Map<String, Object>>();
-                    initialize.put("messages", m);
-                    ArrayList<String> chatUsers = new ArrayList<String>();
-                    chatUsers.add(username);
-                    chatUsers.add(theirusername);
-                    initialize.put("chatters", chatUsers);
-                    db.collection("messages").document(username + "_" + theirusername).set(initialize).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    initialize1.put("messages", m);
+                    initialize1.put("user1", username);
+                    initialize1.put("user2", theirusername);
+
+                    db.collection("messages").document(username + "_" + theirusername).set(initialize1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
@@ -177,7 +176,12 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
-                    db.collection("messages").document(theirusername + "_" + username).set(initialize).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    Map<String, Object> initialize2 = new HashMap<String, Object>();
+                    initialize2.put("messages", m);
+                    initialize2.put("user1", theirusername);
+                    initialize2.put("user2", username);
+                    db.collection("messages").document(theirusername + "_" + username).set(initialize2).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
