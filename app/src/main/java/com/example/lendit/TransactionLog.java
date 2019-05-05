@@ -196,6 +196,17 @@ public class TransactionLog extends AppCompatActivity
         return false;
     }
 
+    public void toAccount(View v) {
+        Intent i;
+        final Bundle bundle = new Bundle();
+        i = new Intent(TransactionLog.this, UserAccount.class);
+        bundle.putString("username", username);
+        bundle.putString("myUsername", username);
+        i.putExtras(bundle);
+        startActivity(i);
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
