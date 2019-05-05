@@ -52,7 +52,8 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
     private class ViewHolder {
         TextView building;
         TextView name;
-        TextView rating;
+        TextView timeFrom;
+        TextView timeTo;
         TextView title;
         ImageView profilePic;
         Button approve;
@@ -79,6 +80,8 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
             holder.profilePic = convertView.findViewById(R.id.requestImage);
             holder.approve = convertView.findViewById(R.id.requestApprove);
             holder.reject = convertView.findViewById(R.id.requestReject);
+            holder.timeFrom = convertView.findViewById(R.id.requestTimeFrom);
+            holder.timeTo = convertView.findViewById(R.id.requestTimeTo);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -98,6 +101,8 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                     otherName = t.get("borrower").toString();
                 }
 
+                holder.timeFrom.setText("From: " + t.get("from"));
+                holder.timeTo.setText("To: " + t.get("to"));
                 holder.title.setText(t.get("postTitle").toString());
 
                 db.collection("users").document(otherName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -153,7 +158,6 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                 transaction.put("borrowerRating", "");
                                 transaction.put("lenderRating", "");
                                 */
-
                                 holder.transaction.put("borrowerRating", "");
                                 holder.transaction.put("lenderRating", "");
                                 db.collection("transactions").document(holder.transaction.get("id").toString()).set(holder.transaction);

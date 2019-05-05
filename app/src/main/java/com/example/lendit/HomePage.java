@@ -217,12 +217,6 @@ public class HomePage extends AppCompatActivity
                         // rating popup
                         new AlertDialog.Builder(context)
                                 .setTitle("You have not returned the appliance:")
-                                .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        rating = ratingList[which];
-                                    }
-                                })
                                 .setPositiveButton("Message the lender to request more time", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -230,6 +224,7 @@ public class HomePage extends AppCompatActivity
                                         Intent i = new Intent(HomePage.this, Chat.class);
                                         Bundle bundle = new Bundle();
                                         bundle.putString("username", username);
+                                        bundle.putString("postuser", s.get("lender").toString());
                                         i.putExtras(bundle);
                                         startActivity(i);
                                         dialog.dismiss();
