@@ -32,18 +32,18 @@
                 android:id="@+id/userBuilding"
                 android:layout_width="171dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="22dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginEnd="29dp"
                 android:layout_marginRight="29dp"
                 android:layout_marginBottom="48dp"
                 android:layout_toEndOf="@+id/userImage"
                 android:layout_toRightOf="@+id/userImage"
-                android:gravity="center_horizontal|center_vertical"
+                android:gravity="start|center_horizontal|center_vertical"
                 app:layout_constraintStart_toEndOf="@+id/posterImage"
                 app:layout_constraintTop_toBottomOf="@+id/posterName" />
 
@@ -51,7 +51,6 @@
                 android:id="@+id/userName"
                 android:layout_width="171dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/posterImage"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -62,7 +61,8 @@
                 android:layout_marginRight="29dp"
                 android:layout_toEndOf="@+id/userImage"
                 android:layout_toRightOf="@+id/userImage"
-                android:gravity="center_horizontal|center_vertical"/>
+                android:gravity="start|center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/posterImage" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -81,17 +81,17 @@
                 app:civ_border_color="@color/white"
                 android:contentDescription="@string/nav_header_desc"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"/>
-                
-                <Button
+
+            <Button
                 android:id="@+id/messageBTN"
                 android:layout_width="149dp"
                 android:layout_height="29dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="41dp"
-                android:layout_marginRight="41dp"
-                android:layout_marginBottom="11dp"
+                android:layout_marginEnd="125dp"
+                android:layout_marginRight="125dp"
+                android:layout_marginBottom="42dp"
                 android:background="@color/green"
                 android:text="Message"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
