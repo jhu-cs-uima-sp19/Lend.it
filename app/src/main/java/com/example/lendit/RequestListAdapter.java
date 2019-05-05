@@ -57,6 +57,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
         ImageView profilePic;
         Button approve;
         Button reject;
+        Map<String, Object> transaction;
 
         public ViewHolder() {
         }
@@ -83,9 +84,12 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
+
         db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                holder.transaction = documentSnapshot.getData();
                 Map<String, Object> t = documentSnapshot.getData();
                 String otherName;
                 if (t.get("borrower").toString().equals(username)) {
@@ -131,6 +135,7 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        /*
                         db.collection("transactionRequests").document(p.transactionID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -147,7 +152,11 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                 // no rating yet - will be updated once lend has transpired
                                 transaction.put("borrowerRating", "");
                                 transaction.put("lenderRating", "");
-                                db.collection("transactions").document(t.get("id").toString()).set(transaction);
+                                */
+
+                                holder.transaction.put("borrowerRating", "");
+                                holder.transaction.put("lenderRating", "");
+                                db.collection("transactions").document(holder.transaction.get("id").toString()).set(holder.transaction);
                                 db.collection("transactionRequests").document(p.transactionID)
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -163,8 +172,6 @@ public class RequestListAdapter extends ArrayAdapter<TransactionCard> {
                                             }
                                         });
                             }
-                        });
-                    }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
