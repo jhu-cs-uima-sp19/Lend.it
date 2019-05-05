@@ -78,6 +78,42 @@
                 app:layout_constraintStart_toEndOf="@+id/posterImage" />
 
             <TextView
+                android:id="@+id/fromTime"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_toEndOf="@+id/otherImage"
+                android:layout_toRightOf="@+id/otherImage"
+                android:gravity="center_vertical"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/posterImage" />
+
+            <TextView
+                android:id="@+id/toTime"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@+id/otherImage"
+                android:layout_toRightOf="@+id/otherImage"
+                android:gravity="center_vertical"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/posterImage" />
+
+            <TextView
                 android:id="@+id/transactionTitle"
                 android:layout_width="189dp"
                 android:layout_height="wrap_content"
