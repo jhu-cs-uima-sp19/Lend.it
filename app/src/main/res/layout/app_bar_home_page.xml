@@ -20,10 +20,19 @@
             android:background="@color/green"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/filterText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="  Filter By:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
         <Spinner
             android:id="@+id/filters"
             android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:popupBackground="@color/white"
             android:spinnerMode="dropdown" />
 
     </android.support.design.widget.AppBarLayout>
