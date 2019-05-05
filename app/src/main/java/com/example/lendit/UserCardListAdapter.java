@@ -82,8 +82,9 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
             public void onClick(View view) {
                 Intent i = new Intent(context, Chat.class);
                 Bundle b = new Bundle();
-                b.putString("postuser", p.username);
                 b.putString("username", p.myUsername);
+
+                i.putExtras(b);
                 //need to send name?
                 context.startActivity(i);
             }
