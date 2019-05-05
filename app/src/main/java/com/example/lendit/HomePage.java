@@ -77,7 +77,8 @@ public class HomePage extends AppCompatActivity
         rightNow = new Date();
         toCompare = new Timestamp(rightNow);
         filters = (Spinner) findViewById(R.id.filters);
-        spinnerFilters = new ArrayList<String>(Arrays.asList("Post Date", "Availability", "Neighbors"));
+
+        spinnerFilters = new ArrayList<String>(Arrays.asList("Filter by: Post Date", "Filter by: Availability", "Filter by: Neighbors"));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, spinnerFilters);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
