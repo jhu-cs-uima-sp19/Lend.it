@@ -70,11 +70,12 @@ public class LendFragment extends Fragment {
             }
         });
 
-        // listener for create lend button
-        final Map<String, String> userData = activity.getUserData();
+
         createLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // listener for create lend button
+               String userData = activity.getUserData();
                 createLend(userData);
             }
         });
@@ -93,7 +94,7 @@ public class LendFragment extends Fragment {
      * Upload lend to database.
      * @param userData
      */
-    public void createLend(Map<String, String> userData) {
+    public void createLend(String userData) {
         String uniqueID = UUID.randomUUID().toString();
         if (!photo.equals("appImages/add-picture-icon-13.png")) {
             uploadPhoto();
@@ -111,7 +112,7 @@ public class LendFragment extends Fragment {
             // initialized to 0 & not required
             lend.put("deposit", deposit.getText().toString());
             lend.put("available", true);
-            lend.put("username", userData.get("username"));
+            lend.put("username", userData);
             lend.put("photo", "lendImages/" + photo);
 
             db.collection("posts").document(uniqueID).set(lend).addOnSuccessListener(new OnSuccessListener<Void>() {
