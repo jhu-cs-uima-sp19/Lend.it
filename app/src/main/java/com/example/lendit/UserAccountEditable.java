@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class UserAccountEditable extends AppCompatActivity {
 
     private static final String TAG = "UserAccountEditableActivity";
     String photo = "";
+    String initialPhoto = "";
     Bitmap bitmap;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
 
@@ -89,6 +91,7 @@ public class UserAccountEditable extends AppCompatActivity {
                 last.setText(profileData.get("last").toString());
                 building.setSelection(adapter.getPosition(profileData.get("building").toString()));
                 photo = profileData.get("profileImg").toString();
+                initialPhoto = profileData.get("profileImg").toString();
                 // populate with normal generic photo
                 final long ONE_MEGABYTE = 1024 * 1024;
                 storage.child(photo).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -136,7 +139,9 @@ public class UserAccountEditable extends AppCompatActivity {
     public void makeChanges() {
         //make database changes
         DocumentReference ref = db.collection("users").document(username);
-        uploadPhoto();
+        if (!photo.equals(initialPhoto)) {
+            uploadPhoto();
+        }
         ref.update("first", first.getText().toString());
         ref.update("last", last.getText().toString());
         ref.update("password", pass.getText().toString());
@@ -148,6 +153,7 @@ public class UserAccountEditable extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "photo url " + photo);
         ref.update("profileImg", photo);
 
         UserAccountEditable.this.finish();

@@ -135,7 +135,15 @@ public class CreateLendTransaction extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                fromDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
+                                String m = "" + (month + 1);
+                                String d = "" + dayOfMonth;
+                                if ((month + 1) < 10) {
+                                    m = "0" + m;
+                                }
+                                if (dayOfMonth < 10) {
+                                    d = "0" + d;
+                                }
+                                fromDate.setText(m + "/" + d + "/" + year);
                             }
                         }, year, month, day);
                 datePickerFrom.show();
@@ -154,7 +162,15 @@ public class CreateLendTransaction extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                toDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
+                                String m = "" + (month + 1);
+                                String d = "" + dayOfMonth;
+                                if ((month + 1) < 10) {
+                                    m = "0" + m;
+                                }
+                                if (dayOfMonth < 10) {
+                                    d = "0" + d;
+                                }
+                                toDate.setText(m + "/" + d + "/" + year);
                             }
                         }, year, month, day);
                 datePickerTo.show();
@@ -171,7 +187,16 @@ public class CreateLendTransaction extends AppCompatActivity {
                 timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        fromTime.setText(String.format("%2d:%2d ", hourOfDay, minute));
+                        String h = "" + hourOfDay;
+                        String m = "" + minute;
+                        if (hourOfDay < 10) {
+                            h = "0" + h;
+                        }
+                        if (minute < 10) {
+                            m = "0" + m;
+                        }
+
+                        fromTime.setText(h + ":" + m);
                     }
                 }
                         , currHour, currMin, false);
@@ -189,7 +214,15 @@ public class CreateLendTransaction extends AppCompatActivity {
                 timePick = new TimePickerDialog(CreateLendTransaction.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        toTime.setText(String.format("%2d:%2d ", hourOfDay, minute));
+                        String h = "" + hourOfDay;
+                        String m = "" + minute;
+                        if (hourOfDay < 10) {
+                            h = "0" + h;
+                        }
+                        if (minute < 10) {
+                            m = "0" + m;
+                        }
+                        toTime.setText(h + ":" + m);
                     }
                 }
                         , currHour, currMin, false);
@@ -217,26 +250,34 @@ public class CreateLendTransaction extends AppCompatActivity {
         request.put("deposit", deposit.getText().toString());
         request.put("id", uniqueID);
 
-        String pattern = "mm/dd/yyyy hh:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
         try {
-            Date current = simpleDateFormat.parse(currDate.toString());
-            Date from = simpleDateFormat.parse(fromDate.getText().toString() + " " + fromTime.getText().toString());
+            //1. Create a Date from String
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+
+            Date from = sdf.parse(fromDate.getText().toString() + " " + fromTime.getText().toString());
             Log.d(TAG, fromDate.getText().toString() + " " + fromTime.getText().toString());
-            Date to = simpleDateFormat.parse(toDate.getText().toString() + " " + toTime.getText().toString());
-            /*if (current.compareTo(from) > 0) {
-                throw new ParseException("From before current time", 1);
-            } else if (from.compareTo(to) < 0) {
-                throw new ParseException("Needs to be valid date", 1);
-            }*/
+            Date to = sdf.parse(toDate.getText().toString() + " " + toTime.getText().toString());
+
             Calendar calendarTo = Calendar.getInstance();
             calendarTo.setTime(to);
             Calendar calendarFrom = Calendar.getInstance();
             calendarFrom.setTime(from);
 
-            request.put("from", calendarFrom);
-            request.put("to", calendarTo);
+            if (calendarTo.getTime().compareTo(calendarFrom.getTime()) < 0) {
+                Log.d(TAG,"im in the to before from");
+                Toast.makeText(CreateLendTransaction.this, "Please choose valid start and end times.", Toast.LENGTH_LONG).show();
+                throw new ParseException("To before from", 1);
+            }
+            if (Calendar.getInstance().getTime().compareTo(calendarTo.getTime()) > 0) {
+                Log.d(TAG,"im in the to before current");
+                Log.d(TAG,"current" + Calendar.getInstance().getTime());
+                Log.d(TAG,"to" + calendarTo.getTime());
+                Toast.makeText(CreateLendTransaction.this, "Please choose valid start and end times.", Toast.LENGTH_LONG).show();
+                throw new ParseException("To before current", 1);
+            }
+
+            request.put("from", calendarFrom.getTime());
+            request.put("to", calendarTo.getTime());
             db.collection("transactionRequests").document(uniqueID).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -249,6 +290,7 @@ public class CreateLendTransaction extends AppCompatActivity {
                             Log.w(TAG, "Error writing document", e);
                         }
                     });
+            Toast.makeText(CreateLendTransaction.this, "Lend Transaction Request Sent!", Toast.LENGTH_LONG).show();
             CreateLendTransaction.this.finish();
         } catch(ParseException e) {
             Log.d(TAG, "parse exception");
