@@ -153,7 +153,7 @@ public class UserAccount extends AppCompatActivity {
 
                                 if (!d.get("username").equals(username)) {
                                     count++;
-                                    userCards.add(new UserCard(d.get("first").toString() + " " + d.get("last").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString()));
+                                    userCards.add(new UserCard(d.get("first").toString() + " " + d.get("last").toString(), d.get("building").toString(), d.get("profileImg").toString(), d.get("username").toString(), myUsername));
                                 }
                             }
 

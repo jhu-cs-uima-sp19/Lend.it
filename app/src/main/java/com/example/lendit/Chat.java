@@ -1,8 +1,12 @@
 package com.example.lendit;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +19,20 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
@@ -35,7 +43,9 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
     ScrollView scrollView;
     String username;
     String theirusername;
-    Firebase reference1, reference2;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final String TAG = "ChatActivity";
+    DocumentReference reference1, reference2;
 
     //frontend variables
     private ListView listView;
@@ -44,6 +54,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
     boolean myMessage = true;
     private List<ChatBubble> ChatBubbles;
     private ArrayAdapter<ChatBubble> adapter;
+    boolean justStarted = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +98,7 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
 //            }
 //        });
 
+
         //backend/database code
         layout = (LinearLayout) findViewById(R.id.layout1);
         layout_2 = (RelativeLayout)findViewById(R.id.layout2);
@@ -94,58 +106,125 @@ public class Chat extends AppCompatActivity { //TODO: combine this with chatpage
         messageArea = (EditText)findViewById(R.id.messageArea);
         scrollView = (ScrollView)findViewById(R.id.scrollView);
 
-        Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://androidchatapp-76776.firebaseio.com/messages/" + username + "_" + theirusername);
-        reference2 = new Firebase("https://androidchatapp-76776.firebaseio.com/messages/" + theirusername + "_" + username);
+        reference1 =  db.collection("messages").document(username + "_" + theirusername);
+        reference2 =  db.collection("messages").document(theirusername + "_" + username);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        Log.d(TAG, "username: " + username);
+        Log.d(TAG, "their username " + theirusername);
+
+        // prepopulate chat
+        reference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
-                String messageText = messageArea.getText().toString();
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ArrayList<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
+                for (int i = 0; i < messages.size(); i++) {
+                    Map<String, Object> lastChat = messages.get(i);
+                    String name = "";
+                    if ((boolean)lastChat.get("myMessage") == true) {
+                        name = username;
+                        addMessageBox("You:-\n" + lastChat.get("content").toString(), 2);
+                    } else {
+                        name = theirusername;
+                        addMessageBox(theirusername + ":-\n" + lastChat.get("content").toString(), 1);
+                    }
+                }
+                justStarted = false;
+            }
+        });
 
-                if(!messageText.equals("")){
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("message", messageText);
-                    map.put("user", username);
-                    reference1.push().setValue(map);
-                    reference2.push().setValue(map);
-                    messageArea.setText("");
+        reference1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    Map doc = snapshot.getData();;
+                    ArrayList<Map<String, Object>> m = (ArrayList<Map<String, Object>>) doc.get("messages");
+                    if (m.size() > 0 && !justStarted) {
+                        Map<String, Object> lastChat = m.get(m.size() - 1);
+                        String name = "";
+                        if ((boolean)lastChat.get("myMessage") == true) {
+                            name = username;
+                            addMessageBox("You:-\n" + lastChat.get("content").toString(), 2);
+                        } else {
+                            name = theirusername;
+                            addMessageBox(theirusername + ":-\n" + lastChat.get("content").toString(), 1);
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "Current data: null");
+                    Map<String, ArrayList<Map<String, Object>>> initialize = new HashMap<String, ArrayList<Map<String, Object>>>();
+
+                    ArrayList<Map<String, Object>> m = new ArrayList<Map<String, Object>>();
+                    initialize.put("messages", m);
+                    db.collection("messages").document(username + "_" + theirusername).set(initialize).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                }
+                            });
+                    db.collection("messages").document(theirusername + "_" + username).set(initialize).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                }
+                            });
                 }
             }
         });
 
-        reference1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Map map = dataSnapshot.getValue(Map.class);
-                String message = map.get("message").toString();
-                String userName = map.get("user").toString();
 
-                if(userName.equals(username)){
-                    addMessageBox("You:-\n" + message, 1);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String messageText = messageArea.getText().toString();
+
+                if(!messageText.equals("")){
+
+                    reference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                         ArrayList<Map<String, Object>> messages1 = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
+                         Log.d(TAG, "message text" + messageText);
+                         Map<String, Object> chatBubble1 = new HashMap<String, Object>();
+                         chatBubble1.put("content", messageText);
+                         chatBubble1.put("myMessage", true);
+                        messages1.add(chatBubble1);
+                         reference1.update("messages", messages1);
+                        }
+                    });
+
+                    reference2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            ArrayList<Map<String, Object>> messages2 = (ArrayList<Map<String, Object>>) documentSnapshot.getData().get("messages");
+                            Log.d(TAG, "message text" + messageText);
+                            Map<String, Object> chatBubble2 = new HashMap<String, Object>();
+                            chatBubble2.put("content", messageText);
+                            chatBubble2.put("myMessage", false);
+                            messages2.add(chatBubble2);
+                            reference2.update("messages", messages2);
+                        }
+                    });
+                    messageArea.setText("");
                 }
-                else{
-                    addMessageBox(theirusername + ":-\n" + message, 2);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
 
             }
         });

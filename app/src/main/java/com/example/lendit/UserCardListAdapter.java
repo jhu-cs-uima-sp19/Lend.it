@@ -2,6 +2,7 @@ package com.example.lendit;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
         private TextView userName;
         private TextView userBuilding;
         private ImageView userImage;
-         private Button message;
+        private Button message;
 
         public ViewHolder() {}
     }
@@ -80,6 +81,9 @@ public class UserCardListAdapter extends ArrayAdapter<UserCard> {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Chat.class);
+                Bundle b = new Bundle();
+                b.putString("postuser", p.username);
+                b.putString("username", p.myUsername);
                 //need to send name?
                 context.startActivity(i);
             }

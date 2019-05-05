@@ -9,12 +9,14 @@ public class UserCard implements Parcelable {
     public String building;
     public String profileImgURL;
     public String username;
+    public String myUsername;
 
-    UserCard(String person, String building, String profile, String u){
+    UserCard(String person, String building, String profile, String u, String mu){
         this.personName = person;
         this.building = building;
         this.profileImgURL = profile;
         this.username = u;
+        this.myUsername = mu;
     }
 
     UserCard(Parcel p){
@@ -22,6 +24,7 @@ public class UserCard implements Parcelable {
         this.building = p.readString();
         this.profileImgURL = p.readString();
         this.username = p.readString();
+        this.myUsername = p.readString();
     }
 
     @Override
@@ -33,6 +36,7 @@ public class UserCard implements Parcelable {
         out.writeString(this.building);
         out.writeString(this.profileImgURL);
         out.writeString(this.username);
+        out.writeString(this.myUsername);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods

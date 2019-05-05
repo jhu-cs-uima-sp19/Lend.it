@@ -2,8 +2,8 @@ package com.example.lendit;
 
 public class ChatBubble {
 
-    private String content;
-    private boolean myMessage;
+    public String content;
+    public boolean myMessage;
 
     public ChatBubble(String content, boolean myMessage) {
         this.content = content;
