@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,8 +62,11 @@ public class HomePage extends AppCompatActivity
     Spinner filters;
     List<String> spinnerFilters;
     String[] ratingList = {"1", "2", "3", "4", "5"};
+    String[] timeList = {"1 hour", "2 hours", "3 hours", "4 hours", "Report the borrower"};
+    int extendedTimeIndex = 0;
     String rating = "";
     String myBuilding;
+    Timestamp to;
 
     StorageReference storage = FirebaseStorage.getInstance().getReference();
 
@@ -139,77 +143,7 @@ public class HomePage extends AppCompatActivity
                         // if you're the borrower and you have not given the other person a rating (lender rating == "" when first created)
                         if ((toCompare.compareTo(getToTime) > 0) && (s.get("lenderRating").toString().equals(""))) {
                             // give -1 as rating since none exists
-                            new AlertDialog.Builder(context)
-                                    .setTitle("LEND IS DUE")
-                                    .setMessage(s.get("postTitle").toString() + " is due! Have this item been returned?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // rating popup
-                                            new AlertDialog.Builder(context)
-                                                    .setTitle("Rate the other user:")
-                                                    .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            rating = ratingList[which];
-                                                        }
-                                                    })
-                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // rating popup
-                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
-                                                            ref.update("lenderRating", rating);
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    // need to be able to edit transaction
-                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // need to edit your transaction to extend time or report other user
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    .create().show();
-                                        }
-                                    })
-                                    // need to be able to edit transaction
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // need to edit your transaction to extend time or report other user
-                                            new AlertDialog.Builder(context)
-                                                    .setTitle("The appliance was not returned")
-                                                    /*
-                                                    .setItems(ratingList, new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            rating = ratingList[which];
-                                                        }
-                                                    })
-                                                     // need to be able to edit transaction
-                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // rating popup
-                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
-                                                            ref.update("lenderRating", rating);
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                   */
-                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // need to edit your transaction to extend time or report other user
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    .create().show();
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .create().show();
+                            showBorrowerDialog(s);
                         }
                     }
                 } else {
@@ -229,77 +163,8 @@ public class HomePage extends AppCompatActivity
                         // if you're the borrower and you have not given the other person a rating (lender rating == "" when first created)
                         if ((toCompare.compareTo(getToTime) > 0) && (s.get("borrowerRating").toString().equals(""))) {
                             // give -1 as rating since none exists
-                            new AlertDialog.Builder(context)
-                                    .setTitle("LEND IS DUE")
-                                    .setMessage(s.get("postTitle").toString() + " is due! Have this item been returned?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // rating popup
-                                            new AlertDialog.Builder(context)
-                                                    .setTitle("Rate the other user:")
-                                                    .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            rating = ratingList[which];
-                                                        }
-                                                    })
-                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // rating popup
-                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
-                                                            ref.update("borrowerRating", rating);
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    // need to be able to edit transaction
-                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // need to edit your transaction to extend time or report other user
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    .create().show();
-                                        }
-                                    })
-                                    // need to be able to edit transaction
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // need to edit your transaction to extend time or report other user
-                                            new AlertDialog.Builder(context)
-                                                    .setTitle("The appliance was not returned")
-                                                    /*
-                                                    .setItems(ratingList, new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            rating = ratingList[which];
-                                                        }
-                                                    })
-                                                     // need to be able to edit transaction
-                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // rating popup
-                                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
-                                                            ref.update("lenderRating", rating);
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                   */
-                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            // need to edit your transaction to extend time or report other user
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    .create().show();
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .create().show();
+                            showLenderDialog(s);
+
                         }
                     }
                 } else {
@@ -307,8 +172,182 @@ public class HomePage extends AppCompatActivity
                 }
             }
         });
+    }
 
+    public void showBorrowerDialog(final QueryDocumentSnapshot s) {
+        new AlertDialog.Builder(context)
+                .setTitle("LEND IS DUE")
+                .setMessage(s.get("postTitle").toString() + " is due! Have this item been returned?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // rating popup
+                        new AlertDialog.Builder(context)
+                                .setTitle("Rate the other user:")
+                                .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        rating = ratingList[which];
+                                    }
+                                })
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // rating popup
+                                        DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                        ref.update("lenderRating", rating);
+                                        dialog.dismiss();
+                                    }
+                                })
+                                // need to be able to edit transaction
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // need to edit your transaction to extend time or report other user
+                                        showBorrowerDialog(s);
+                                    }
+                                })
+                                .create().show();
+                    }
+                })
+                // need to be able to edit transaction
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // rating popup
+                        new AlertDialog.Builder(context)
+                                .setTitle("You have not returned the appliance:")
+                                .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        rating = ratingList[which];
+                                    }
+                                })
+                                .setPositiveButton("Message the lender to request more time", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // rating popup
+                                        Intent i = new Intent(HomePage.this, Chat.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("username", username);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+                                        dialog.dismiss();
+                                    }
+                                })
+                                // need to be able to edit transaction
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // need to edit your transaction to extend time or report other user
+                                        showBorrowerDialog(s);
+                                    }
+                                })
+                                .create().show();// if you're the borrower & haven't returned appliance, need to message lender
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
+    }
 
+    public void showLenderDialog(final QueryDocumentSnapshot s) {
+        new AlertDialog.Builder(context)
+                .setTitle("LEND IS DUE")
+                .setMessage(s.get("postTitle").toString() + " is due! Have this item been returned?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // rating popup
+                        new AlertDialog.Builder(context)
+                                .setTitle("Rate the other user:")
+                                .setSingleChoiceItems(ratingList, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        rating = ratingList[which];
+                                    }
+                                })
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // rating popup
+                                        DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                        ref.update("borrowerRating", rating);
+                                        dialog.dismiss();
+                                    }
+                                })
+                                // need to be able to edit transaction
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // need to edit your transaction to extend time or report other user
+                                        showLenderDialog(s);
+                                    }
+                                })
+                                .create().show();
+                    }
+                })
+                // need to be able to edit transaction
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // need to edit your transaction to extend time or report other user
+                        new AlertDialog.Builder(context)
+                                .setTitle("The appliance was not returned: \n1) Allow borrower to return appliance in a few hours or \n2) Report user")
+                                .setSingleChoiceItems(timeList, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        extendedTimeIndex = which;
+                                    }
+                                })
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // report borrower
+                                        if (extendedTimeIndex == 4) {
+                                            Toast.makeText(HomePage.this, "Borrower reported!", Toast.LENGTH_LONG).show();
+                                            Calendar calendar = Calendar.getInstance();
+                                            calendar.setTime(new Date());
+                                            calendar.add(Calendar.HOUR_OF_DAY, 5);
+                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                            ref.update("to", new Timestamp(calendar.getTime()));
+                                            Map<String, Object> report = new HashMap<>();
+                                            report.put("postTitle", s.get("postTitle").toString());
+                                            db.collection("reportedUsers").document(s.get("borrower").toString()).set(report).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                }
+                                            })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Error writing document", e);
+                                                        }
+                                                    });
+                                        } else {
+                                            // extend time
+                                            Calendar calendar = Calendar.getInstance();
+                                            calendar.setTime(new Date());
+                                            calendar.add(Calendar.HOUR_OF_DAY, extendedTimeIndex + 1);
+                                            DocumentReference ref = db.collection("transactions").document(s.get("id").toString());
+                                            ref.update("to", new Timestamp(calendar.getTime()));
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                })
+                                // need to be able to edit transaction
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // need to edit your transaction to extend time or report other user
+                                        showLenderDialog(s);
+                                    }
+                                })
+                                .create().show();
+                        //dialog.dismiss();
+                    }
+                })
+                .create().show();
     }
 
     public void createPost(View view) {
