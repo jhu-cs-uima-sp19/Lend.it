@@ -127,3 +127,7 @@ Populating neighbors list is working properly
 Implemented Firebase Authentication
 Working on Shared Preferences to display when a lend is due
 End of sprint 2!
+
+Meeting 5-5-19
+Taryn, Ryan, Ravina and Mary
+Made fixes to filter colors, layouts and repopulated transactions automatically
